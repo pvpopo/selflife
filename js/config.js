@@ -17,8 +17,8 @@
   g.SL = g.SL || {};
   g.SL.config = {
     supabase: {
-      url: '',      // e.g. 'https://abcdefghijkl.supabase.co'
-      anonKey: ''   // the long 'anon' 'public' key from Project Settings → API
+      url: 'https://bcurybrflyzpahyihnok.supabase.co',
+      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjdXJ5YnJmbHl6cGFoeWlobm9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNzMyMjUsImV4cCI6MjA5ODg0OTIyNX0.sujCwmOI2asqAJR6wvn1WGT9yDhO6F-5kRBI2BPkF1I' // anon key — public by design, RLS guards the data
     }
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -113,6 +113,16 @@
     },
 
     async resume() {
+      // surface OAuth errors bounced back from the provider (e.g. "provider
+      // is not enabled") instead of silently landing on the sign-in screen
+      const bounced = new URLSearchParams(
+        (g.location.search || '').slice(1) + '&' + (g.location.hash || '').slice(1)
+      );
+      const oauthError = bounced.get('error_description') || bounced.get('error');
+      if (oauthError) {
+        g.history.replaceState(null, '', g.location.pathname);
+        if (g.SL.ui) g.SL.ui.toast('Sign-in failed: ' + oauthError.replace(/\+/g, ' '), 'warn');
+      }
       if (configured) {
         try {
           const c = await ensureClient();
