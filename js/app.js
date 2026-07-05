@@ -46,14 +46,15 @@
     });
   }
 
-  function boot() {
+  async function boot() {
     // tab bar clicks
     U.$$('.tab').forEach((t) => {
       t.addEventListener('click', () => { g.location.hash = '#/' + t.dataset.route; });
     });
     g.addEventListener('hashchange', () => { if (auth.current()) renderRoute(); });
 
-    if (auth.resume()) showApp();
+    // resume() is sync for local accounts, a promise when cloud sign-in is active
+    if (await auth.resume()) showApp();
     else showAuth();
 
     // PWA: relative path so it works on GitHub Pages project sites

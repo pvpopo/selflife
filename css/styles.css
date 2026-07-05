@@ -565,6 +565,28 @@ s { text-decoration-thickness: 1.5px; }
 .auth-tab.active { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
 .auth-error { color: var(--tomato); font-size: 13.5px; min-height: 1.2em; font-weight: 500; }
 
+/* ---------- cloud sign-in buttons ---------- */
+.oauth-stack { display: flex; flex-direction: column; gap: 10px; }
+.btn.oauth {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--card); border-color: var(--mist); font-weight: 600;
+}
+.btn.oauth:hover { border-color: var(--ink-60); }
+.btn.oauth.apple { background: #000; border-color: #000; color: #fff; }
+.btn.oauth.apple:hover { background: #1a1a1a; border-color: #1a1a1a; }
+.oauth-logo { display: inline-flex; }
+.oauth-logo svg { width: 18px; height: 18px; }
+
+/* ---------- agent hand-off brief ---------- */
+.brief-preview {
+  font-family: var(--font-mono);
+  font-size: 12px; line-height: 1.5;
+  white-space: pre-wrap; word-break: break-word;
+  background: var(--paper); border: 1px solid var(--mist); border-radius: var(--radius-sm);
+  padding: 12px; margin: 10px 0 0;
+  max-height: 240px; overflow-y: auto;
+}
+
 /* ============================================================
    Tab bar
    ============================================================ */

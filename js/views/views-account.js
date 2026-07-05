@@ -10,6 +10,15 @@
   const db = g.SL.db;
   const planner = g.SL.planner;
 
+  // brand marks for the OAuth buttons (inline so they work offline)
+  const GOOGLE_LOGO = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M23.5 12.27c0-.85-.08-1.66-.22-2.45H12v4.64h6.45a5.52 5.52 0 0 1-2.39 3.62v3h3.86c2.26-2.08 3.58-5.15 3.58-8.81z"/><path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.94-2.91l-3.86-3c-1.07.72-2.44 1.14-4.08 1.14-3.13 0-5.78-2.11-6.73-4.96H1.29v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.27 14.27a7.2 7.2 0 0 1 0-4.54v-3.1H1.29a12 12 0 0 0 0 10.74l3.98-3.1z"/><path fill="#EA4335" d="M12 4.77c1.76 0 3.35.61 4.6 1.8l3.42-3.42A11.97 11.97 0 0 0 12 0 12 12 0 0 0 1.29 6.63l3.98 3.1C6.22 6.88 8.87 4.77 12 4.77z"/></svg>';
+  const APPLE_LOGO = '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M16.36 12.76c.03 3.26 2.86 4.35 2.9 4.36-.03.08-.46 1.56-1.5 3.09-.9 1.32-1.84 2.64-3.32 2.66-1.45.03-1.92-.86-3.58-.86-1.66 0-2.18.84-3.55.89-1.43.05-2.51-1.43-3.42-2.75-1.86-2.69-3.28-7.6-1.37-10.92a5.32 5.32 0 0 1 4.49-2.72c1.4-.03 2.72.94 3.58.94.85 0 2.46-1.17 4.15-1 .71.03 2.69.29 3.96 2.15-.1.06-2.37 1.38-2.34 4.16zM13.62 4.9c.76-.92 1.27-2.2 1.13-3.47-1.09.04-2.42.73-3.2 1.65-.7.81-1.32 2.11-1.15 3.36 1.22.1 2.46-.62 3.22-1.54z"/></svg>';
+
+  function oauthProvider() {
+    const p = auth.provider ? auth.provider() : null;
+    return (p === 'google' || p === 'apple' || p === 'oauth') ? p : null;
+  }
+
   /* ================= auth screen ================= */
   function renderAuth(container, onSignedIn) {
     container.innerHTML = '';
@@ -26,6 +35,25 @@
 
     function draw() {
       card.innerHTML = '';
+
+      // cloud sign-in — buttons always visible; they explain themselves when
+      // js/config.js hasn't been wired to Supabase yet
+      const oauthErr = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
+      const oauthStack = U.el('div', { class: 'oauth-stack' });
+      [['google', 'Continue with Google', GOOGLE_LOGO], ['apple', 'Continue with Apple', APPLE_LOGO]].forEach(([prov, label, logo]) => {
+        oauthStack.appendChild(U.el('button', {
+          class: 'btn oauth wide ' + prov, type: 'button',
+          onclick: async () => {
+            oauthErr.textContent = '';
+            try { await auth.oauth(prov); }
+            catch (e) { oauthErr.textContent = e.message; }
+          }
+        }, [U.el('span', { class: 'oauth-logo', 'aria-hidden': 'true', html: logo }), label]));
+      });
+      card.appendChild(oauthStack);
+      card.appendChild(oauthErr);
+      card.appendChild(U.el('div', { class: 'divider-or' }, 'or'));
+
       const tabs = U.el('div', { class: 'auth-tabs', role: 'tablist' });
       [['login', 'Sign in'], ['register', 'Create account']].forEach(([m, label]) => {
         tabs.appendChild(U.el('button', {
@@ -68,7 +96,9 @@
       }, 'Try it as a guest'));
 
       card.appendChild(U.el('p', { class: 'muted small center' },
-        'Accounts live on this device: passwords are salted & hashed (PBKDF2), and each profile\u2019s data is kept separate. Nothing is sent to a server.'));
+        auth.cloudReady
+          ? 'Google/Apple sign-in keeps a private cloud backup of your data so it follows you across devices. Username accounts stay on this device: passwords salted & hashed (PBKDF2), nothing sent to a server.'
+          : 'Accounts live on this device: passwords are salted & hashed (PBKDF2), and each profile\u2019s data is kept separate. Nothing is sent to a server.'));
     }
     draw();
     wrap.appendChild(card);
@@ -112,8 +142,10 @@
       title: 'Delete this account',
       render(body, close) {
         body.appendChild(U.el('p', { class: 'sheet-text' },
-          'This permanently removes the account and all its data \u2014 pantry, plans, history \u2014 from this device. There is no undo.'));
-        const passIn = auth.isGuest() ? null : U.el('input', { class: 'input', type: 'password', placeholder: 'Confirm with your password' });
+          oauthProvider()
+            ? 'This removes all ShelfLife data for this account \u2014 on this device and the cloud backup \u2014 and signs you out. Your ' + (oauthProvider() === 'apple' ? 'Apple' : 'Google') + ' account itself is untouched. There is no undo.'
+            : 'This permanently removes the account and all its data \u2014 pantry, plans, history \u2014 from this device. There is no undo.'));
+        const passIn = (auth.isGuest() || oauthProvider()) ? null : U.el('input', { class: 'input', type: 'password', placeholder: 'Confirm with your password' });
         const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
         if (passIn) body.appendChild(passIn);
         body.appendChild(err);
@@ -134,6 +166,8 @@
   function render(container) {
     container.innerHTML = '';
     const username = auth.current();
+    const handle = auth.handle ? auth.handle() : username;
+    const oauthed = oauthProvider();
     const p = planner.prefs();
 
     container.appendChild(ui.header('You', 'Account'));
@@ -141,8 +175,9 @@
     /* profile */
     const prof = U.el('section', { class: 'card' });
     prof.appendChild(U.el('div', { class: 'card-title-row' }, [
-      U.el('h3', { class: 'card-title' }, '@' + username),
-      auth.isGuest() ? U.el('span', { class: 'chip small static' }, 'guest') : null
+      U.el('h3', { class: 'card-title' }, '@' + handle),
+      auth.isGuest() ? U.el('span', { class: 'chip small static' }, 'guest') : null,
+      oauthed ? U.el('span', { class: 'chip small static' }, 'via ' + (oauthed === 'apple' ? 'Apple' : 'Google')) : null
     ]));
     if (auth.isGuest()) {
       prof.appendChild(U.el('p', { class: 'muted small' },
@@ -182,11 +217,13 @@
     const sec = U.el('section', { class: 'card' });
     sec.appendChild(U.el('h3', { class: 'card-title' }, 'Security'));
     sec.appendChild(U.el('p', { class: 'muted small' },
-      (auth.strongCrypto
-        ? 'Your password is salted and hashed with PBKDF2-SHA256 (210k rounds) \u2014 it is never stored. '
-        : 'This browser lacks WebCrypto, so a weaker fallback hash is in use. ')
-      + 'Data lives only in this browser\u2019s storage; anyone with full access to this device could read it. For synced, server-side accounts see the README\u2019s Supabase guide.'));
-    if (!auth.isGuest()) {
+      oauthed
+        ? 'You\u2019re signed in with ' + (oauthed === 'apple' ? 'Apple' : 'Google') + ' \u2014 your password and sign-in security live there, and ShelfLife never sees them. Your data is backed up privately to your cloud account (row-level security) and restored when you sign in on another device.'
+        : (auth.strongCrypto
+          ? 'Your password is salted and hashed with PBKDF2-SHA256 (210k rounds) \u2014 it is never stored. '
+          : 'This browser lacks WebCrypto, so a weaker fallback hash is in use. ')
+        + 'Data lives only in this browser\u2019s storage; anyone with full access to this device could read it. For synced, server-side accounts see the README\u2019s cloud sign-in guide.'));
+    if (!auth.isGuest() && !oauthed) {
       sec.appendChild(U.el('button', { class: 'btn ghost wide', onclick: changePasswordSheet }, 'Change password'));
     }
     container.appendChild(sec);
@@ -230,7 +267,7 @@
     const sess = U.el('section', { class: 'card' });
     sess.appendChild(U.el('button', {
       class: 'btn ghost wide',
-      onclick: () => { auth.logout(); g.location.hash = ''; g.location.reload(); }
+      onclick: async () => { await auth.logout(); g.location.hash = ''; g.location.reload(); }
     }, 'Sign out'));
     sess.appendChild(U.el('button', {
       class: 'btn danger wide',

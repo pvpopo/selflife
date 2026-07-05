@@ -284,6 +284,108 @@
     });
   }
 
+  /* ---------- real-store hand-off (brief for an AI browsing agent) ---------- */
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+    // fallback for older mobile browsers
+    const ta = U.el('textarea', { style: 'position:fixed;opacity:0' });
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } finally { ta.remove(); }
+    return Promise.resolve();
+  }
+
+  function agentSheet(cart, lines) {
+    const AG = g.SL.agent;
+    const p = planner.prefs();
+    const items = cart ? AG.itemsFromCart(cart, FOODS) : AG.itemsFromList(lines, FOODS);
+    const budget = cart ? cart.total : null;
+    let retailerId = AG.RETAILERS[0].id;
+    let mode = 'pickup';
+
+    ui.sheet({
+      title: 'Hand off to an AI agent',
+      tall: true,
+      render(body) {
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'This brief tells a browsing agent (Claude with the Chrome extension, or any computer-use agent) exactly what to put in your cart on the real store’s site — and where to stop. It never checks out or touches payment; you review the cart and place the order yourself.'));
+
+        const pre = U.el('pre', { class: 'brief-preview mono' });
+        function refresh() {
+          pre.textContent = AG.buildBrief({ retailerId, mode, zip: p.zip, items, budget });
+        }
+
+        const storeWrap = U.el('div', { class: 'field' });
+        storeWrap.appendChild(U.el('label', { class: 'field-label' }, 'Store'));
+        const storeRow = U.el('div', { class: 'chip-row' });
+        function drawStores() {
+          storeRow.innerHTML = '';
+          AG.RETAILERS.forEach((r) => {
+            storeRow.appendChild(ui.chip(r.name, {
+              active: retailerId === r.id,
+              onclick: () => { retailerId = r.id; drawStores(); refresh(); }
+            }));
+          });
+        }
+        drawStores();
+        storeWrap.appendChild(storeRow);
+        body.appendChild(storeWrap);
+
+        const modeWrap = U.el('div', { class: 'field' });
+        modeWrap.appendChild(U.el('label', { class: 'field-label' }, 'Fulfillment'));
+        const modeRow = U.el('div', { class: 'chip-row' });
+        function drawModes() {
+          modeRow.innerHTML = '';
+          [['pickup', 'Pickup'], ['delivery', 'Delivery']].forEach(([m, label]) => {
+            modeRow.appendChild(ui.chip(label, {
+              active: mode === m,
+              onclick: () => { mode = m; drawModes(); refresh(); }
+            }));
+          });
+        }
+        drawModes();
+        modeWrap.appendChild(modeRow);
+        body.appendChild(modeWrap);
+
+        body.appendChild(pre);
+        refresh();
+
+        body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+          U.el('button', {
+            class: 'btn ghost',
+            onclick: () => {
+              const blob = new Blob([pre.textContent], { type: 'text/markdown' });
+              const url = URL.createObjectURL(blob);
+              const a = U.el('a', { href: url, download: 'shelflife-agent-brief.md' });
+              document.body.appendChild(a);
+              a.click();
+              setTimeout(() => { a.remove(); URL.revokeObjectURL(url); }, 500);
+            }
+          }, '↓ Download .md'),
+          U.el('button', {
+            class: 'btn primary',
+            onclick: () => copyText(pre.textContent).then(() => ui.toast('Brief copied — paste it to your agent'))
+          }, 'Copy brief')
+        ]));
+      }
+    });
+  }
+
+  function agentCard() {
+    const c = shopping.cart();
+    const list = shopping.currentList();
+    const lines = list ? shopping.activeLines(list) : [];
+    if (!c && !lines.length) return null;
+    const card = U.el('section', { class: 'card' });
+    card.appendChild(U.el('h3', { class: 'card-title' }, 'Shop it for real'));
+    card.appendChild(U.el('p', { class: 'muted small' },
+      (c ? 'Turn this cart' : 'Turn your list') + ' into a guard-railed brief an AI browsing agent can run on a real grocer’s site — it fills the cart in your own browser session and stops before checkout, so you always place the order.'
+      + (c ? '' : ' Tip: build a cart above first and the brief will include the optimizer’s substitutions and budget.')));
+    card.appendChild(U.el('button', { class: 'btn ghost wide', onclick: () => agentSheet(c, lines) }, '\u{1F916} Build agent brief'));
+    return card;
+  }
+
   function historyCard() {
     const h = shopping.history();
     if (!h.length) return null;
@@ -305,6 +407,8 @@
     const cart = cartCard(container);
     container.appendChild(optimizerCard(container));
     if (cart) container.appendChild(cart);
+    const agent = agentCard();
+    if (agent) container.appendChild(agent);
     const hist = historyCard();
     if (hist) container.appendChild(hist);
   }

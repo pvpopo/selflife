@@ -30,7 +30,7 @@ const root = path.join(__dirname, '..');
 const LOGIC_FILES = [
   'js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/data/stores.js',
   'js/db.js', 'js/auth.js', 'js/nutrition.js', 'js/inventory.js',
-  'js/planner.js', 'js/shopping.js', 'js/receipt.js'
+  'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js'
 ];
 for (const f of LOGIC_FILES) {
   // receipt.js references document only inside functions; safe to load.
@@ -168,6 +168,14 @@ const U = SL.util;
   check(gotSpin, '"2 @ SPINACH" matched spinach with qty 2');
   const noisy = parsed.some((p) => /subtotal|total|tax|visa/i.test(p.raw));
   check(!noisy, 'totals/tax/payment lines were filtered out');
+
+  console.log('\n== Agent hand-off brief ==');
+  const cart = SL.shopping.cart();
+  const briefItems = cart ? SL.agent.itemsFromCart(cart, SL.foods)
+    : [{ name: 'Chicken breast', qty: 2, pkg: '1 lb tray', subs: ['Chicken thighs'] }];
+  const brief = SL.agent.buildBrief({ retailerId: 'walmart', mode: 'pickup', zip, items: briefItems, budget: 25.5 });
+  check(brief.includes('Walmart') && briefItems.every((it) => brief.includes(it.name)), 'brief names the store and includes every item');
+  check(/never enter payment/i.test(brief) && /do not place the order/i.test(brief), 'brief carries the no-checkout guardrails');
 
   console.log('\n== Auth extras ==');
   await SL.auth.changePassword('password123', 'newpassword456');

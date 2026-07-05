@@ -33,11 +33,16 @@
     }
   })();
 
+  // change listeners (the cloud backup layer subscribes to these)
+  const watchers = [];
+  function notify(key) { watchers.forEach((fn) => { try { fn(key); } catch (e) { /* a bad listener never blocks writes */ } }); }
+
   const db = {
     /* ---- account binding ---- */
     bind(username) { userPrefix = GLOBAL_PREFIX + 'u:' + username + ':'; },
     unbind() { userPrefix = null; },
     isBound() { return !!userPrefix; },
+    watch(fn) { watchers.push(fn); },
 
     /* ---- per-user data ---- */
     get(key, fallback) {
@@ -47,8 +52,9 @@
     set(key, value) {
       if (!userPrefix) return;
       store.setItem(userPrefix + key, JSON.stringify(value));
+      notify(key);
     },
-    del(key) { if (userPrefix) store.removeItem(userPrefix + key); },
+    del(key) { if (userPrefix) { store.removeItem(userPrefix + key); notify(key); } },
 
     /* ---- global (cross-account) data ---- */
     gget(key, fallback) { return safeParse(store.getItem(GLOBAL_PREFIX + key), fallback); },

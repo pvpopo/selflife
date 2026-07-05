@@ -18,7 +18,8 @@ Built as a zero-build static site: push it to GitHub, turn on Pages, done. No se
 - **Purchases become inventory.** Marking the cart purchased files everything into the pantry with an estimated use-by date based on storage location (pantry / fridge / freezer), which you confirm per item.
 - **Receipt scanning.** Photograph a paper receipt; OCR runs *on your device* (Tesseract.js — the image never leaves the browser). Parsed lines are fuzzy-matched to the catalog ("CHKN BRST" → chicken breast) and you review every match before anything is saved. A paste-the-text fallback works offline.
 - **Honest expiration tracking.** Every item shows a countdown shelf-tag. A prominent disclaimer states these are guesstimates, and every item's detail view describes what spoilage *actually looks like* for that food — smell, color, texture — with "trust your senses" actions ("looks fine, extend estimate" / "tossed it").
-- **Account management.** Local accounts with salted PBKDF2-SHA256 password hashing (WebCrypto, 210k rounds), per-user data isolation, password change, JSON export/import backups, account deletion, and a guest mode. See the security section below for exactly what this does and doesn't protect.
+- **Account management.** Local accounts with salted PBKDF2-SHA256 password hashing (WebCrypto, 210k rounds), per-user data isolation, password change, JSON export/import backups, account deletion, and a guest mode. Optionally, **Sign in with Google / Apple** via Supabase — with a private, row-level-secured cloud backup so your data follows you across devices. See "Cloud sign-in" below.
+- **Agent hand-off for real stores.** One tap turns your optimized cart into a guard-railed brief an AI browsing agent (e.g. Claude with the Chrome extension) can execute on a real grocer's site — it fills the cart in your own session and stops before checkout. See "Real-store carts with an AI agent" below.
 - **Installable PWA.** Manifest + service worker: add it to your phone's home screen and the app shell works offline.
 
 ## What's real and what's simulated
@@ -58,8 +59,11 @@ index.html                  app shell, script load order
 css/styles.css              design system ("shelf tag" identity)
 js/
   util.js                   DOM/format/date helpers, seeded PRNG, fuzzy matcher
+  config.js                 optional cloud switches (Supabase URL + anon key)
   db.js                     namespaced localStorage layer + export/import
   auth.js                   PBKDF2 accounts, sessions, guest mode
+  auth-cloud.js             optional Google/Apple sign-in + cloud backup (Supabase)
+  agent.js                  real-store hand-off briefs for AI browsing agents
   data/foods.js             72-item catalog: nutrition /100g, package sizes,
                             prices, shelf life per storage, spoilage signs,
                             receipt aliases, substitutes  ← the linchpin
@@ -99,9 +103,38 @@ Reimplement those against a real source and nothing else changes. The realistic 
 
 Instacart-style delivery pricing has no public API; the honest options are a partner agreement or keeping that lane simulated.
 
-## Real accounts with Supabase (optional upgrade)
+## Real-store carts with an AI agent
 
-For sync across devices: create a free Supabase project, enable email auth, and add one `user_data` table (`user_id uuid references auth.users, key text, value jsonb`) with row-level security `user_id = auth.uid()`. Then replace `js/auth.js` with `supabase.auth.signUp/signInWithPassword` and point `js/db.js`'s `get/set` at that table (the app already funnels all persistence through those two files). Supabase's JS client works from static sites — the anon key is designed to be public, RLS does the guarding.
+No grocer exposes a public add-to-cart API — but an AI browsing agent working inside *your* signed-in browser session can do what an API can't. The Shop tab's **"Shop it for real"** card turns your cart (or list) into a precise brief: store, fulfillment mode, ZIP, every item with package size and acceptable substitutes, plus hard guardrails — the agent must use your existing session, never touch credentials or payment, and stop at cart review so *you* place the order.
+
+Copy the brief and paste it to Claude with the [Chrome extension](https://claude.com/claude-code) (or any computer-use agent), and it will populate the cart at Walmart, Kroger, Target, Safeway, H-E-B, Instacart, or Amazon Fresh. The brief format is plain markdown — see `js/agent.js` to add retailers or tweak the rules.
+
+## Cloud sign-in (Google & Apple) — optional
+
+The code is already in place (`js/auth-cloud.js`); it lights up when you give it a Supabase project. Until then the Google/Apple buttons explain what's missing and local accounts work as always. Supabase's JS client works from static sites — the anon key is designed to be public, row-level security does the guarding, and the OAuth flow uses PKCE so no tokens ever land in your code or URL history.
+
+**1. Create the project (~2 min).** Free tier at [supabase.com](https://supabase.com). In **Project Settings → API**, copy the *Project URL* and *anon public* key into `js/config.js`.
+
+**2. Create the backup table.** SQL editor → run:
+
+```sql
+create table if not exists public.shelflife_snapshots (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  data jsonb not null,
+  updated_at timestamptz not null default now()
+);
+alter table public.shelflife_snapshots enable row level security;
+create policy "own snapshot" on public.shelflife_snapshots
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+```
+
+**3. Enable Google.** In Supabase **Authentication → Providers → Google**, follow the linked guide: create an OAuth client in Google Cloud Console (free), authorize Supabase's callback URL, paste the client ID/secret back into Supabase.
+
+**4. Enable Apple.** Same page, **Apple** provider. Honest caveat: Sign in with Apple requires an Apple Developer Program membership ($99/yr) to create the required Services ID and key. If you don't have one, ship with Google only — the Apple button will report the configuration error cleanly.
+
+**5. Allow your site's URL.** In **Authentication → URL Configuration**, set the Site URL to `https://<username>.github.io/<repo>/` (and add `http://localhost:8000` or similar for local dev).
+
+What you get: Google/Apple sign-in from the auth screen, per-user isolated data exactly like local accounts, and a debounced private cloud backup (last-write-wins) that restores automatically when the same account signs in on another device. Password management stays with the provider; ShelfLife never sees credentials.
 
 ## Disclaimers
 
