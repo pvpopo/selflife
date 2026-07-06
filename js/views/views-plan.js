@@ -11,6 +11,11 @@
   const planner = g.SL.planner;
   const nutrition = g.SL.nutrition;
   const inv = g.SL.inventory;
+  const shopping = g.SL.shopping;
+
+  function rescueNames(resc, max) {
+    return resc.slice(0, max || 3).map((x) => FOODS.byId(x.foodId).name.toLowerCase()).join(', ');
+  }
 
   /* ---------- recipe detail sheet (shared with Recipes view) ---------- */
   function openRecipe(recipe, opts) {
@@ -30,6 +35,13 @@
           ])
         ]));
 
+        const resc = planner.rescues(recipe);
+        if (resc.length) {
+          body.appendChild(U.el('div', { class: 'rescue-banner' },
+            '⚡ Cooking this uses up your ' + rescueNames(resc)
+            + (resc[0].days <= 1 ? ' — cutting it close!' : ' before ' + (resc.length === 1 ? 'it turns.' : 'they turn.'))));
+        }
+
         body.appendChild(U.el('h3', { class: 'sub' }, 'Per serving'));
         body.appendChild(ui.macros(n));
 
@@ -47,9 +59,11 @@
           const have = inv.usableQty(ing.f);
           const enough = have >= need;
           const some = have > 0 && !enough;
+          const days = have > 0 ? inv.soonestDays(ing.f) : Infinity;
           ingList.appendChild(U.el('li', { class: 'ing-row' }, [
             U.el('span', { class: 'ing-check ' + (enough ? 'ok' : some ? 'part' : ''), 'aria-hidden': 'true' }, enough ? '\u2713' : some ? '\u25d1' : ''),
             U.el('span', { class: 'ing-name' }, food.name),
+            (isFinite(days) && days <= 4) ? ui.expiryTag(days) : null,
             U.el('span', { class: 'ing-qty mono' }, U.fmtQty(need, food.unit))
           ]));
         });
@@ -91,7 +105,10 @@
               onclick: () => {
                 planner.setSlot(di, slot, recipe.id);
                 close();
-                ui.toast('Added to ' + U.fmtDate(day.date) + ' \u00b7 ' + slot);
+                // an approved list follows the plan automatically
+                const hadList = !!shopping.currentList();
+                if (hadList) shopping.rebuildList();
+                ui.toast('Added to ' + U.fmtDate(day.date) + ' \u00b7 ' + slot + (hadList ? ' \u00b7 shopping list updated' : ''));
                 if (g.SL.router) g.SL.router.rerender(); else render(U.$('#view'));
               }
             }));
@@ -113,7 +130,7 @@
         if (currentId) {
           body.appendChild(U.el('button', {
             class: 'btn ghost wide',
-            onclick: () => { planner.setSlot(dayIndex, slot, null); close(); render(U.$('#view')); ui.toast('Slot cleared'); }
+            onclick: () => { planner.setSlot(dayIndex, slot, null); if (shopping.currentList()) shopping.rebuildList(); close(); render(U.$('#view')); ui.toast('Slot cleared'); }
           }, 'Leave this slot empty'));
         }
         if (!alts.length) {
@@ -124,7 +141,7 @@
           const n = nutrition.perServing(r);
           body.appendChild(U.el('button', {
             class: 'swap-row', type: 'button',
-            onclick: () => { planner.setSlot(dayIndex, slot, r.id); close(); render(U.$('#view')); ui.toast('Swapped in ' + r.name); }
+            onclick: () => { planner.setSlot(dayIndex, slot, r.id); const hadList = !!shopping.currentList(); if (hadList) shopping.rebuildList(); close(); render(U.$('#view')); ui.toast('Swapped in ' + r.name + (hadList ? ' · list updated' : '')); }
           }, [
             U.el('span', { class: 'recipe-emoji sm', 'aria-hidden': 'true' }, r.emoji),
             U.el('span', { class: 'swap-name' }, [U.el('b', {}, r.name), U.el('small', { class: 'muted' }, r.cuisine + ' \u00b7 ' + r.time + ' min')]),
@@ -147,8 +164,10 @@
     const row = U.el('div', { class: 'scroll-row' });
     soon.slice(0, 10).forEach(({ item, days }) => {
       const food = FOODS.byId(item.foodId);
+      const planned = planner.planUsesFood(item.foodId);
       row.appendChild(U.el('button', {
-        class: 'use-up-item', type: 'button',
+        class: 'use-up-item' + (planned ? '' : ' unplanned'), type: 'button',
+        title: planned ? 'A planned meal uses this' : 'Not in this week’s plan yet — tap for recipes that use it',
         onclick: () => {
           const suggestions = planner.recipesUsing(item.foodId, 5);
           ui.sheet({
@@ -172,7 +191,8 @@
         }
       }, [
         U.el('span', { class: 'use-up-name' }, food.name),
-        ui.expiryTag(days)
+        ui.expiryTag(days),
+        planned ? null : U.el('small', { class: 'not-planned' }, 'not in plan')
       ]));
     });
     strip.appendChild(row);
@@ -210,8 +230,20 @@
     }
 
     const bar = U.el('div', { class: 'btn-row' }, [
-      U.el('button', { class: 'btn primary', onclick: () => { planner.generate(); render(container); ui.toast('Regenerated with fresh picks'); } }, 'Regenerate'),
-      U.el('button', { class: 'btn ghost', onclick: () => { g.location.hash = '#/shop'; } }, 'Shopping list \u2192')
+      U.el('button', { class: 'btn ghost', onclick: () => { planner.generate(); if (shopping.currentList()) shopping.rebuildList(); render(container); ui.toast('Regenerated with fresh picks'); } }, 'Regenerate'),
+      U.el('button', {
+        class: 'btn primary',
+        onclick: () => {
+          const list = shopping.rebuildList();
+          shopping.clearCart();
+          const toBuy = shopping.activeLines(list).length;
+          if (g.SL.views.shop && g.SL.views.shop.queueCompare) g.SL.views.shop.queueCompare();
+          g.location.hash = '#/shop';
+          ui.toast(toBuy
+            ? 'List ready: ' + toBuy + ' ' + U.plural(toBuy, 'item') + ' to buy' + (list.covered ? ' \u00b7 pantry covers ' + list.covered + ' more' : '')
+            : 'Your pantry covers the whole week \ud83c\udf89');
+        }
+      }, 'Approve week \u2192 build list')
     ]);
     container.appendChild(bar);
 
@@ -235,13 +267,15 @@
 
         const recipe = RECIPES.byId(entry.recipeId);
         const n = nutrition.perServing(recipe);
+        const resc = entry.cooked ? [] : planner.rescues(recipe);
         row.appendChild(U.el('button', {
           class: 'meal-main', type: 'button', onclick: () => openRecipe(recipe)
         }, [
           U.el('span', { class: 'recipe-emoji sm', 'aria-hidden': 'true' }, recipe.emoji),
           U.el('span', { class: 'meal-name' }, [
             U.el('b', {}, recipe.name),
-            U.el('small', { class: 'muted' }, recipe.time + ' min \u00b7 ' + n.cal + ' cal/serving')
+            U.el('small', { class: 'muted' }, recipe.time + ' min \u00b7 ' + n.cal + ' cal/serving'),
+            resc.length ? U.el('small', { class: 'rescue-note' }, '\u26a1 uses your ' + rescueNames(resc, 2) + ' (' + resc[0].days + 'd left)') : null
           ])
         ]));
 

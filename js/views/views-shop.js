@@ -14,6 +14,7 @@
   const inv = g.SL.inventory;
 
   let lastOptions = null; // ephemeral optimizer results for this visit
+  let compareQueued = false; // set by the Plan tab's approve flow
 
   /* ---------- list section ---------- */
   function lineRow(list, line, container) {
@@ -464,6 +465,14 @@
   }
 
   function render(container) {
+    // arriving from "Approve week": run the store comparison automatically
+    if (compareQueued) {
+      compareQueued = false;
+      const list = shopping.currentList();
+      if (list && shopping.activeLines(list).length && planner.prefs().zip && !shopping.cart()) {
+        lastOptions = shopping.optimize();
+      }
+    }
     container.innerHTML = '';
     container.appendChild(ui.header('Buy smart', 'Shop'));
     container.appendChild(listCard(container));
@@ -478,5 +487,5 @@
 
   g.SL = g.SL || {};
   g.SL.views = g.SL.views || {};
-  g.SL.views.shop = { render };
+  g.SL.views.shop = { render, queueCompare: () => { compareQueued = true; lastOptions = null; } };
 })(typeof window !== 'undefined' ? window : globalThis);

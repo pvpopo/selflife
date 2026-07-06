@@ -26,6 +26,6 @@
        catalog foods to Walmart products so the whole cart adds in one tap.
        Leave blank and the app falls back to hand-mapped ids + search links.
        Setup: see "Real-store carts" in the README. */
-    walmartProxy: ''
+    walmartProxy: 'https://shelflife-walmart.richvici.workers.dev'
   };
 })(typeof window !== 'undefined' ? window : globalThis);

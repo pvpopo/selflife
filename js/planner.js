@@ -176,10 +176,37 @@
       .slice(0, limit || 3);
   }
 
+  /* Expiring stock (≤ horizon days) this recipe would use — the "cook this
+     and nothing goes to waste" signal surfaced across plan/recipes/sheets. */
+  function rescues(recipe, horizonDays) {
+    const horizon = horizonDays == null ? 4 : horizonDays;
+    const out = [];
+    recipe.ing.forEach((ing) => {
+      const food = FOODS.byId(ing.f);
+      if (!food || food.staple) return;
+      if (inv.usableQty(ing.f) <= 0) return;
+      const days = inv.soonestDays(ing.f);
+      if (isFinite(days) && days <= horizon) out.push({ foodId: ing.f, days });
+    });
+    return out.sort((a, b) => a.days - b.days);
+  }
+
+  /* Does any uncooked meal in the current plan use this food? Lets the
+     expiring strip flag stock that still needs a rescue. */
+  function planUsesFood(foodId) {
+    const plan = current();
+    if (!plan) return false;
+    return plan.days.some((day) => Object.values(day.slots).some((s) => {
+      if (!s || s.cooked) return false;
+      const r = RECIPES.byId(s.recipeId);
+      return !!r && r.ing.some((ing) => ing.f === foodId);
+    }));
+  }
+
   g.SL = g.SL || {};
   g.SL.planner = {
     prefs, savePrefs, DEFAULT_PREFS,
     generate, current, save, alternatives, setSlot, markCooked,
-    dayNutrition, eligible, recipesUsing, slotList
+    dayNutrition, eligible, recipesUsing, slotList, rescues, planUsesFood
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -48,6 +48,7 @@
     const lines = [];
     const staples = [];
 
+    let covered = 0; // foods the pantry fully takes care of
     Object.entries(needs).forEach(([foodId, needQty]) => {
       const food = FOODS.byId(foodId);
       if (!food) return;
@@ -61,7 +62,7 @@
         packages: buyQty > 0 ? Math.ceil(buyQty / food.pkg.qty - 0.02) : 0,
         checked: true
       };
-      if (line.packages <= 0) return; // pantry covers it
+      if (line.packages <= 0) { if (!food.staple) covered++; return; } // pantry covers it
       if (food.staple) { line.checked = false; staples.push(line); }
       else lines.push(line);
     });
@@ -70,9 +71,24 @@
     lines.sort((a, b) => sortKey(a) - sortKey(b));
     staples.sort((a, b) => sortKey(a) - sortKey(b));
 
-    const list = { generatedISO: new Date().toISOString(), planId: plan ? plan.id : null, lines, staples, extras: [] };
+    const list = { generatedISO: new Date().toISOString(), planId: plan ? plan.id : null, lines, staples, extras: [], covered };
     db.set(LIST_KEY, list);
     return list;
+  }
+
+  /* Rebuild from the (possibly changed) plan while keeping what the shopper
+     already decided: their added extras and their checked/unchecked choices. */
+  function rebuildList() {
+    const prev = currentList();
+    const fresh = buildList();
+    if (prev) {
+      fresh.extras = prev.extras || [];
+      const chosen = {};
+      [...(prev.lines || []), ...(prev.staples || [])].forEach((l) => { chosen[l.foodId] = l.checked; });
+      [...fresh.lines, ...fresh.staples].forEach((l) => { if (l.foodId in chosen) l.checked = chosen[l.foodId]; });
+      saveList(fresh);
+    }
+    return fresh;
   }
 
   function currentList() { return db.get(LIST_KEY, null); }
@@ -242,7 +258,7 @@
 
   g.SL = g.SL || {};
   g.SL.shopping = {
-    buildList, currentList, saveList, addExtra, activeLines,
+    buildList, rebuildList, currentList, saveList, addExtra, activeLines,
     optimize, setCart, cart, clearCart, purchase, history
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -120,8 +120,26 @@ const U = SL.util;
   const usesSpinach = allEntries.some((e) => SL.recipes.byId(e.recipeId).ing.some((i) => i.f === 'spinach'));
   check(usesSpinach, 'expiring spinach pulled at least one spinach recipe into the week');
 
+  const spinachRecipe = SL.recipes.list.find((r) => r.ing.some((i) => i.f === 'spinach'));
+  const resc = SL.planner.rescues(spinachRecipe);
+  check(resc.some((x) => x.foodId === 'spinach' && x.days <= 4), 'rescues() flags the expiring spinach with days left');
+  check(SL.planner.planUsesFood('spinach') === usesSpinach, 'planUsesFood agrees with the generated plan');
+
   const list = SL.shopping.buildList();
   check(list.lines.length > 0, 'shopping list built (' + list.lines.length + ' items + ' + list.staples.length + ' staples)');
+  check(typeof list.covered === 'number', 'list reports how many foods the pantry fully covers (' + list.covered + ')');
+
+  // approve-flow guarantees: extras and manual unchecks survive a rebuild
+  const extraFood = SL.foods.list.find((f) => !list.lines.some((l) => l.foodId === f.id));
+  SL.shopping.addExtra(extraFood.id, 2);
+  const marked = SL.shopping.currentList();
+  marked.lines[0].checked = false;
+  const uncheckedId = marked.lines[0].foodId;
+  SL.shopping.saveList(marked);
+  const rebuilt = SL.shopping.rebuildList();
+  check(rebuilt.extras.some((x) => x.foodId === extraFood.id && x.packages === 2), 'rebuildList keeps user-added extras');
+  const keptLine = rebuilt.lines.find((l) => l.foodId === uncheckedId);
+  check(!!keptLine && keptLine.checked === false, 'rebuildList keeps manual unchecks');
   const riceLine = list.lines.find((l) => l.foodId === 'rice');
   const riceNeeded = list.lines.concat(list.staples).some((l) => l.foodId === 'rice' && l.packages > 0);
   console.log('    rice: pantry has 900g \u2192 ' + (riceLine ? 'still buying ' + riceLine.packages + ' pkg (plan needs more)' : (riceNeeded ? 'buying' : 'covered by pantry, correctly omitted')));

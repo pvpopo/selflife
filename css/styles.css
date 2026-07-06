@@ -577,6 +577,26 @@ s { text-decoration-thickness: 1.5px; }
 .oauth-logo { display: inline-flex; }
 .oauth-logo svg { width: 18px; height: 18px; }
 
+/* ---------- waste-rescue signals ---------- */
+.rescue-banner {
+  background: var(--marigold-tint);
+  border: 1px solid var(--marigold);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 13.5px;
+  margin: 4px 0 10px;
+}
+.rescue-note { color: var(--marigold); font-weight: 600; display: block; }
+.use-up-item .not-planned {
+  display: block;
+  color: var(--tomato);
+  font-style: italic;
+  font-size: 11px;
+}
+.use-up-item.unplanned { border-color: var(--tomato); }
+.ing-row .shelf-tag { margin-left: auto; margin-right: 8px; }
+.ing-row .ing-qty { margin-left: 0; }
+
 /* ---------- email auth extras ---------- */
 .link-btn {
   border: none; background: none; width: 100%;
