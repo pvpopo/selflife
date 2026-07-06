@@ -19,6 +19,13 @@
     supabase: {
       url: 'https://bcurybrflyzpahyihnok.supabase.co',
       anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjdXJ5YnJmbHl6cGFoeWlobm9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyNzMyMjUsImV4cCI6MjA5ODg0OTIyNX0.sujCwmOI2asqAJR6wvn1WGT9yDhO6F-5kRBI2BPkF1I' // anon key — public by design, RLS guards the data
-    }
+    },
+
+    /* One-tap Walmart carts: URL of your deployed proxy/walmart-worker.js
+       (e.g. 'https://shelflife-walmart.<you>.workers.dev'). It matches
+       catalog foods to Walmart products so the whole cart adds in one tap.
+       Leave blank and the app falls back to hand-mapped ids + search links.
+       Setup: see "Real-store carts" in the README. */
+    walmartProxy: ''
   };
 })(typeof window !== 'undefined' ? window : globalThis);

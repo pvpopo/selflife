@@ -189,6 +189,12 @@ const U = SL.util;
   check(wUrl === 'https://affil.walmart.com/cart/addToCart?items=27935840_2', 'cart deep-link carries item id and quantity (' + wUrl + ')');
   check(SL.cartlink.searchUrl('Spinach').includes('walmart.com/search?q=Spinach'), 'unmapped items get a Walmart search link');
   delete SL.cartlink.WALMART_IDS.chicken_breast;
+  // proxy-resolved ids flow through the same cache the runtime uses
+  SL.db.gset('walmartIds', { spinach: '10450115' });
+  check(SL.cartlink.idFor('spinach') === '10450115', 'proxy-resolved ids are honored from the cache');
+  check(SL.cartlink.cartUrl(clItems).includes('10450115'), 'cached proxy matches join the one-tap cart link');
+  SL.db.gdel('walmartIds');
+  check(!SL.cartlink.canResolve() || typeof fetch === 'function', 'resolver only activates when a proxy is configured');
 
   console.log('\n== Auth extras ==');
   await SL.auth.changePassword('password123', 'newpassword456');

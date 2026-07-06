@@ -374,36 +374,57 @@
 
   function walmartSheet(items) {
     const CL = g.SL.cartlink;
-    const { mapped, unmapped } = CL.splitItems(items);
     ui.sheet({
       title: 'Shop this at Walmart',
       tall: true,
       render(body) {
-        if (mapped.length) {
-          body.appendChild(U.el('p', { class: 'muted small' },
-            mapped.length + ' of ' + items.length + ' items can go straight into your Walmart cart — one tap, added in your own walmart.com session.'));
-          body.appendChild(U.el('a', {
-            class: 'btn primary wide', target: '_blank', rel: 'noopener',
-            href: CL.cartUrl(items)
-          }, '\u{1F6D2} Add ' + mapped.length + ' ' + U.plural(mapped.length, 'item') + ' to Walmart cart'));
+        function draw(status) {
+          body.innerHTML = '';
+          const { mapped, unmapped } = CL.splitItems(items);
+
+          if (status) body.appendChild(U.el('p', { class: 'muted small resolving' }, status));
+
+          if (mapped.length) {
+            const all = !unmapped.length;
+            body.appendChild(U.el('p', { class: 'muted small' },
+              all
+                ? 'All ' + mapped.length + ' items matched. One tap fills your Walmart cart — then just review it on walmart.com and check out with your payment there.'
+                : mapped.length + ' of ' + items.length + ' items matched — one tap adds them to your Walmart cart.'));
+            body.appendChild(U.el('a', {
+              class: 'btn primary wide', target: '_blank', rel: 'noopener',
+              href: CL.cartUrl(items)
+            }, '\u{1F6D2} Add ' + (all ? 'all ' : '') + mapped.length + ' ' + U.plural(mapped.length, 'item') + ' to Walmart cart'));
+          }
+
+          if (unmapped.length) {
+            body.appendChild(U.el('p', { class: 'muted small' },
+              (mapped.length ? 'The remaining ' + unmapped.length + ' open' : 'Each item opens') + ' as a Walmart search — tap through, pick your product, add to cart.'
+              + (CL.canResolve() ? '' : ' (Deploy the Walmart matcher in proxy/walmart-worker.js and every item becomes one-tap — see README.)')));
+            const listEl = U.el('div', { class: 'picker-list' });
+            unmapped.forEach((it) => {
+              listEl.appendChild(U.el('a', {
+                class: 'picker-row', target: '_blank', rel: 'noopener',
+                href: CL.searchUrl(it.name)
+              }, [
+                U.el('span', {}, [U.el('b', {}, it.name), U.el('small', { class: 'muted' }, ' · ' + it.qty + ' × ' + it.pkg)]),
+                U.el('span', { class: 'muted small-caps' }, 'search ↗')
+              ]));
+            });
+            body.appendChild(listEl);
+          }
+
+          body.appendChild(U.el('p', { class: 'muted small center' },
+            'Everything happens in your own Walmart session — ShelfLife never sees your account or payment. Prices on walmart.com are the real ones and may differ from the estimate.'));
         }
-        if (unmapped.length) {
-          body.appendChild(U.el('p', { class: 'muted small' },
-            (mapped.length ? 'The rest open' : 'Each item opens') + ' as a Walmart search — tap through, pick your product, add to cart. (Once an item is mapped to a Walmart product ID in js/cartlink.js, it joins the one-tap cart.)'));
-          const listEl = U.el('div', { class: 'picker-list' });
-          unmapped.forEach((it) => {
-            listEl.appendChild(U.el('a', {
-              class: 'picker-row', target: '_blank', rel: 'noopener',
-              href: CL.searchUrl(it.name)
-            }, [
-              U.el('span', {}, [U.el('b', {}, it.name), U.el('small', { class: 'muted' }, ' · ' + it.qty + ' × ' + it.pkg)]),
-              U.el('span', { class: 'muted small-caps' }, 'search ↗')
-            ]));
-          });
-          body.appendChild(listEl);
+
+        // first paint with whatever is already known, then auto-match the rest
+        const needsResolve = CL.canResolve() && CL.splitItems(items).unmapped.length > 0;
+        draw(needsResolve ? 'Matching your items to Walmart products…' : null);
+        if (needsResolve) {
+          CL.resolveIds(items)
+            .then((learned) => { draw(null); if (learned) ui.toast(learned + ' items matched to Walmart products'); })
+            .catch((e) => { draw(null); ui.toast(e.message, 'warn'); });
         }
-        body.appendChild(U.el('p', { class: 'muted small center' },
-          'Everything happens in your own Walmart session — ShelfLife never sees your account or payment.'));
       }
     });
   }

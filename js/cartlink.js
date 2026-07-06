@@ -3,47 +3,59 @@
    deep-links: opening
      https://affil.walmart.com/cart/addToCart?items=<itemId>_<qty>,<itemId>...
    in the user's browser puts those products straight into their walmart.com
-   cart (their own session — ShelfLife never touches their account).
+   cart (their own session — ShelfLife never touches their account or
+   payment; they review and check out on Walmart).
 
-   The catch: the link needs Walmart item IDs, and there's no public API to
-   search them from a static site. So this module works in two tiers:
-     1. Foods mapped in WALMART_IDS get the one-click cart link.
-     2. Unmapped foods fall back to a per-item Walmart search link the user
-        (or an AI agent) can tap through.
-   Fill WALMART_IDS by hand (the digits at the end of any walmart.com product
-   URL) or automate it with the Walmart Affiliate API proxy described in the
-   README. Pure logic, no DOM — exercised by dev/validate.js. */
+   The link needs Walmart item IDs. Three tiers, best available wins:
+     1. Automatic: when js/config.js has a walmartProxy URL (the ~80-line
+        Cloudflare Worker in proxy/walmart-worker.js), unknown foods are
+        matched to Walmart products at runtime and cached — the whole cart
+        becomes one tap.
+     2. Hand-mapped: entries in WALMART_IDS below (the digits at the end of
+        a walmart.com product URL).
+     3. Fallback: anything unresolved gets a per-item Walmart search link.
+   Pure logic, no DOM — exercised by dev/validate.js. */
 (function (g) {
   'use strict';
+  const db = g.SL.db;
 
   /* foodId → Walmart item ID (the number at the end of a product URL,
      e.g. walmart.com/ip/Chicken-Breast/27935840 → '27935840').
-     Every entry you add here upgrades that food from "search link"
-     to "already in the cart". */
+     Hand-mapped entries take precedence over proxy matches. */
   const WALMART_IDS = {
     // chicken_breast: '27935840',
-    // eggs: '145051970',
   };
 
   const CART_BASE = 'https://affil.walmart.com/cart/addToCart?items=';
   const SEARCH_BASE = 'https://www.walmart.com/search?q=';
+  const CACHE_KEY = 'walmartIds'; // global cache — product ids aren't personal data
+
+  function proxyUrl() {
+    return ((g.SL.config && g.SL.config.walmartProxy) || '').replace(/\/+$/, '');
+  }
+
+  function idFor(foodId) {
+    if (WALMART_IDS[foodId]) return WALMART_IDS[foodId];
+    const cached = db.gget(CACHE_KEY, {});
+    return cached[foodId] || null;
+  }
 
   /* Split the items: which get the one-click cart, which need a search tap. */
   function splitItems(items) {
     const mapped = [], unmapped = [];
     items.forEach((it) => {
-      if (WALMART_IDS[it.foodId]) mapped.push(it);
+      if (idFor(it.foodId)) mapped.push(it);
       else unmapped.push(it);
     });
     return { mapped, unmapped };
   }
 
-  /* One URL that fills the Walmart cart with every mapped item. */
+  /* One URL that fills the Walmart cart with every resolvable item. */
   function cartUrl(items) {
     const { mapped } = splitItems(items);
     if (!mapped.length) return null;
     return CART_BASE + mapped
-      .map((it) => WALMART_IDS[it.foodId] + (it.qty > 1 ? '_' + it.qty : ''))
+      .map((it) => idFor(it.foodId) + (it.qty > 1 ? '_' + it.qty : ''))
       .join(',');
   }
 
@@ -51,6 +63,30 @@
     return SEARCH_BASE + encodeURIComponent(name);
   }
 
+  /* ---- automatic matching via the proxy (see proxy/walmart-worker.js) ---- */
+  function canResolve() {
+    return !!proxyUrl() && typeof g.fetch === 'function';
+  }
+
+  /* Ask the proxy to match still-unknown foods to Walmart products.
+     Returns how many new ids were learned; results persist in the cache. */
+  async function resolveIds(items) {
+    if (!canResolve()) return 0;
+    const missing = items.filter((it) => !idFor(it.foodId));
+    if (!missing.length) return 0;
+    const terms = missing.map((it) => it.foodId + ':' + it.name).join('|');
+    const res = await g.fetch(proxyUrl() + '/ids?terms=' + encodeURIComponent(terms));
+    if (!res.ok) throw new Error('Product matcher unavailable (' + res.status + ') — using search links instead.');
+    const found = await res.json();
+    const cached = db.gget(CACHE_KEY, {});
+    let learned = 0;
+    Object.entries(found).forEach(([foodId, itemId]) => {
+      if (itemId) { cached[foodId] = String(itemId); learned++; }
+    });
+    if (learned) db.gset(CACHE_KEY, cached);
+    return learned;
+  }
+
   g.SL = g.SL || {};
-  g.SL.cartlink = { WALMART_IDS, splitItems, cartUrl, searchUrl };
+  g.SL.cartlink = { WALMART_IDS, splitItems, cartUrl, searchUrl, canResolve, resolveIds, idFor };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -107,7 +107,13 @@ Instacart-style delivery pricing has no public API; the honest options are a par
 
 The Shop tab's **"Shop it for real"** card takes the optimized cart (or the raw list) to an actual store. Two paths, no AI required for the first:
 
-**One-click Walmart carts (`js/cartlink.js`).** Walmart supports cart deep-links: `https://affil.walmart.com/cart/addToCart?items=<itemId>_<qty>,...` adds those products to the visitor's own walmart.com cart. The link needs Walmart item IDs, so the module works in two tiers: foods mapped in `WALMART_IDS` join the one-tap "Add N items to Walmart cart" button; unmapped foods appear as per-item Walmart search links the user taps through. To map a food, grab the digits at the end of any walmart.com product URL (`walmart.com/ip/Chicken-Breast/27935840` → `'27935840'`) and add `chicken_breast: '27935840'` to `WALMART_IDS`. To automate the mapping (and keep prices fresh), the Walmart Affiliate API + the ~40-line proxy described in "Wiring real store data" is the sanctioned route. ShelfLife never touches the user's Walmart account or payment — everything happens in their own session, and they place the order.
+**One-tap Walmart carts (`js/cartlink.js`).** Walmart supports cart deep-links: `https://affil.walmart.com/cart/addToCart?items=<itemId>_<qty>,...` adds those products to the visitor's own walmart.com cart in one tap — they review the cart on walmart.com and check out with their payment there. ShelfLife never touches the user's Walmart account or payment.
+
+The link needs Walmart item IDs, and the module resolves them in three tiers (best available wins):
+
+1. **Automatic (recommended).** Deploy `proxy/walmart-worker.js` to Cloudflare Workers (free) with your Walmart Affiliate API credentials — the setup walkthrough is at the top of that file: walmart.io signup, three `openssl` commands, `wrangler deploy`, paste the worker URL into `js/config.js → walmartProxy`. From then on the Walmart sheet matches every cart item to a real Walmart product at runtime ("Matching your items…" → "Add all N items to Walmart cart"), caching matches on-device and at the edge for a day.
+2. **Hand-mapped.** Add entries to `WALMART_IDS` in `js/cartlink.js` — the id is the digits at the end of any walmart.com product URL (`walmart.com/ip/Chicken-Breast/27935840` → `'27935840'`). Useful for pinning exact products you prefer over the API's top match.
+3. **Search fallback.** Anything unresolved appears as a per-item Walmart search link.
 
 **AI agent hand-off (`js/agent.js`).** Alternatively, the same card produces a guard-railed markdown brief for an AI browsing agent (e.g. Claude with the Chrome extension): store, fulfillment, ZIP, every item with package size and acceptable substitutes, plus hard rules — use the existing session, never touch credentials or payment, stop at cart review. Works for Walmart, Kroger, Target, Safeway, H-E-B, Instacart, and Amazon Fresh.
 
