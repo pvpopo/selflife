@@ -31,7 +31,15 @@
    Results are cached at Cloudflare's edge for 24h per term, so Walmart's
    rate limits are a non-issue for normal traffic. */
 
-const SEARCH_URL = 'https://developer.api.walmart.com/api-proxy/service/affil/product/v2/search';
+/* Walmart environment: set WM_ENV=stage while your walmart.io app only has
+   a Sandbox/Stage configuration (Stage Consumer ID). Leave unset (or set
+   WM_ENV=prod) once the Production configuration is approved — stage data
+   can be a limited/test catalog, so real matches need production. */
+const HOSTS = {
+  prod: 'https://developer.api.walmart.com',
+  stage: 'https://developer.api.stg.walmart.com'
+};
+const SEARCH_PATH = '/api-proxy/service/affil/product/v2/search';
 const CACHE_TTL = 60 * 60 * 24; // seconds
 
 export default {
@@ -100,7 +108,8 @@ async function lookupCached(name, env) {
 async function lookup(name, env) {
   const ts = Date.now().toString();
   const signature = await sign(env.WM_CONSUMER_ID + '\n' + ts + '\n' + env.WM_KEY_VERSION + '\n', env.WM_PRIVATE_KEY_B64);
-  const res = await fetch(SEARCH_URL + '?query=' + encodeURIComponent(name) + '&numItems=3', {
+  const host = HOSTS[env.WM_ENV === 'stage' ? 'stage' : 'prod'];
+  const res = await fetch(host + SEARCH_PATH + '?query=' + encodeURIComponent(name) + '&numItems=3', {
     headers: {
       'WM_CONSUMER.ID': env.WM_CONSUMER_ID,
       'WM_CONSUMER.INTIMESTAMP': ts,
