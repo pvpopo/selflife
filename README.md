@@ -103,11 +103,13 @@ Reimplement those against a real source and nothing else changes. The realistic 
 
 Instacart-style delivery pricing has no public API; the honest options are a partner agreement or keeping that lane simulated.
 
-## Real-store carts with an AI agent
+## Real-store carts
 
-No grocer exposes a public add-to-cart API — but an AI browsing agent working inside *your* signed-in browser session can do what an API can't. The Shop tab's **"Shop it for real"** card turns your cart (or list) into a precise brief: store, fulfillment mode, ZIP, every item with package size and acceptable substitutes, plus hard guardrails — the agent must use your existing session, never touch credentials or payment, and stop at cart review so *you* place the order.
+The Shop tab's **"Shop it for real"** card takes the optimized cart (or the raw list) to an actual store. Two paths, no AI required for the first:
 
-Copy the brief and paste it to Claude with the [Chrome extension](https://claude.com/claude-code) (or any computer-use agent), and it will populate the cart at Walmart, Kroger, Target, Safeway, H-E-B, Instacart, or Amazon Fresh. The brief format is plain markdown — see `js/agent.js` to add retailers or tweak the rules.
+**One-click Walmart carts (`js/cartlink.js`).** Walmart supports cart deep-links: `https://affil.walmart.com/cart/addToCart?items=<itemId>_<qty>,...` adds those products to the visitor's own walmart.com cart. The link needs Walmart item IDs, so the module works in two tiers: foods mapped in `WALMART_IDS` join the one-tap "Add N items to Walmart cart" button; unmapped foods appear as per-item Walmart search links the user taps through. To map a food, grab the digits at the end of any walmart.com product URL (`walmart.com/ip/Chicken-Breast/27935840` → `'27935840'`) and add `chicken_breast: '27935840'` to `WALMART_IDS`. To automate the mapping (and keep prices fresh), the Walmart Affiliate API + the ~40-line proxy described in "Wiring real store data" is the sanctioned route. ShelfLife never touches the user's Walmart account or payment — everything happens in their own session, and they place the order.
+
+**AI agent hand-off (`js/agent.js`).** Alternatively, the same card produces a guard-railed markdown brief for an AI browsing agent (e.g. Claude with the Chrome extension): store, fulfillment, ZIP, every item with package size and acceptable substitutes, plus hard rules — use the existing session, never touch credentials or payment, stop at cart review. Works for Walmart, Kroger, Target, Safeway, H-E-B, Instacart, and Amazon Fresh.
 
 ## Cloud sign-in (Google & Apple) — optional
 
@@ -135,6 +137,14 @@ create policy "own snapshot" on public.shelflife_snapshots
 **5. Allow your site's URL.** In **Authentication → URL Configuration**, set the Site URL to `https://<username>.github.io/<repo>/` (and add `http://localhost:8000` or similar for local dev).
 
 What you get: Google/Apple sign-in from the auth screen, per-user isolated data exactly like local accounts, and a debounced private cloud backup (last-write-wins) that restores automatically when the same account signs in on another device. Password management stays with the provider; ShelfLife never sees credentials.
+
+### Email accounts (confirmation + recovery)
+
+With Supabase connected, the Sign in / Create account form switches from device-only usernames to **email accounts**: sign-up sends a confirmation email (Supabase's Email provider, on by default), unconfirmed sign-ins are rejected with a clear message, and **"Forgot password?"** sends a reset link that returns the user to the app to set a new password. This works for any address — Gmail, Outlook, custom domains — and Gmail users can equally use the one-tap Google button; both routes get the same cloud backup and recovery.
+
+Two production notes:
+- **Email sending limits.** Supabase's built-in mailer is for development (a few emails per hour). Before real users: **Authentication → Emails → SMTP Settings** and plug in any SMTP service (Resend, Postmark, SES — free tiers are plenty). The email templates (confirmation, reset) are editable on the same page.
+- **Device-only accounts remain** for the privacy-conscious, tucked under "Prefer a device-only account?" on the sign-in screen — no email, PBKDF2-hashed locally, but no recovery and no sync, and the UI says so.
 
 ## Disclaimers
 

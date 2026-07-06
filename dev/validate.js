@@ -30,7 +30,7 @@ const root = path.join(__dirname, '..');
 const LOGIC_FILES = [
   'js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/data/stores.js',
   'js/db.js', 'js/auth.js', 'js/nutrition.js', 'js/inventory.js',
-  'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js'
+  'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js', 'js/cartlink.js'
 ];
 for (const f of LOGIC_FILES) {
   // receipt.js references document only inside functions; safe to load.
@@ -176,6 +176,19 @@ const U = SL.util;
   const brief = SL.agent.buildBrief({ retailerId: 'walmart', mode: 'pickup', zip, items: briefItems, budget: 25.5 });
   check(brief.includes('Walmart') && briefItems.every((it) => brief.includes(it.name)), 'brief names the store and includes every item');
   check(/never enter payment/i.test(brief) && /do not place the order/i.test(brief), 'brief carries the no-checkout guardrails');
+
+  console.log('\n== Walmart cart links ==');
+  SL.cartlink.WALMART_IDS.chicken_breast = '27935840'; // simulate a mapped item
+  const clItems = [
+    { foodId: 'chicken_breast', name: 'Chicken breast', qty: 2, pkg: '1 lb tray' },
+    { foodId: 'spinach', name: 'Spinach', qty: 1, pkg: '5 oz bag' }
+  ];
+  const split = SL.cartlink.splitItems(clItems);
+  check(split.mapped.length === 1 && split.unmapped.length === 1, 'items split into one-click vs search fallback');
+  const wUrl = SL.cartlink.cartUrl(clItems);
+  check(wUrl === 'https://affil.walmart.com/cart/addToCart?items=27935840_2', 'cart deep-link carries item id and quantity (' + wUrl + ')');
+  check(SL.cartlink.searchUrl('Spinach').includes('walmart.com/search?q=Spinach'), 'unmapped items get a Walmart search link');
+  delete SL.cartlink.WALMART_IDS.chicken_breast;
 
   console.log('\n== Auth extras ==');
   await SL.auth.changePassword('password123', 'newpassword456');

@@ -36,13 +36,32 @@
     });
   }
 
+  let recovery = false;
+  let recoveryCb = null;
+
   async function ensureClient() {
     if (client) return client;
     await loadSdk();
     client = g.supabase.createClient(cfg.url, cfg.anonKey, {
       auth: { flowType: 'pkce' } // authorization-code flow: no tokens in the URL fragment
     });
+    // password-reset links land here with a recovery session; the app then
+    // prompts for a new password (see watchRecovery)
+    client.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        if (session && session.user && !cloud) bindCloud(session.user);
+        recovery = true;
+        if (recoveryCb) recoveryCb();
+      }
+    });
     return client;
+  }
+
+  function friendly(msg) {
+    if (/invalid login credentials/i.test(msg)) return 'Wrong email or password.';
+    if (/email not confirmed/i.test(msg)) return 'Check your inbox first — your email hasn’t been confirmed yet.';
+    if (/rate limit/i.test(msg)) return 'Too many attempts — wait a minute and try again.';
+    return msg;
   }
 
   function handleFor(user) {
@@ -135,6 +154,58 @@
         } catch (e) { /* SDK unreachable (offline) — fall back to local accounts */ }
       }
       return local.resume();
+    },
+
+    /* ---- email accounts (confirmation + recovery handled by Supabase) ---- */
+    async signUpEmail(email, password) {
+      if (!configured) throw new Error('Cloud sign-in isn’t configured yet — see “Cloud sign-in” in the README.');
+      if (typeof password !== 'string' || password.length < 8) throw new Error('Password needs at least 8 characters.');
+      const c = await ensureClient();
+      const { data, error } = await c.auth.signUp({
+        email, password,
+        options: { emailRedirectTo: g.location.origin + g.location.pathname }
+      });
+      if (error) throw new Error(friendly(error.message));
+      // when email confirmation is on (Supabase default), session is null
+      // until the user clicks the link in their inbox
+      if (data.session) {
+        bindCloud(data.session.user);
+        await pullSnapshot();
+        return { confirmed: true };
+      }
+      return { confirmed: false };
+    },
+
+    async signInEmail(email, password) {
+      if (!configured) throw new Error('Cloud sign-in isn’t configured yet — see “Cloud sign-in” in the README.');
+      const c = await ensureClient();
+      const { data, error } = await c.auth.signInWithPassword({ email, password });
+      if (error) throw new Error(friendly(error.message));
+      bindCloud(data.session.user);
+      await pullSnapshot();
+      return facade.current();
+    },
+
+    async resetPassword(email) {
+      if (!configured) throw new Error('Cloud sign-in isn’t configured yet — see “Cloud sign-in” in the README.');
+      const c = await ensureClient();
+      const { error } = await c.auth.resetPasswordForEmail(email, {
+        redirectTo: g.location.origin + g.location.pathname
+      });
+      if (error) throw new Error(friendly(error.message));
+    },
+
+    async updatePassword(newPassword) {
+      if (typeof newPassword !== 'string' || newPassword.length < 8) throw new Error('Password needs at least 8 characters.');
+      const c = await ensureClient();
+      const { error } = await c.auth.updateUser({ password: newPassword });
+      if (error) throw new Error(friendly(error.message));
+      recovery = false;
+    },
+
+    watchRecovery(cb) {
+      recoveryCb = cb;
+      if (recovery) cb();
     },
 
     async oauth(provider) {

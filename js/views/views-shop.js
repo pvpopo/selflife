@@ -372,17 +372,59 @@
     });
   }
 
+  function walmartSheet(items) {
+    const CL = g.SL.cartlink;
+    const { mapped, unmapped } = CL.splitItems(items);
+    ui.sheet({
+      title: 'Shop this at Walmart',
+      tall: true,
+      render(body) {
+        if (mapped.length) {
+          body.appendChild(U.el('p', { class: 'muted small' },
+            mapped.length + ' of ' + items.length + ' items can go straight into your Walmart cart — one tap, added in your own walmart.com session.'));
+          body.appendChild(U.el('a', {
+            class: 'btn primary wide', target: '_blank', rel: 'noopener',
+            href: CL.cartUrl(items)
+          }, '\u{1F6D2} Add ' + mapped.length + ' ' + U.plural(mapped.length, 'item') + ' to Walmart cart'));
+        }
+        if (unmapped.length) {
+          body.appendChild(U.el('p', { class: 'muted small' },
+            (mapped.length ? 'The rest open' : 'Each item opens') + ' as a Walmart search — tap through, pick your product, add to cart. (Once an item is mapped to a Walmart product ID in js/cartlink.js, it joins the one-tap cart.)'));
+          const listEl = U.el('div', { class: 'picker-list' });
+          unmapped.forEach((it) => {
+            listEl.appendChild(U.el('a', {
+              class: 'picker-row', target: '_blank', rel: 'noopener',
+              href: CL.searchUrl(it.name)
+            }, [
+              U.el('span', {}, [U.el('b', {}, it.name), U.el('small', { class: 'muted' }, ' · ' + it.qty + ' × ' + it.pkg)]),
+              U.el('span', { class: 'muted small-caps' }, 'search ↗')
+            ]));
+          });
+          body.appendChild(listEl);
+        }
+        body.appendChild(U.el('p', { class: 'muted small center' },
+          'Everything happens in your own Walmart session — ShelfLife never sees your account or payment.'));
+      }
+    });
+  }
+
   function agentCard() {
     const c = shopping.cart();
     const list = shopping.currentList();
     const lines = list ? shopping.activeLines(list) : [];
     if (!c && !lines.length) return null;
+    const AG = g.SL.agent;
+    const items = c ? AG.itemsFromCart(c, FOODS) : AG.itemsFromList(lines, FOODS);
     const card = U.el('section', { class: 'card' });
     card.appendChild(U.el('h3', { class: 'card-title' }, 'Shop it for real'));
     card.appendChild(U.el('p', { class: 'muted small' },
-      (c ? 'Turn this cart' : 'Turn your list') + ' into a guard-railed brief an AI browsing agent can run on a real grocer’s site — it fills the cart in your own browser session and stops before checkout, so you always place the order.'
-      + (c ? '' : ' Tip: build a cart above first and the brief will include the optimizer’s substitutions and budget.')));
-    card.appendChild(U.el('button', { class: 'btn ghost wide', onclick: () => agentSheet(c, lines) }, '\u{1F916} Build agent brief'));
+      (c ? 'Take this cart' : 'Take your list') + ' to a real store. Walmart items open in your own browser session — no AI involved, you review and place the order.'
+      + (c ? '' : ' Tip: build a cart above first to include the optimizer’s substitutions and budget.')));
+    card.appendChild(U.el('button', {
+      class: 'btn primary wide',
+      onclick: () => walmartSheet(items)
+    }, 'Shop at Walmart'));
+    card.appendChild(U.el('button', { class: 'btn ghost wide', onclick: () => agentSheet(c, lines) }, '\u{1F916} Or hand off to an AI agent'));
     return card;
   }
 

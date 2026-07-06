@@ -25,6 +25,7 @@
     return cart.quotes.map((q) => {
       const food = FOODS.byId(q.boughtAs);
       return {
+        foodId: food.id,
         name: food.name,
         qty: q.packages,
         pkg: food.pkg.label,
@@ -37,6 +38,7 @@
     return lines.map((l) => {
       const food = FOODS.byId(l.foodId);
       return {
+        foodId: food.id,
         name: food.name,
         qty: l.packages,
         pkg: food.pkg.label,

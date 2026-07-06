@@ -19,6 +19,11 @@
     return (p === 'google' || p === 'apple' || p === 'oauth') ? p : null;
   }
 
+  function isCloudAccount() {
+    const p = auth.provider ? auth.provider() : null;
+    return p === 'google' || p === 'apple' || p === 'oauth' || p === 'email';
+  }
+
   /* ================= auth screen ================= */
   function renderAuth(container, onSignedIn) {
     container.innerHTML = '';
@@ -64,21 +69,54 @@
       });
       card.appendChild(tabs);
 
-      const userIn = U.el('input', { class: 'input', type: 'text', autocomplete: 'username', placeholder: 'Username', 'aria-label': 'Username' });
+      // cloud on \u2192 email accounts (confirmation + recovery via Supabase);
+      // cloud off \u2192 the original on-device username accounts
+      const cloud = !!auth.cloudReady;
+      const idIn = U.el('input', {
+        class: 'input',
+        type: cloud ? 'email' : 'text',
+        autocomplete: cloud ? 'email' : 'username',
+        inputmode: cloud ? 'email' : null,
+        placeholder: cloud ? 'Email' : 'Username',
+        'aria-label': cloud ? 'Email' : 'Username'
+      });
       const passIn = U.el('input', { class: 'input', type: 'password', autocomplete: mode === 'login' ? 'current-password' : 'new-password', placeholder: mode === 'login' ? 'Password' : 'Password (8+ characters)', 'aria-label': 'Password' });
       const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
-      card.appendChild(userIn);
+      card.appendChild(idIn);
       card.appendChild(passIn);
       card.appendChild(err);
+
+      function confirmNotice(email) {
+        card.innerHTML = '';
+        card.appendChild(U.el('div', { class: 'confirm-note' }, [
+          U.el('div', { class: 'confirm-emoji', 'aria-hidden': 'true' }, '\u{1F4EC}'),
+          U.el('h3', {}, 'Check your inbox'),
+          U.el('p', { class: 'muted' }, 'We sent a confirmation link to ' + email + '. Open it on this device and you\u2019ll be signed in automatically.'),
+          U.el('p', { class: 'muted small' }, 'Nothing arriving? Check spam, or try again in a minute \u2014 confirmation emails are rate-limited.'),
+          U.el('button', { class: 'btn ghost wide', onclick: () => draw() }, '\u2190 Back to sign in')
+        ]));
+      }
 
       async function go() {
         err.textContent = '';
         const btnEl = U.$('.auth-go', card);
         btnEl.disabled = true;
         try {
-          if (mode === 'login') await auth.login(userIn.value, passIn.value);
-          else await auth.register(userIn.value, passIn.value);
-          onSignedIn();
+          if (cloud) {
+            const email = idIn.value.trim();
+            if (mode === 'login') {
+              await auth.signInEmail(email, passIn.value);
+              onSignedIn();
+            } else {
+              const res = await auth.signUpEmail(email, passIn.value);
+              if (res.confirmed) onSignedIn();
+              else confirmNotice(email);
+            }
+          } else {
+            if (mode === 'login') await auth.login(idIn.value, passIn.value);
+            else await auth.register(idIn.value, passIn.value);
+            onSignedIn();
+          }
         } catch (e) {
           err.textContent = e.message;
           btnEl.disabled = false;
@@ -89,16 +127,69 @@
       card.appendChild(U.el('button', { class: 'btn primary wide auth-go', onclick: go },
         mode === 'login' ? 'Sign in' : 'Create account'));
 
+      if (cloud && mode === 'login') {
+        card.appendChild(U.el('button', {
+          class: 'link-btn', type: 'button',
+          onclick: () => forgotPasswordSheet(idIn.value.trim())
+        }, 'Forgot password?'));
+      }
+
       card.appendChild(U.el('div', { class: 'divider-or' }, 'or'));
       card.appendChild(U.el('button', {
         class: 'btn ghost wide',
         onclick: () => { auth.guest(); onSignedIn(); }
       }, 'Try it as a guest'));
 
+      if (cloud) {
+        // privacy option: the original no-email, on-device accounts
+        const det = U.el('details', { class: 'device-account' });
+        det.appendChild(U.el('summary', {}, 'Prefer a device-only account? (no email needed)'));
+        const dUser = U.el('input', { class: 'input', type: 'text', autocomplete: 'username', placeholder: 'Username' });
+        const dPass = U.el('input', { class: 'input', type: 'password', placeholder: 'Password (8+ characters)' });
+        const dErr = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
+        const row = U.el('div', { class: 'btn-row' }, [
+          U.el('button', {
+            class: 'btn ghost',
+            onclick: async () => { dErr.textContent = ''; try { await auth.login(dUser.value, dPass.value); onSignedIn(); } catch (e) { dErr.textContent = e.message; } }
+          }, 'Sign in'),
+          U.el('button', {
+            class: 'btn ghost',
+            onclick: async () => { dErr.textContent = ''; try { await auth.register(dUser.value, dPass.value); onSignedIn(); } catch (e) { dErr.textContent = e.message; } }
+          }, 'Create')
+        ]);
+        det.appendChild(dUser); det.appendChild(dPass); det.appendChild(dErr); det.appendChild(row);
+        det.appendChild(U.el('p', { class: 'muted small' }, 'Device-only accounts never touch a server \u2014 but they can\u2019t be recovered if you forget the password, and they don\u2019t sync.'));
+        card.appendChild(det);
+      }
+
       card.appendChild(U.el('p', { class: 'muted small center' },
-        auth.cloudReady
-          ? 'Google/Apple sign-in keeps a private cloud backup of your data so it follows you across devices. Username accounts stay on this device: passwords salted & hashed (PBKDF2), nothing sent to a server.'
+        cloud
+          ? 'Email and Google/Apple accounts get a confirmation email, password recovery, and a private cloud backup that follows you across devices.'
           : 'Accounts live on this device: passwords are salted & hashed (PBKDF2), and each profile\u2019s data is kept separate. Nothing is sent to a server.'));
+    }
+
+    function forgotPasswordSheet(prefill) {
+      ui.sheet({
+        title: 'Reset your password',
+        render(body, close) {
+          body.appendChild(U.el('p', { class: 'sheet-text' },
+            'Enter your account email and we\u2019ll send a reset link. Opening it brings you back here to set a new password.'));
+          const emailIn = U.el('input', { class: 'input', type: 'email', autocomplete: 'email', placeholder: 'Email', value: prefill || '' });
+          const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
+          body.appendChild(emailIn); body.appendChild(err);
+          body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+            U.el('button', { class: 'btn ghost', onclick: close }, 'Cancel'),
+            U.el('button', {
+              class: 'btn primary',
+              onclick: async () => {
+                err.textContent = '';
+                try { await auth.resetPassword(emailIn.value.trim()); close(); ui.toast('Reset link sent \u2014 check your inbox'); }
+                catch (e) { err.textContent = e.message; }
+              }
+            }, 'Send reset link')
+          ]));
+        }
+      });
     }
     draw();
     wrap.appendChild(card);
@@ -116,22 +207,51 @@
   }
 
   function changePasswordSheet() {
+    const cloudEmail = auth.provider && auth.provider() === 'email';
     ui.sheet({
       title: 'Change password',
       render(body, close) {
-        const oldIn = U.el('input', { class: 'input', type: 'password', placeholder: 'Current password', autocomplete: 'current-password' });
+        const oldIn = cloudEmail ? null : U.el('input', { class: 'input', type: 'password', placeholder: 'Current password', autocomplete: 'current-password' });
         const newIn = U.el('input', { class: 'input', type: 'password', placeholder: 'New password (8+ characters)', autocomplete: 'new-password' });
         const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
-        body.appendChild(oldIn); body.appendChild(newIn); body.appendChild(err);
+        if (oldIn) body.appendChild(oldIn);
+        body.appendChild(newIn); body.appendChild(err);
         body.appendChild(U.el('div', { class: 'sheet-actions' }, [
           U.el('button', { class: 'btn ghost', onclick: close }, 'Cancel'),
           U.el('button', {
             class: 'btn primary',
             onclick: async () => {
-              try { await auth.changePassword(oldIn.value, newIn.value); close(); ui.toast('Password changed'); }
+              try {
+                if (cloudEmail) await auth.updatePassword(newIn.value);
+                else await auth.changePassword(oldIn.value, newIn.value);
+                close(); ui.toast('Password changed');
+              }
               catch (e) { err.textContent = e.message; }
             }
           }, 'Change password')
+        ]));
+      }
+    });
+  }
+
+  /* shown when the user arrives from a password-reset email */
+  function promptNewPassword() {
+    ui.sheet({
+      title: 'Set a new password',
+      render(body, close) {
+        body.appendChild(U.el('p', { class: 'sheet-text' }, 'You followed a reset link — choose a new password for your account.'));
+        const newIn = U.el('input', { class: 'input', type: 'password', placeholder: 'New password (8+ characters)', autocomplete: 'new-password' });
+        const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
+        body.appendChild(newIn); body.appendChild(err);
+        body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+          U.el('button', {
+            class: 'btn primary',
+            onclick: async () => {
+              err.textContent = '';
+              try { await auth.updatePassword(newIn.value); close(); ui.toast('Password updated — you’re signed in'); }
+              catch (e) { err.textContent = e.message; }
+            }
+          }, 'Save new password')
         ]));
       }
     });
@@ -142,10 +262,10 @@
       title: 'Delete this account',
       render(body, close) {
         body.appendChild(U.el('p', { class: 'sheet-text' },
-          oauthProvider()
-            ? 'This removes all ShelfLife data for this account \u2014 on this device and the cloud backup \u2014 and signs you out. Your ' + (oauthProvider() === 'apple' ? 'Apple' : 'Google') + ' account itself is untouched. There is no undo.'
+          isCloudAccount()
+            ? 'This removes all ShelfLife data for this account \u2014 on this device and the cloud backup \u2014 and signs you out. There is no undo.'
             : 'This permanently removes the account and all its data \u2014 pantry, plans, history \u2014 from this device. There is no undo.'));
-        const passIn = (auth.isGuest() || oauthProvider()) ? null : U.el('input', { class: 'input', type: 'password', placeholder: 'Confirm with your password' });
+        const passIn = (auth.isGuest() || isCloudAccount()) ? null : U.el('input', { class: 'input', type: 'password', placeholder: 'Confirm with your password' });
         const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
         if (passIn) body.appendChild(passIn);
         body.appendChild(err);
@@ -168,6 +288,7 @@
     const username = auth.current();
     const handle = auth.handle ? auth.handle() : username;
     const oauthed = oauthProvider();
+    const cloudAcct = isCloudAccount();
     const p = planner.prefs();
 
     container.appendChild(ui.header('You', 'Account'));
@@ -177,7 +298,7 @@
     prof.appendChild(U.el('div', { class: 'card-title-row' }, [
       U.el('h3', { class: 'card-title' }, '@' + handle),
       auth.isGuest() ? U.el('span', { class: 'chip small static' }, 'guest') : null,
-      oauthed ? U.el('span', { class: 'chip small static' }, 'via ' + (oauthed === 'apple' ? 'Apple' : 'Google')) : null
+      cloudAcct ? U.el('span', { class: 'chip small static' }, 'via ' + (oauthed ? (oauthed === 'apple' ? 'Apple' : 'Google') : 'email')) : null
     ]));
     if (auth.isGuest()) {
       prof.appendChild(U.el('p', { class: 'muted small' },
@@ -219,10 +340,12 @@
     sec.appendChild(U.el('p', { class: 'muted small' },
       oauthed
         ? 'You\u2019re signed in with ' + (oauthed === 'apple' ? 'Apple' : 'Google') + ' \u2014 your password and sign-in security live there, and ShelfLife never sees them. Your data is backed up privately to your cloud account (row-level security) and restored when you sign in on another device.'
-        : (auth.strongCrypto
-          ? 'Your password is salted and hashed with PBKDF2-SHA256 (210k rounds) \u2014 it is never stored. '
-          : 'This browser lacks WebCrypto, so a weaker fallback hash is in use. ')
-        + 'Data lives only in this browser\u2019s storage; anyone with full access to this device could read it. For synced, server-side accounts see the README\u2019s cloud sign-in guide.'));
+        : cloudAcct
+          ? 'You\u2019re signed in with a confirmed email account. Your password is handled by secure cloud auth (never stored by ShelfLife), you can reset it by email from the sign-in screen, and your data is backed up privately (row-level security) and restored when you sign in on another device.'
+          : (auth.strongCrypto
+            ? 'Your password is salted and hashed with PBKDF2-SHA256 (210k rounds) \u2014 it is never stored. '
+            : 'This browser lacks WebCrypto, so a weaker fallback hash is in use. ')
+          + 'Data lives only in this browser\u2019s storage; anyone with full access to this device could read it. For synced, server-side accounts see the README\u2019s cloud sign-in guide.'));
     if (!auth.isGuest() && !oauthed) {
       sec.appendChild(U.el('button', { class: 'btn ghost wide', onclick: changePasswordSheet }, 'Change password'));
     }
@@ -278,5 +401,5 @@
 
   g.SL = g.SL || {};
   g.SL.views = g.SL.views || {};
-  g.SL.views.account = { render, renderAuth };
+  g.SL.views.account = { render, renderAuth, promptNewPassword };
 })(typeof window !== 'undefined' ? window : globalThis);
