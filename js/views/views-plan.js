@@ -35,6 +35,27 @@
           ])
         ]));
 
+        // community rating — earned in-app, shown honestly with its count
+        const DB = g.SL.recipedb;
+        if (DB) {
+          const agg = DB.starsFor(recipe.id);
+          const rateRow = U.el('div', { class: 'rate-row' });
+          rateRow.appendChild(U.el('span', { class: 'muted small' },
+            agg ? '★ ' + agg.stars.toFixed(1) + ' · ' + agg.n + ' ' + U.plural(agg.n, 'rating') : 'No ratings yet — cooked it?'));
+          const starsEl = U.el('span', { class: 'star-picker', role: 'radiogroup', 'aria-label': 'Rate this recipe' });
+          for (let s = 1; s <= 5; s++) {
+            starsEl.appendChild(U.el('button', {
+              class: 'star-btn', type: 'button', 'aria-label': s + ' stars',
+              onclick: async () => {
+                try { await DB.rate(recipe.id, s); ui.toast('Rated ' + s + '★ — thanks!'); }
+                catch (e) { ui.toast(e.message, 'warn'); }
+              }
+            }, '☆'));
+          }
+          rateRow.appendChild(starsEl);
+          body.appendChild(rateRow);
+        }
+
         const resc = planner.rescues(recipe);
         if (resc.length) {
           body.appendChild(U.el('div', { class: 'rescue-banner' },

@@ -36,7 +36,8 @@
 
   function render(container) {
     container.innerHTML = '';
-    container.appendChild(ui.header('Library', 'Recipes'));
+    container.appendChild(ui.header('Library', 'Recipes',
+      U.el('button', { class: 'btn small ghost', onclick: () => submitRecipeSheet(container) }, '+ Submit a recipe')));
 
     const search = U.el('input', {
       class: 'input', type: 'search', placeholder: 'Search recipes or ingredients\u2026',
@@ -104,7 +105,9 @@
             resc.length ? U.el('small', { class: 'rescue-note' }, '\u26a1 uses your ' + FOODS.byId(resc[0].foodId).name.toLowerCase() + ' (' + resc[0].days + 'd left)') : null,
             U.el('span', { class: 'chip-row tight' }, r.diets.slice(0, 3).map((d) => U.el('span', { class: 'chip small static' }, ui.DIET_LABELS[d])))
           ]));
+          const rating = g.SL.recipedb ? g.SL.recipedb.starsFor(r.id) : null;
           card.appendChild(U.el('span', { class: 'recipe-card-tags' }, [
+            rating ? ui.tag(U.el('b', {}, '\u2605 ' + rating.stars.toFixed(1)), rating.stars >= 4 ? 'fresh' : null) : null,
             ui.tag(U.el('b', {}, n.cal + ' cal')),
             resc.length ? ui.tag(U.el('b', {}, '\u26a1 use it up'), 'soon') : (match > 0 ? ui.tag(U.el('b', {}, Math.round(match * 100) + '% in pantry'), match >= 0.6 ? 'fresh' : null) : null)
           ]));
@@ -112,6 +115,100 @@
         });
     }
     drawList();
+  }
+
+  /* ---------- community submissions ---------- */
+  function submitRecipeSheet(container) {
+    const doc = { name: '', cuisine: 'American', time: 30, servings: 2, emoji: '🍽️', meal: ['dinner'], diets: [], allergens: [], ing: [], steps: [], tip: '' };
+    ui.sheet({
+      title: 'Submit a recipe',
+      tall: true,
+      render(body, close) {
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'Submissions are reviewed before they appear for everyone. Ingredients come from the catalog so nutrition facts, shopping lists and expiry tracking work automatically.'));
+
+        const nameIn = U.el('input', { class: 'input', type: 'text', placeholder: 'Recipe name' });
+        body.appendChild(nameIn);
+
+        const cuisineIn = U.el('input', { class: 'input', type: 'text', placeholder: 'Cuisine (e.g. Italian)', value: doc.cuisine, list: 'cuisine-list' });
+        const dl = U.el('datalist', { id: 'cuisine-list' });
+        RECIPES.CUISINES.forEach((c) => dl.appendChild(U.el('option', { value: c })));
+        body.appendChild(cuisineIn); body.appendChild(dl);
+
+        const rowNums = U.el('div', { class: 'btn-row' }, [
+          U.el('div', { class: 'field' }, [U.el('label', { class: 'field-label' }, 'Minutes'), (() => { const i = U.el('input', { class: 'input', type: 'number', min: '5', max: '240', value: '30' }); i.addEventListener('change', () => { doc.time = +i.value || 30; }); return i; })()]),
+          U.el('div', { class: 'field' }, [U.el('label', { class: 'field-label' }, 'Servings'), (() => { const i = U.el('input', { class: 'input', type: 'number', min: '1', max: '12', value: '2' }); i.addEventListener('change', () => { doc.servings = +i.value || 2; }); return i; })()])
+        ]);
+        body.appendChild(rowNums);
+
+        function chipGroup(label, options, selected, labels) {
+          const wrap = U.el('div', { class: 'field' });
+          wrap.appendChild(U.el('label', { class: 'field-label' }, label));
+          const row = U.el('div', { class: 'chip-row' });
+          options.forEach((o) => {
+            const chip = ui.chip((labels && labels[o]) || U.cap(o), {
+              small: true, active: selected.includes(o),
+              onclick: () => { const i = selected.indexOf(o); if (i >= 0) selected.splice(i, 1); else selected.push(o); chip.classList.toggle('active'); }
+            });
+            row.appendChild(chip);
+          });
+          wrap.appendChild(row);
+          return wrap;
+        }
+        body.appendChild(chipGroup('Meal slots', ['breakfast', 'lunch', 'dinner'], doc.meal));
+        body.appendChild(chipGroup('Diets it satisfies', RECIPES.DIETS, doc.diets, ui.DIET_LABELS));
+        body.appendChild(chipGroup('Contains allergens', RECIPES.ALLERGENS, doc.allergens, ui.ALLERGEN_LABELS));
+
+        body.appendChild(U.el('label', { class: 'field-label' }, 'Ingredients'));
+        const ingList = U.el('div', { class: 'picker-list' });
+        function drawIngs() {
+          ingList.innerHTML = '';
+          doc.ing.forEach((ing, idx) => {
+            const food = FOODS.byId(ing.f);
+            ingList.appendChild(U.el('div', { class: 'row-between ing-edit' }, [
+              U.el('span', {}, [U.el('b', {}, food.name), U.el('small', { class: 'muted' }, ' · ' + U.fmtQty(ing.q, food.unit))]),
+              U.el('span', {}, [
+                ui.stepper(ing.q, 1, 2000, (v) => { ing.q = v; }),
+                U.el('button', { class: 'icon-btn', 'aria-label': 'Remove', onclick: () => { doc.ing.splice(idx, 1); drawIngs(); } }, '✕')
+              ])
+            ]));
+          });
+        }
+        drawIngs();
+        body.appendChild(ingList);
+        body.appendChild(U.el('button', {
+          class: 'btn ghost wide',
+          onclick: () => ui.pickFood('Add an ingredient', (food) => {
+            doc.ing.push({ f: food.id, q: food.unit === 'ct' ? 1 : 100 });
+            drawIngs();
+          })
+        }, '+ Add ingredient (quantities in g / ml / count)'));
+
+        body.appendChild(U.el('label', { class: 'field-label' }, 'Steps — one per line'));
+        const stepsIn = U.el('textarea', { class: 'input textarea', rows: '6', placeholder: 'Dice the onion…\nBrown the beef…\nSimmer 20 minutes…' });
+        body.appendChild(stepsIn);
+
+        const err = U.el('p', { class: 'auth-error', 'aria-live': 'polite' }, '');
+        body.appendChild(err);
+        body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+          U.el('button', { class: 'btn ghost', onclick: close }, 'Cancel'),
+          U.el('button', {
+            class: 'btn primary',
+            onclick: async () => {
+              err.textContent = '';
+              doc.name = nameIn.value.trim();
+              doc.cuisine = cuisineIn.value.trim() || 'American';
+              doc.steps = stepsIn.value.split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+              try {
+                await g.SL.recipedb.submit(doc);
+                close();
+                ui.toast('Submitted — it appears for everyone once approved 🎉');
+              } catch (e) { err.textContent = e.message; }
+            }
+          }, 'Submit for review')
+        ]));
+      }
+    });
   }
 
   g.SL = g.SL || {};

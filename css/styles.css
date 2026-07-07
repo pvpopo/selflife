@@ -577,6 +577,14 @@ s { text-decoration-thickness: 1.5px; }
 .oauth-logo { display: inline-flex; }
 .oauth-logo svg { width: 18px; height: 18px; }
 
+/* ---------- recipe ratings & submissions ---------- */
+.rate-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 2px 0 8px; }
+.star-picker { display: inline-flex; gap: 2px; }
+.star-btn { border: none; background: none; font-size: 22px; line-height: 1; color: var(--marigold); cursor: pointer; padding: 2px; }
+.star-btn:hover { transform: scale(1.15); }
+.ing-edit { padding: 6px 0; border-bottom: 1px solid var(--mist); }
+.ing-edit > span:last-child { display: inline-flex; align-items: center; gap: 6px; }
+
 /* ---------- waste-rescue signals ---------- */
 .rescue-banner {
   background: var(--marigold-tint);

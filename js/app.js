@@ -63,6 +63,14 @@
     // pull the community shelf-life consensus in the background (24h TTL)
     if (g.SL.expiry) g.SL.expiry.refreshConsensus();
 
+    // load approved community recipes + ratings; refresh the view if new
+    // recipes arrived while the user is already looking at a list
+    if (g.SL.recipedb) {
+      g.SL.recipedb.load().then((added) => {
+        if (added > 0 && auth.current()) renderRoute();
+      });
+    }
+
     // PWA: relative path so it works on GitHub Pages project sites
     if ('serviceWorker' in navigator && g.location.protocol.startsWith('http')) {
       navigator.serviceWorker.register('./sw.js').catch(() => { /* offline shell is a bonus, not a requirement */ });

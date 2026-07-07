@@ -1,4 +1,4 @@
-/* ShelfLife — data/recipes.js
+﻿/* ShelfLife â€” data/recipes.js
    Every ingredient references a food id from data/foods.js and its quantity is
    expressed in that food's unit ('g', 'ml', or 'ct'). Nutrition per serving is
    computed at runtime from the food catalog (see nutrition.js), so the recipe
@@ -529,10 +529,39 @@
   const map = {};
   R.forEach((r) => { map[r.id] = r; });
 
-  const CUISINES = Array.from(new Set(R.map((r) => r.cuisine))).sort();
   const DIETS = ['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 'high-protein', 'low-carb'];
   const ALLERGENS = ['dairy', 'gluten', 'eggs', 'nuts', 'soy', 'fish', 'shellfish', 'sesame'];
 
+  const api = { list: R, byId: (id) => map[id], DIETS, ALLERGENS, CUISINES: [] };
+
+  function refreshCuisines() {
+    api.CUISINES = Array.from(new Set(R.map((r) => r.cuisine))).sort();
+  }
+  refreshCuisines();
+
+  /* Merge remote recipes (recipedb.js) over the built-ins. A remote doc with
+     a known id replaces the built-in; unknown ingredient ids are rejected so
+     a bad submission can never break nutrition math or shopping lists. */
+  api.register = function (docs) {
+    const FOODS = g.SL.foods;
+    let accepted = 0;
+    (docs || []).forEach((r) => {
+      if (!r || !r.id || !r.name || !Array.isArray(r.ing) || !Array.isArray(r.steps)) return;
+      if (!r.ing.length || !r.steps.length || !Array.isArray(r.meal) || !r.meal.length) return;
+      if (r.ing.some((ing) => !FOODS.byId(ing.f) || !(ing.q > 0))) return;
+      r.diets = Array.isArray(r.diets) ? r.diets.filter((d) => DIETS.includes(d)) : [];
+      r.allergens = Array.isArray(r.allergens) ? r.allergens.filter((a) => ALLERGENS.includes(a)) : [];
+      if (map[r.id]) {
+        const i = R.indexOf(map[r.id]);
+        if (i >= 0) R[i] = r; else R.push(r);
+      } else R.push(r);
+      map[r.id] = r;
+      accepted++;
+    });
+    refreshCuisines();
+    return accepted;
+  };
+
   g.SL = g.SL || {};
-  g.SL.recipes = { list: R, byId: (id) => map[id], CUISINES, DIETS, ALLERGENS };
+  g.SL.recipes = api;
 })(typeof window !== 'undefined' ? window : globalThis);

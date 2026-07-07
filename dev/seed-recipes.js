@@ -1,0 +1,400 @@
+/* ShelfLife — dev/seed-recipes.js
+   The recipe-batch pipeline: author recipe docs here (or paste generated
+   batches), run `node dev/seed-recipes.js`, and it
+     1. validates every doc against the food catalog (unknown ingredients,
+        missing steps, insane calories are rejected loudly),
+     2. prints a per-recipe nutrition + diet coverage report,
+     3. writes dev/seed-recipes.sql — upsert statements to paste into the
+        Supabase SQL editor (status 'approved', visible to everyone).
+   Recipes are original, modeled on canonical widely-loved dishes; star
+   ratings are earned in-app via recipe_ratings, never invented. */
+'use strict';
+const fs = require('fs');
+const path = require('path');
+
+/* browser shim, same as validate.js */
+const mem = {};
+globalThis.localStorage = {
+  getItem: (k) => (k in mem ? mem[k] : null), setItem: (k, v) => { mem[k] = String(v); },
+  removeItem: (k) => { delete mem[k]; }, key: (i) => Object.keys(mem)[i] || null,
+  get length() { return Object.keys(mem).length; }
+};
+const root = path.join(__dirname, '..');
+['js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/nutrition.js'].forEach((f) => {
+  eval(fs.readFileSync(path.join(root, f), 'utf8'));
+});
+const SL = globalThis.SL;
+
+/* ============================ THE BATCH ============================ */
+const SEED = [
+  /* ---------- American ---------- */
+  {
+    id: 'turkey_black_bean_chili', name: 'Turkey & black bean chili', emoji: '🌶️', cuisine: 'American',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'high-protein'], allergens: [],
+    time: 45, servings: 4,
+    ing: [
+      { f: 'ground_turkey', q: 500 }, { f: 'black_beans', q: 400 }, { f: 'crushed_tomatoes', q: 400 },
+      { f: 'onion', q: 1 }, { f: 'garlic', q: 0.3 }, { f: 'bell_pepper', q: 1 },
+      { f: 'chili_powder', q: 8 }, { f: 'cumin', q: 5 }, { f: 'broth', q: 400 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Warm the oil in a heavy pot over medium-high. Brown the turkey, breaking it up, about 5 minutes.',
+      'Add the diced onion and bell pepper; cook until soft, 4 minutes. Stir in the minced garlic, chili powder and cumin for 30 seconds until fragrant.',
+      'Pour in the crushed tomatoes, broth and drained beans. Bring to a simmer.',
+      'Drop the heat to low and simmer uncovered 25 minutes, stirring now and then, until thick.',
+      'Taste, season, and serve — it is even better the next day.'
+    ],
+    tip: 'Freezes beautifully in single portions for no-effort future dinners.'
+  },
+  {
+    id: 'cobb_chicken_salad', name: 'Chopped chicken Cobb salad', emoji: '🥗', cuisine: 'American',
+    meal: ['lunch', 'dinner'], diets: ['gluten-free', 'low-carb', 'high-protein'], allergens: ['eggs', 'dairy'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'chicken_breast', q: 300 }, { f: 'romaine', q: 1 }, { f: 'eggs', q: 2 },
+      { f: 'avocado', q: 1 }, { f: 'cherry_tomatoes', q: 0.5 }, { f: 'cheddar', q: 40 },
+      { f: 'olive_oil', q: 20 }, { f: 'lemon', q: 0.5 }
+    ],
+    steps: [
+      'Hard-boil the eggs (10 minutes), cool in cold water, peel and quarter.',
+      'Season the chicken and sear in a skillet over medium-high, 5–6 minutes per side, until cooked through. Rest, then slice.',
+      'Chop the romaine and arrange in wide bowls. Halve the tomatoes, dice the avocado.',
+      'Row up the chicken, eggs, avocado, tomatoes and cheddar over the lettuce.',
+      'Whisk the olive oil with the lemon’s juice, a pinch of salt and pepper; dress just before eating.'
+    ],
+    tip: 'Everything but the avocado and dressing can be prepped a day ahead.'
+  },
+  {
+    id: 'banana_oat_pancakes', name: 'Banana oat pancakes', emoji: '🥞', cuisine: 'American',
+    meal: ['breakfast'], diets: ['vegetarian'], allergens: ['eggs', 'dairy'],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'banana', q: 2 }, { f: 'oats', q: 120 }, { f: 'eggs', q: 2 },
+      { f: 'milk', q: 120 }, { f: 'cinnamon', q: 2 }, { f: 'butter', q: 10 }, { f: 'honey', q: 20 }
+    ],
+    steps: [
+      'Blitz the oats in a blender until floury. Add the bananas, eggs, milk and cinnamon; blend until smooth. Rest 5 minutes to thicken.',
+      'Heat a nonstick skillet over medium and slick with a little butter.',
+      'Pour quarter-cup rounds and cook until bubbles pop on top, about 2 minutes.',
+      'Flip and cook 1–2 minutes more until golden.',
+      'Stack and finish with the honey.'
+    ],
+    tip: 'Spottier bananas mean sweeter pancakes — this is what those two sad ones are for.'
+  },
+
+  /* ---------- Asian ---------- */
+  {
+    id: 'chicken_fried_rice', name: 'Better-than-takeout chicken fried rice', emoji: '🍚', cuisine: 'Asian',
+    meal: ['dinner', 'lunch'], diets: ['dairy-free'], allergens: ['eggs', 'soy', 'gluten'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'rice', q: 180 }, { f: 'chicken_thigh', q: 250 }, { f: 'eggs', q: 2 },
+      { f: 'peas_frozen', q: 100 }, { f: 'carrots', q: 80 }, { f: 'scallions', q: 0.5 },
+      { f: 'soy_sauce', q: 30 }, { f: 'ginger', q: 10 }, { f: 'garlic', q: 0.2 }, { f: 'olive_oil', q: 20 }
+    ],
+    steps: [
+      'Cook the rice ahead if you can — cold, dry rice fries best.',
+      'Stir-fry the diced chicken in half the oil over high heat until golden, 4–5 minutes; set aside.',
+      'Scramble the eggs in the pan, then add the remaining oil with the diced carrot, peas, ginger and garlic; fry 2 minutes.',
+      'Add the rice, pressing it into the hot pan; let it crackle 1 minute before tossing.',
+      'Return the chicken, splash in the soy sauce, toss with sliced scallions and serve.'
+    ],
+    tip: 'High heat and a crowded-pan intolerance are the two rules of fried rice.'
+  },
+  {
+    id: 'ginger_tofu_stirfry', name: 'Crispy ginger-garlic tofu stir-fry', emoji: '🥦', cuisine: 'Asian',
+    meal: ['dinner'], diets: ['vegan', 'vegetarian', 'dairy-free'], allergens: ['soy', 'gluten'],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'tofu', q: 350 }, { f: 'broccoli', q: 1 }, { f: 'bell_pepper', q: 1 },
+      { f: 'soy_sauce', q: 30 }, { f: 'ginger', q: 12 }, { f: 'garlic', q: 0.3 },
+      { f: 'rice', q: 160 }, { f: 'scallions', q: 0.5 }, { f: 'olive_oil', q: 20 }
+    ],
+    steps: [
+      'Press the tofu 10 minutes between towels, then cube it. Start the rice.',
+      'Sear the tofu in half the oil over medium-high, undisturbed 3 minutes a side, until deeply golden. Set aside.',
+      'Stir-fry the broccoli florets and sliced pepper in the rest of the oil, 4 minutes, until crisp-tender.',
+      'Add the grated ginger and minced garlic for 30 seconds, then return the tofu with the soy sauce and toss to glaze.',
+      'Serve over the rice, showered with sliced scallions.'
+    ],
+    tip: 'A dry pan-side and patience make tofu crispy — poking it early makes it stick.'
+  },
+  {
+    id: 'honey_garlic_salmon_bowl', name: 'Honey-garlic salmon rice bowl', emoji: '🍣', cuisine: 'Asian',
+    meal: ['dinner'], diets: ['dairy-free', 'high-protein'], allergens: ['fish', 'soy', 'gluten'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'salmon', q: 350 }, { f: 'honey', q: 30 }, { f: 'soy_sauce', q: 30 },
+      { f: 'garlic', q: 0.3 }, { f: 'rice', q: 160 }, { f: 'broccoli', q: 1 }, { f: 'scallions', q: 0.5 }
+    ],
+    steps: [
+      'Start the rice; steam the broccoli florets over it for the final 5 minutes.',
+      'Stir the honey, soy sauce and minced garlic into a glaze.',
+      'Sear the salmon skin-side down in a hot skillet, 4 minutes, then flip for 2.',
+      'Pour the glaze around the fish and let it bubble and thicken 1–2 minutes, spooning it over.',
+      'Build bowls: rice, broccoli, salmon, extra glaze, sliced scallions.'
+    ],
+    tip: 'Pull the salmon while its center is still deep pink — it finishes in the glaze.'
+  },
+
+  /* ---------- Indian ---------- */
+  {
+    id: 'chana_masala', name: 'Chana masala', emoji: '🍛', cuisine: 'Indian',
+    meal: ['dinner', 'lunch'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free'], allergens: [],
+    time: 35, servings: 2,
+    ing: [
+      { f: 'chickpeas', q: 400 }, { f: 'onion', q: 1 }, { f: 'garlic', q: 0.3 },
+      { f: 'ginger', q: 12 }, { f: 'crushed_tomatoes', q: 300 }, { f: 'curry_powder', q: 10 },
+      { f: 'cumin', q: 4 }, { f: 'cilantro', q: 0.3 }, { f: 'rice', q: 160 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Start the rice. Soften the diced onion in the oil over medium heat, 6–8 minutes, until golden at the edges.',
+      'Add the minced garlic, grated ginger, curry powder and cumin; fry 1 minute until the pan smells incredible.',
+      'Pour in the crushed tomatoes and simmer 5 minutes until slightly darkened.',
+      'Add the drained chickpeas with a splash of water; simmer 10 minutes, mashing a few against the pot to thicken the sauce.',
+      'Season, shower with chopped cilantro, and serve over the rice.'
+    ],
+    tip: 'The long onion sauté is the flavor foundation — don’t rush those first minutes.'
+  },
+  {
+    id: 'coconut_chicken_curry', name: 'Coconut chicken curry', emoji: '🥥', cuisine: 'Indian',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'high-protein'], allergens: [],
+    time: 40, servings: 2,
+    ing: [
+      { f: 'chicken_thigh', q: 350 }, { f: 'coconut_milk', q: 200 }, { f: 'curry_powder', q: 12 },
+      { f: 'onion', q: 1 }, { f: 'garlic', q: 0.3 }, { f: 'ginger', q: 12 },
+      { f: 'tomato', q: 2 }, { f: 'rice', q: 160 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Start the rice. Brown the chicken pieces in the oil over medium-high, about 4 minutes; set aside.',
+      'Soften the diced onion in the same pot, 5 minutes, then add garlic, ginger and curry powder for 1 minute.',
+      'Add the chopped tomatoes and cook until they slump, 3 minutes.',
+      'Return the chicken, pour in the coconut milk, and simmer gently 15 minutes until the sauce coats a spoon.',
+      'Season and serve over rice.'
+    ],
+    tip: 'Thighs stay juicy through the simmer — this is exactly what they are for.'
+  },
+  {
+    id: 'spinach_dal', name: 'Spinach dal', emoji: '🥬', cuisine: 'Indian',
+    meal: ['dinner', 'lunch'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free', 'high-protein'], allergens: [],
+    time: 40, servings: 2,
+    ing: [
+      { f: 'lentils_dry', q: 200 }, { f: 'spinach', q: 100 }, { f: 'onion', q: 1 },
+      { f: 'garlic', q: 0.3 }, { f: 'ginger', q: 10 }, { f: 'cumin', q: 5 },
+      { f: 'curry_powder', q: 8 }, { f: 'rice', q: 120 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Rinse the lentils and simmer in 3 cups of water until tender, 20–25 minutes, skimming any foam.',
+      'Meanwhile cook the rice, and fry the diced onion in the oil until deeply golden, 8 minutes.',
+      'Add the garlic, ginger, cumin and curry powder to the onions for 1 minute.',
+      'Fold the spiced onions into the lentils, add the spinach, and simmer 3 minutes until wilted and thick.',
+      'Season generously and serve with the rice.'
+    ],
+    tip: 'The fried-onion finish (tadka) is the difference between fine dal and great dal.'
+  },
+
+  /* ---------- Italian ---------- */
+  {
+    id: 'marinara_spaghetti', name: 'Garlic-basil marinara spaghetti', emoji: '🍝', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['vegetarian'], allergens: ['gluten', 'dairy'],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'spaghetti', q: 200 }, { f: 'crushed_tomatoes', q: 400 }, { f: 'garlic', q: 0.4 },
+      { f: 'onion', q: 0.5 }, { f: 'basil', q: 0.3 }, { f: 'olive_oil', q: 25 }, { f: 'parmesan', q: 30 }
+    ],
+    steps: [
+      'Sizzle the sliced garlic and diced onion in the olive oil over medium-low until soft and fragrant, 5 minutes — no color.',
+      'Add the crushed tomatoes with a pinch of salt; simmer 15 minutes until glossy.',
+      'Cook the spaghetti in well-salted water to just shy of al dente; reserve a cup of pasta water.',
+      'Drag the pasta into the sauce with a splash of its water and toss over heat 1 minute until the sauce clings.',
+      'Tear in the basil, twirl into bowls, and finish with grated parmesan.'
+    ],
+    tip: 'Finishing the pasta *in* the sauce is the entire trick of Italian pasta.'
+  },
+  {
+    id: 'chicken_pomodoro_mozzarella', name: 'Skillet chicken pomodoro with mozzarella', emoji: '🍗', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['high-protein'], allergens: ['gluten', 'dairy'],
+    time: 35, servings: 2,
+    ing: [
+      { f: 'chicken_breast', q: 400 }, { f: 'crushed_tomatoes', q: 300 }, { f: 'garlic', q: 0.3 },
+      { f: 'mozzarella', q: 100 }, { f: 'basil', q: 0.3 }, { f: 'spaghetti', q: 160 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Halve the chicken breasts horizontally into cutlets, season, and sear in the oil 3 minutes per side; set aside.',
+      'Fry the sliced garlic in the same skillet 30 seconds, then add the crushed tomatoes and simmer 8 minutes.',
+      'Meanwhile cook the spaghetti in salted water.',
+      'Nestle the chicken back into the sauce, top each cutlet with mozzarella, cover 3 minutes until melted.',
+      'Serve over the spaghetti with torn basil.'
+    ],
+    tip: 'Thin cutlets cook fast and stay tender — thick breasts do neither.'
+  },
+  {
+    id: 'zucchini_parmesan_frittata', name: 'Zucchini-parmesan frittata', emoji: '🍳', cuisine: 'Italian',
+    meal: ['breakfast', 'lunch'], diets: ['vegetarian', 'gluten-free', 'low-carb', 'high-protein'], allergens: ['eggs', 'dairy'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'eggs', q: 6 }, { f: 'zucchini', q: 1 }, { f: 'parmesan', q: 40 },
+      { f: 'onion', q: 0.5 }, { f: 'olive_oil', q: 15 }, { f: 'salt', q: 2 }, { f: 'black_pepper', q: 1 }
+    ],
+    steps: [
+      'Sauté the thinly sliced zucchini and onion in the oil in an ovenproof skillet until soft and lightly golden, 6 minutes.',
+      'Whisk the eggs with most of the parmesan, the salt and pepper.',
+      'Pour the eggs over the vegetables on medium-low; cook undisturbed until the edges set, 4 minutes.',
+      'Scatter the remaining parmesan on top and finish under the broiler 2–3 minutes until puffed and golden.',
+      'Rest 2 minutes, slice into wedges, eat warm or room-temperature.'
+    ],
+    tip: 'A frittata is dinner insurance — any vegetable in the crisper works.'
+  },
+
+  /* ---------- Mediterranean ---------- */
+  {
+    id: 'greek_chopped_pita_plate', name: 'Greek chopped salad pita plate', emoji: '🥙', cuisine: 'Mediterranean',
+    meal: ['lunch'], diets: ['vegetarian'], allergens: ['dairy', 'gluten', 'sesame'],
+    time: 15, servings: 2,
+    ing: [
+      { f: 'cucumber', q: 1 }, { f: 'tomato', q: 2 }, { f: 'feta', q: 80 },
+      { f: 'onion', q: 0.3 }, { f: 'oregano', q: 2 }, { f: 'olive_oil', q: 20 },
+      { f: 'pita', q: 2 }, { f: 'hummus', q: 120 }, { f: 'romaine', q: 0.5 }
+    ],
+    steps: [
+      'Chop the cucumber, tomatoes and romaine; slice the onion paper-thin.',
+      'Toss the vegetables with the olive oil, oregano and a pinch of salt.',
+      'Warm the pitas in a dry skillet 30 seconds per side.',
+      'Swoosh the hummus across two plates, pile the salad over, and crumble the feta on top.',
+      'Serve with the warm pitas for scooping.'
+    ],
+    tip: 'Salting the tomatoes five minutes early deepens the whole salad.'
+  },
+  {
+    id: 'lemon_oregano_salmon', name: 'Lemon-oregano salmon over garlicky spinach', emoji: '🍋', cuisine: 'Mediterranean',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'high-protein', 'low-carb'], allergens: ['fish'],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'salmon', q: 350 }, { f: 'lemon', q: 1 }, { f: 'olive_oil', q: 20 },
+      { f: 'oregano', q: 3 }, { f: 'spinach', q: 200 }, { f: 'garlic', q: 0.2 }
+    ],
+    steps: [
+      'Rub the salmon with half the oil, the oregano, salt and the zest of the lemon.',
+      'Sear skin-side down in a hot skillet 4 minutes; flip for 2 more, then rest on a plate.',
+      'In the same pan, sizzle the sliced garlic in the remaining oil for 30 seconds.',
+      'Pile in the spinach and toss just until collapsed, 1 minute.',
+      'Plate the spinach under the salmon and finish everything with the lemon’s juice.'
+    ],
+    tip: 'Zest before you juice — it is impossible the other way around.'
+  },
+  {
+    id: 'mediterranean_quinoa_bowl', name: 'Mediterranean chickpea-quinoa bowl', emoji: '🫒', cuisine: 'Mediterranean',
+    meal: ['lunch', 'dinner'], diets: ['vegetarian', 'gluten-free'], allergens: ['dairy', 'sesame'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'quinoa', q: 150 }, { f: 'chickpeas', q: 250 }, { f: 'cucumber', q: 1 },
+      { f: 'cherry_tomatoes', q: 0.5 }, { f: 'feta', q: 60 }, { f: 'lemon', q: 1 },
+      { f: 'olive_oil', q: 20 }, { f: 'hummus', q: 80 }
+    ],
+    steps: [
+      'Rinse the quinoa and simmer in double its volume of salted water until the germ spirals out, 15 minutes. Fluff.',
+      'Crisp the drained chickpeas in a dry skillet with a pinch of salt, 5 minutes.',
+      'Dice the cucumber, halve the tomatoes, and whisk the lemon juice with the olive oil.',
+      'Build bowls: quinoa, chickpeas, vegetables, a swoosh of hummus.',
+      'Crumble the feta over and dress with the lemon oil.'
+    ],
+    tip: 'Toasting cooked chickpeas gives bean-haters something to reconsider.'
+  },
+
+  /* ---------- Mexican ---------- */
+  {
+    id: 'salsa_chicken_tacos', name: 'Weeknight salsa-braised chicken tacos', emoji: '🌮', cuisine: 'Mexican',
+    meal: ['dinner'], diets: ['dairy-free'], allergens: ['gluten'],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'chicken_thigh', q: 350 }, { f: 'salsa', q: 200 }, { f: 'onion', q: 0.5 },
+      { f: 'tortillas', q: 6 }, { f: 'avocado', q: 1 }, { f: 'cilantro', q: 0.3 }, { f: 'lime', q: 1 }
+    ],
+    steps: [
+      'Sear the chicken thighs in a hot skillet 3 minutes per side.',
+      'Pour the salsa over with a splash of water, cover, and simmer 12 minutes until the chicken shreds easily.',
+      'Shred the chicken into the sauce and let it soak up the pan juices.',
+      'Char the tortillas directly over the flame or in a dry skillet, seconds per side.',
+      'Fill with chicken, sliced avocado, diced raw onion, cilantro, and a squeeze of lime.'
+    ],
+    tip: 'A good jarred salsa is a legitimate braising liquid — this is the shortcut that tastes like it wasn’t.'
+  },
+  {
+    id: 'black_bean_burrito_bowls', name: 'Black bean burrito bowls', emoji: '🥣', cuisine: 'Mexican',
+    meal: ['lunch', 'dinner'], diets: ['vegetarian', 'gluten-free'], allergens: ['dairy'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'rice', q: 160 }, { f: 'black_beans', q: 400 }, { f: 'corn_frozen', q: 120 },
+      { f: 'salsa', q: 150 }, { f: 'avocado', q: 1 }, { f: 'lime', q: 1 },
+      { f: 'cilantro', q: 0.3 }, { f: 'cheddar', q: 50 }, { f: 'sour_cream', q: 60 }
+    ],
+    steps: [
+      'Cook the rice, then fold in the lime zest and half its juice.',
+      'Warm the beans with a splash of water and a pinch of cumin or salt; char the corn in a dry skillet 3 minutes.',
+      'Halve and slice the avocado.',
+      'Build bowls: lime rice, beans, corn, salsa.',
+      'Top with cheddar, a spoon of sour cream, cilantro, avocado, and the rest of the lime.'
+    ],
+    tip: 'Charring frozen corn straight from the bag is a free flavor upgrade.'
+  },
+  {
+    id: 'turkey_taco_lettuce_wraps', name: 'Turkey taco lettuce wraps', emoji: '🥬', cuisine: 'Mexican',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'low-carb', 'high-protein'], allergens: [],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'ground_turkey', q: 400 }, { f: 'romaine', q: 1 }, { f: 'chili_powder', q: 6 },
+      { f: 'cumin', q: 4 }, { f: 'onion', q: 0.5 }, { f: 'tomato', q: 2 },
+      { f: 'avocado', q: 1 }, { f: 'lime', q: 1 }, { f: 'olive_oil', q: 10 }
+    ],
+    steps: [
+      'Brown the turkey in the oil over medium-high, breaking it up, 5 minutes.',
+      'Add the diced onion, chili powder and cumin; cook 3 minutes more, then splash in water to make it saucy.',
+      'Separate the romaine into cup-shaped leaves; dice the tomato and avocado.',
+      'Spoon the spiced turkey into the leaves.',
+      'Top with tomato and avocado and finish with lime.'
+    ],
+    tip: 'Double the filling and tomorrow’s lunch is a taco salad.'
+  }
+];
+/* =================================================================== */
+
+let failures = 0;
+const diets = {}; const cuisines = {};
+SEED.forEach((r) => {
+  const problems = [];
+  if (!r.id || !/^[a-z0-9_]+$/.test(r.id)) problems.push('bad id');
+  if (SL.recipes.byId(r.id)) problems.push('id collides with a built-in recipe');
+  r.ing.forEach((ing) => {
+    if (!SL.foods.byId(ing.f)) problems.push('unknown food: ' + ing.f);
+    if (!(ing.q > 0)) problems.push('bad qty for ' + ing.f);
+  });
+  if (!r.steps || r.steps.length < 3) problems.push('needs 3+ steps');
+  const n = SL.nutrition.perServing(r);
+  if (!(n.cal >= 120 && n.cal <= 1100)) problems.push('calories out of range: ' + n.cal);
+  if (problems.length) {
+    failures++;
+    console.error('✗ ' + r.id + ': ' + problems.join('; '));
+  } else {
+    console.log('✓ ' + r.id + '  ' + n.cal + ' cal/serving · ' + (r.diets.join(', ') || 'no diet tags') + ' · ' + r.cuisine);
+  }
+  r.diets.forEach((d) => { diets[d] = (diets[d] || 0) + 1; });
+  cuisines[r.cuisine] = (cuisines[r.cuisine] || 0) + 1;
+});
+
+console.log('\nDiet coverage this batch:', JSON.stringify(diets));
+console.log('Cuisine coverage this batch:', JSON.stringify(cuisines));
+
+if (failures) { console.error('\n✗ ' + failures + ' recipe(s) failed — SQL not written.'); process.exit(1); }
+
+const sql = [
+  '-- ShelfLife recipe seed batch — generated by dev/seed-recipes.js',
+  '-- Paste into the Supabase SQL editor. Re-running is safe (upsert).',
+  ''
+];
+SEED.forEach((r) => {
+  const doc = JSON.stringify(r).replace(/'/g, "''");
+  sql.push("insert into public.recipes (id, doc, status) values ('" + r.id + "', '" + doc + "'::jsonb, 'approved')");
+  sql.push("  on conflict (id) do update set doc = excluded.doc, status = 'approved', updated_at = now();");
+});
+fs.writeFileSync(path.join(__dirname, 'seed-recipes.sql'), sql.join('\n') + '\n');
+console.log('\n✓ dev/seed-recipes.sql written (' + SEED.length + ' recipes, upsert-safe).');

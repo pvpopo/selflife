@@ -242,6 +242,17 @@ const U = SL.util;
   check(await SL.expiry.recordObservation('spinach', 'fridge', 6, { source: 'manual' }) === false, 'manually-dated items are never shared to the consensus');
   check(SL.expiry.plausibleDays('spinach', 'fridge', 6) === true && SL.expiry.plausibleDays('spinach', 'fridge', 300) === false, 'implausible spans (>4x baseline) are rejected');
 
+  console.log('\n== Recipe repository ==');
+  const recipeCountBefore = SL.recipes.list.length;
+  const okDoc = { id: 'test_remote_dish', name: 'Test remote dish', emoji: '🧪', cuisine: 'Testland', meal: ['dinner'], diets: ['vegan'], allergens: [], time: 20, servings: 2, ing: [{ f: 'rice', q: 160 }, { f: 'black_beans', q: 300 }], steps: ['One.', 'Two.', 'Three.'] };
+  const badDoc = { id: 'test_bad_dish', name: 'Bad dish', meal: ['dinner'], ing: [{ f: 'unicorn_meat', q: 100 }], steps: ['One.', 'Two.', 'Three.'] };
+  const accepted = SL.recipes.register([okDoc, badDoc]);
+  check(accepted === 1 && SL.recipes.list.length === recipeCountBefore + 1, 'register() accepts valid remote recipes and rejects unknown ingredients');
+  check(SL.recipes.byId('test_remote_dish').name === 'Test remote dish' && !SL.recipes.byId('test_bad_dish'), 'registered recipe is queryable; bad one is not');
+  check(SL.recipes.CUISINES.includes('Testland'), 'cuisine list refreshes after registration');
+  const replaced = SL.recipes.register([{ ...okDoc, name: 'Test remote dish v2' }]);
+  check(replaced === 1 && SL.recipes.list.length === recipeCountBefore + 1 && SL.recipes.byId('test_remote_dish').name === 'Test remote dish v2', 'same-id registration replaces, never duplicates');
+
   console.log('\n== Non-food inventory ==');
   check(SL.nonfood.classify('BOUNTY PAPER TOWELS 6CT') === 'paper', 'paper goods classified');
   check(SL.nonfood.classify('TIDE PODS 42CT') === 'cleaning', 'cleaning supplies classified');

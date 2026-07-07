@@ -85,6 +85,49 @@ Everything hangs off one idea: **a single canonical food id** connects recipes, 
 
 Run the test harness any time: `node dev/validate.js` (24 checks: referential integrity, nutrition sanity, deterministic pricing, and a full register → plan → shop → purchase → cook → scan flow).
 
+## Recipe repository (central, community-fed, honestly rated)
+
+The 28 built-in recipes are the offline baseline. The real repository lives in Supabase: approved recipes load at boot (`js/recipedb.js`) and merge over the built-ins — same JSON schema, validated by `recipes.register()` so a bad document can never break nutrition math or shopping lists. Create the tables:
+
+```sql
+create table if not exists public.recipes (
+  id text primary key,
+  doc jsonb not null,
+  status text not null default 'pending' check (status in ('pending','approved','rejected')),
+  submitted_by uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+alter table public.recipes enable row level security;
+create policy "read approved" on public.recipes for select using (status = 'approved');
+create policy "submit pending" on public.recipes for insert to authenticated
+  with check (status = 'pending' and submitted_by = auth.uid());
+
+create table if not exists public.recipe_ratings (
+  recipe_id text not null,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  stars int not null check (stars between 1 and 5),
+  created_at timestamptz not null default now(),
+  primary key (recipe_id, user_id)
+);
+alter table public.recipe_ratings enable row level security;
+create policy "rate" on public.recipe_ratings for insert to authenticated with check (user_id = auth.uid());
+create policy "rerate" on public.recipe_ratings for update to authenticated using (user_id = auth.uid());
+
+create or replace view public.recipe_stars as
+  select recipe_id, count(*)::int as n, round(avg(stars)::numeric, 1) as stars
+  from public.recipe_ratings group by recipe_id;
+grant select on public.recipe_stars to anon, authenticated;
+```
+
+**Growing the catalog in batches**: author recipe docs in `dev/seed-recipes.js` and run it — every doc is validated (unknown ingredients, missing steps, out-of-range calories rejected loudly, with a diet/cuisine coverage report), then `dev/seed-recipes.sql` is emitted for the Supabase SQL editor. Upsert-safe; re-run anytime.
+
+**Community submissions**: signed-in users submit recipes from the Recipes tab (ingredients restricted to the catalog picker, so every submission automatically works with nutrition, shopping and expiry). Submissions land as `status: 'pending'`; review them in the Supabase dashboard (Table Editor → recipes) and flip to `approved` to publish, `rejected` to decline.
+
+**Ratings are earned, not imported**: users rate 1–5★ in the recipe sheet; the aggregate (average + count) shows on recipe cards. Seed recipes are original, modeled on canonical widely-loved dishes — the app never displays a star it didn't collect itself.
+
+**Nutrition correctness at scale**: recipes carry no nutrition data — every number is computed from the food catalog, so accuracy lives in one place. `dev/usda-nutrition.js` audits the catalog against **USDA FoodData Central** (the U.S. government's lab-analyzed, public-domain nutrient database): it flags any food whose per-100g values drift beyond tolerance from the USDA record, with the FDC id for traceability. Run it when adding foods (`node dev/usda-nutrition.js --food <id>`, free API key at fdc.nal.usda.gov). Growing recipes to the hundreds means growing foods too — add the food with USDA-verified numbers first, and every recipe referencing it is automatically correct.
+
 ## Wiring real store data
 
 The whole app consumes stores through three functions in `js/data/stores.js`:
