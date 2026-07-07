@@ -233,10 +233,18 @@
       U.el('button', { class: 'btn ghost', onclick: () => { planner.generate(); if (shopping.currentList()) shopping.rebuildList(); render(container); ui.toast('Regenerated with fresh picks'); } }, 'Regenerate'),
       U.el('button', {
         class: 'btn primary',
-        onclick: () => {
+        onclick: async (e) => {
+          const btn = e.currentTarget;
           const list = shopping.rebuildList();
           shopping.clearCart();
           const toBuy = shopping.activeLines(list).length;
+          const CL = g.SL.cartlink;
+          if (toBuy && CL && CL.canResolve()) {
+            btn.disabled = true;
+            btn.textContent = 'Checking live Walmart prices\u2026';
+            try { await CL.resolveIds(g.SL.agent.itemsFromList(shopping.activeLines(list), FOODS)); }
+            catch (err) { /* comparison falls back to what's cached */ }
+          }
           if (g.SL.views.shop && g.SL.views.shop.queueCompare) g.SL.views.shop.queueCompare();
           g.location.hash = '#/shop';
           ui.toast(toBuy

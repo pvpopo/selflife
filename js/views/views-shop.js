@@ -16,6 +16,15 @@
   let lastOptions = null; // ephemeral optimizer results for this visit
   let compareQueued = false; // set by the Plan tab's approve flow
 
+  /* Pull live walmart.com matches (price + availability) for the active list
+     so the synchronous optimizer can read them from the cache. */
+  async function warmWalmart(list) {
+    const CL = g.SL.cartlink;
+    if (!CL || !CL.canResolve()) return;
+    try { await CL.resolveIds(g.SL.agent.itemsFromList(shopping.activeLines(list), FOODS)); }
+    catch (e) { ui.toast(e.message, 'warn'); }
+  }
+
   /* ---------- list section ---------- */
   function lineRow(list, line, container) {
     const food = FOODS.byId(line.foodId);
@@ -120,7 +129,7 @@
     box.appendChild(U.el('div', { class: 'option-head' }, [
       U.el('div', {}, [
         U.el('b', {}, names),
-        U.el('small', { class: 'muted' }, opt.stores.map((s) => s.delivery ? 'delivery' : s.dist + ' mi').join(' \u00b7 '))
+        U.el('small', { class: 'muted' }, opt.stores.map((s) => s.delivery ? 'delivery' : (s.online ? 'live \u00b7 walmart.com' : s.dist + ' mi')).join(' \u00b7 '))
       ]),
       ui.tag(U.el('b', {}, U.money(opt.total)), isBest ? 'deal' : null)
     ]));
@@ -149,8 +158,11 @@
         p.zip ? 'ZIP ' + p.zip : 'Set ZIP')
     ]));
 
+    const CL = g.SL.cartlink;
     card.appendChild(U.el('p', { class: 'muted small' },
-      'Simulated stores & prices, seeded by your ZIP \u2014 the comparison, deals and substitutions are real logic on demo data. See About for wiring real store APIs.'));
+      (CL && CL.canResolve())
+        ? 'Walmart availability & prices are live from walmart.com. The other stores are a simulated demo (seeded by your ZIP) until their APIs are wired \u2014 see About.'
+        : 'Simulated stores & prices, seeded by your ZIP \u2014 the comparison, deals and substitutions are real logic on demo data. See About for wiring real store APIs.'));
 
     const list = shopping.currentList();
     const active = list ? shopping.activeLines(list) : [];
@@ -167,7 +179,16 @@
     if (!lastOptions) {
       card.appendChild(U.el('button', {
         class: 'btn primary wide',
-        onclick: () => { lastOptions = shopping.optimize(); render(container); }
+        onclick: async (e) => {
+          const btn = e.currentTarget;
+          if (g.SL.cartlink && g.SL.cartlink.canResolve()) {
+            btn.disabled = true;
+            btn.textContent = 'Checking live Walmart prices…';
+            await warmWalmart(list);
+          }
+          lastOptions = shopping.optimize();
+          render(container);
+        }
       }, 'Compare ' + STORES.nearbyStores(p.zip).length + ' nearby stores'));
       return card;
     }

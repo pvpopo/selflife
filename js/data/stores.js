@@ -56,6 +56,22 @@
     return c.base ? { ...chainById[c.base], id: storeId, fee: c.fee, mult: chainById[c.base].mult * c.mult, delivery: true } : c;
   }
 
+  /* ---- real store lane: Walmart via the live matcher ----
+     When js/config.js points at the walmart-worker proxy, Walmart joins the
+     lineup as a REAL store: availability and prices come from walmart.com's
+     catalog (resolved by cartlink.js and cached on-device), not simulation.
+     The comparison warms that cache before optimizing (see views-shop). */
+  const WALMART = { id: 'walmart', name: 'Walmart', tag: 'walmart.com · live prices', online: true };
+
+  function walmartLive() {
+    const cfg = g.SL.config || {};
+    return !!(cfg.walmartProxy && g.SL.cartlink);
+  }
+
+  function walmartData(foodId) {
+    return g.SL.cartlink ? g.SL.cartlink.dataFor(foodId) : null;
+  }
+
   /* ---- which stores exist near this zip ---- */
   function nearbyStores(zip) {
     const z = String(zip || '00000').trim() || '00000';
@@ -74,11 +90,18 @@
     })).sort((a, b) => a.dist - b.dist);
     const dc = chainById.dashcart;
     result.push({ id: dc.id, name: dc.name, tag: dc.tag, delivery: true, fee: dc.fee, dist: 0 });
+    if (walmartLive()) {
+      result.unshift({ id: WALMART.id, name: WALMART.name, tag: WALMART.tag, delivery: false, fee: 0, dist: 0, online: true });
+    }
     return result;
   }
 
   /* ---- is a given food stocked at a given store (stable per zip) ---- */
   function isAvailable(storeId, foodId, zip) {
+    if (storeId === WALMART.id) {
+      const m = walmartData(foodId);
+      return !!(m && m.id && m.available !== false);
+    }
     const chain = effectiveChain(storeId);
     const baseId = chainById[storeId].base || storeId;
     if ((NEVER[baseId] || []).includes(foodId)) return false;
@@ -123,6 +146,12 @@
 
   /* ---- price of one package of `food` at `storeId` ---- */
   function priceFor(storeId, food, zip, date) {
+    if (storeId === WALMART.id) {
+      const m = walmartData(food.id);
+      if (m && typeof m.price === 'number') return { price: m.price, deal: null, live: true };
+      // matched but priceless (hand-mapped id): estimate from catalog baseline
+      return { price: food.price, deal: null, live: false };
+    }
     const chain = effectiveChain(storeId);
     const baseId = chainById[storeId].base || storeId;
     const jitter = 0.93 + U.rngFor(['price', baseId, food.id, String(zip || '')].join(':'))() * 0.14; // ±7%

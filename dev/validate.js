@@ -207,6 +207,11 @@ const U = SL.util;
   check(wUrl === 'https://affil.walmart.com/cart/addToCart?items=27935840_2', 'cart deep-link carries item id and quantity (' + wUrl + ')');
   check(SL.cartlink.searchUrl('Spinach').includes('walmart.com/search?q=Spinach'), 'unmapped items get a Walmart search link');
   delete SL.cartlink.WALMART_IDS.chicken_breast;
+  // live-data cache entries carry price + availability for the real store lane
+  SL.db.gset('walmartIds', { spinach: { id: '888', price: 2.48, available: true, ts: 1 } });
+  check(SL.cartlink.idFor('spinach') === '888' && SL.cartlink.dataFor('spinach').price === 2.48, 'cache entries carry live walmart.com price data');
+  SL.db.gdel('walmartIds');
+  check(!SL.stores.nearbyStores('98101').some((s) => s.id === 'walmart'), 'real Walmart lane stays off until a proxy is configured');
   // proxy-resolved ids flow through the same cache the runtime uses
   SL.db.gset('walmartIds', { spinach: '10450115' });
   check(SL.cartlink.idFor('spinach') === '10450115', 'proxy-resolved ids are honored from the cache');

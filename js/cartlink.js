@@ -34,10 +34,19 @@
     return ((g.SL.config && g.SL.config.walmartProxy) || '').replace(/\/+$/, '');
   }
 
+  /* Full match data for a food: { id, price?, available?, name? }.
+     Hand-mapped ids win; cached proxy matches (with live walmart.com price
+     and availability) come next. Accepts legacy string entries. */
+  function dataFor(foodId) {
+    if (WALMART_IDS[foodId]) return { id: WALMART_IDS[foodId] };
+    const e = db.gget(CACHE_KEY, {})[foodId];
+    if (!e) return null;
+    return typeof e === 'string' ? { id: e } : e;
+  }
+
   function idFor(foodId) {
-    if (WALMART_IDS[foodId]) return WALMART_IDS[foodId];
-    const cached = db.gget(CACHE_KEY, {});
-    return cached[foodId] || null;
+    const e = dataFor(foodId);
+    return e && e.id ? e.id : null;
   }
 
   /* Split the items: which get the one-click cart, which need a search tap. */
@@ -68,25 +77,38 @@
     return !!proxyUrl() && typeof g.fetch === 'function';
   }
 
-  /* Ask the proxy to match still-unknown foods to Walmart products.
-     Returns how many new ids were learned; results persist in the cache. */
+  /* Ask the proxy to match unknown (or stale-priced) foods to Walmart
+     products. Returns how many matches were learned/refreshed; results
+     persist in the cache so the store comparison can read them sync. */
+  const FRESH_MS = 6 * 60 * 60 * 1000; // re-check prices after 6h
+
   async function resolveIds(items) {
     if (!canResolve()) return 0;
-    const missing = items.filter((it) => !idFor(it.foodId));
+    const cached = db.gget(CACHE_KEY, {});
+    const missing = items.filter((it) => {
+      if (WALMART_IDS[it.foodId]) return false;
+      const e = cached[it.foodId];
+      if (!e) return true;
+      if (typeof e === 'string') return true; // legacy entry: upgrade to live data
+      return !e.ts || (Date.now() - e.ts) > FRESH_MS;
+    });
     if (!missing.length) return 0;
     const terms = missing.map((it) => it.foodId + ':' + it.name).join('|');
     const res = await g.fetch(proxyUrl() + '/ids?terms=' + encodeURIComponent(terms));
     if (!res.ok) throw new Error('Product matcher unavailable (' + res.status + ') — using search links instead.');
     const found = await res.json();
-    const cached = db.gget(CACHE_KEY, {});
     let learned = 0;
-    Object.entries(found).forEach(([foodId, itemId]) => {
-      if (itemId) { cached[foodId] = String(itemId); learned++; }
+    Object.entries(found).forEach(([foodId, match]) => {
+      if (!match) return;
+      cached[foodId] = typeof match === 'string'
+        ? { id: match, ts: Date.now() }
+        : { ...match, id: String(match.id), ts: Date.now() };
+      learned++;
     });
     if (learned) db.gset(CACHE_KEY, cached);
     return learned;
   }
 
   g.SL = g.SL || {};
-  g.SL.cartlink = { WALMART_IDS, splitItems, cartUrl, searchUrl, canResolve, resolveIds, idFor };
+  g.SL.cartlink = { WALMART_IDS, splitItems, cartUrl, searchUrl, canResolve, resolveIds, idFor, dataFor };
 })(typeof window !== 'undefined' ? window : globalThis);

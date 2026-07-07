@@ -5,7 +5,9 @@
 
    Endpoint:
      GET /ids?terms=<foodId>:<name>|<foodId>:<name>|...
-     → { "<foodId>": "<walmartItemId>" | null, ... }
+     → { "<foodId>": { id, price, available, name } | null, ... }
+   price/available come straight from walmart.com's live catalog, which is
+   what upgrades the app's store comparison from simulation to real data.
 
    ── Setup (once, ~15 minutes) ─────────────────────────────────────────────
    1. Walmart credentials (free):
@@ -87,24 +89,25 @@ function chunk(arr, n) {
   return out;
 }
 
-/* Edge-cache each product lookup for a day. */
+/* Edge-cache each product lookup (id + live price/availability) for a day. */
 async function lookupCached(name, env) {
-  const cacheKey = new Request('https://cache.local/wm/' + encodeURIComponent(name.toLowerCase()));
+  const cacheKey = new Request('https://cache.local/wm2/' + encodeURIComponent(name.toLowerCase()));
   const cache = caches.default;
   const hit = await cache.match(cacheKey);
-  if (hit) return (await hit.json()).id;
+  if (hit) return (await hit.json()).match;
 
-  let id = null;
-  try { id = await lookup(name, env); } catch (e) { /* Walmart hiccup → null, retried next time (not cached) */ }
-  if (id !== null) {
-    await cache.put(cacheKey, new Response(JSON.stringify({ id }), {
+  let match = null;
+  try { match = await lookup(name, env); } catch (e) { /* Walmart hiccup → null, retried next time (not cached) */ }
+  if (match !== null) {
+    await cache.put(cacheKey, new Response(JSON.stringify({ match }), {
       headers: { 'Cache-Control': 'public, max-age=' + CACHE_TTL }
     }));
   }
-  return id;
+  return match;
 }
 
-/* One signed Walmart Affiliate API search; returns the best item id. */
+/* One signed Walmart Affiliate API search; returns the best match with its
+   live walmart.com price and availability. */
 async function lookup(name, env) {
   const ts = Date.now().toString();
   const signature = await sign(env.WM_CONSUMER_ID + '\n' + ts + '\n' + env.WM_KEY_VERSION + '\n', env.WM_PRIVATE_KEY_B64);
@@ -123,7 +126,15 @@ async function lookup(name, env) {
   const items = data.items || [];
   // prefer an available, shippable grocery item; fall back to the top hit
   const best = items.find((i) => i.availableOnline !== false) || items[0];
-  return best ? String(best.itemId) : null;
+  if (!best) return null;
+  const price = typeof best.salePrice === 'number' ? best.salePrice
+    : (typeof best.msrp === 'number' ? best.msrp : null);
+  return {
+    id: String(best.itemId),
+    price,
+    available: best.availableOnline !== false,
+    name: best.name || null
+  };
 }
 
 /* RSA-SHA256 signature over the consumer-id/timestamp/key-version triple. */
