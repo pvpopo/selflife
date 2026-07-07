@@ -1519,6 +1519,470 @@ const SEED = [
       'Finish with oil, pepper, and eat with your hands.'
     ],
     tip: 'Avocado-as-mayo is the upgrade canned tuna has been waiting for.'
+  },
+
+  /* ================= BATCH 4 — Italian & Mediterranean push ================= */
+  {
+    id: 'pasta_e_fagioli', name: 'Pasta e fagioli', emoji: '🍲', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['vegan', 'vegetarian', 'dairy-free'], allergens: ['gluten'],
+    time: 35, servings: 2,
+    ing: [
+      { f: 'white_beans', q: 400 }, { f: 'penne', q: 120 }, { f: 'crushed_tomatoes', q: 250 },
+      { f: 'carrots', q: 100 }, { f: 'celery', q: 80 }, { f: 'onion', q: 0.5 },
+      { f: 'garlic', q: 0.3 }, { f: 'oregano', q: 3 }, { f: 'olive_oil', q: 25 }, { f: 'parsley', q: 0.3 }
+    ],
+    steps: [
+      'Soften the diced onion, carrot and celery in the oil, 6 minutes; add the garlic and oregano for 1 more.',
+      'Add the crushed tomatoes, beans and 2½ cups of water; simmer 10 minutes.',
+      'Mash a ladleful of beans against the pot to cream the broth.',
+      'Add the pasta straight into the soup and simmer until al dente, 10–11 minutes, stirring so it doesn’t stick.',
+      'Rest 5 minutes — it thickens into the proper spoon-standing texture — and finish with parsley and good oil.'
+    ],
+    tip: 'Cooking the pasta in the soup releases its starch — that is the body of the dish.'
+  },
+  {
+    id: 'walnut_pesto_penne', name: 'Walnut-basil pesto penne', emoji: '🌿', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['vegetarian'], allergens: ['gluten', 'dairy', 'nuts'],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'penne', q: 200 }, { f: 'basil', q: 1 }, { f: 'walnuts', q: 60 },
+      { f: 'parmesan', q: 50 }, { f: 'garlic', q: 0.1 }, { f: 'olive_oil', q: 50 }, { f: 'lemon', q: 0.5 }
+    ],
+    steps: [
+      'Toast the walnuts in a dry pan, 3 minutes; cool slightly.',
+      'Blitz the basil leaves, walnuts, parmesan, garlic and oil into a rough pesto; season with salt and lemon juice.',
+      'Cook the penne; reserve a cup of pasta water.',
+      'Toss the pasta with the pesto OFF the heat, loosening with pasta water until it clings.',
+      'More parmesan over the top, obviously.'
+    ],
+    tip: 'Heat kills pesto’s color and perfume — it dresses pasta, it never cooks.'
+  },
+  {
+    id: 'bacon_tomato_penne', name: 'Amatriciana-style bacon & tomato penne', emoji: '🥓', cuisine: 'Italian',
+    meal: ['dinner'], diets: [], allergens: ['gluten', 'dairy'],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'penne', q: 200 }, { f: 'bacon', q: 120 }, { f: 'crushed_tomatoes', q: 400 },
+      { f: 'onion', q: 0.5 }, { f: 'parmesan', q: 40 }, { f: 'olive_oil', q: 10 }, { f: 'black_pepper', q: 2 }
+    ],
+    steps: [
+      'Render the chopped bacon in the oil over medium until crisp; lift it out, leaving the fat.',
+      'Soften the sliced onion in the bacon fat, 4 minutes.',
+      'Add the crushed tomatoes and plenty of black pepper; simmer 12 minutes.',
+      'Cook the penne; finish it in the sauce with a splash of pasta water and most of the bacon.',
+      'Serve with parmesan and the reserved bacon on top.'
+    ],
+    tip: 'Guanciale is traditional; bacon is Tuesday. Both are delicious.'
+  },
+  {
+    id: 'white_bean_kale_soup', name: 'Tuscan white bean & kale soup', emoji: '🥬', cuisine: 'Italian',
+    meal: ['dinner', 'lunch'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free'], allergens: [],
+    time: 35, servings: 2,
+    ing: [
+      { f: 'white_beans', q: 500 }, { f: 'kale', q: 1 }, { f: 'carrots', q: 120 },
+      { f: 'onion', q: 1 }, { f: 'garlic', q: 0.4 }, { f: 'oregano', q: 3 },
+      { f: 'olive_oil', q: 30 }, { f: 'lemon', q: 0.5 }
+    ],
+    steps: [
+      'Soften the diced onion and carrots in half the oil, 6 minutes; add the garlic and oregano for 1 minute.',
+      'Add the beans and 3 cups of water; simmer 10 minutes.',
+      'Blend a third of the pot and stir it back — creamy broth, no cream.',
+      'Stir in the stripped, chopped kale; simmer 5 minutes until tender.',
+      'Finish with lemon juice and the rest of the oil in slow circles over each bowl.'
+    ],
+    tip: 'The partial blend is the oldest trick in Tuscany — body without dairy.'
+  },
+  {
+    id: 'ricotta_spinach_penne', name: 'Creamy ricotta & spinach penne', emoji: '🍝', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['vegetarian'], allergens: ['gluten', 'dairy'],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'penne', q: 200 }, { f: 'ricotta', q: 250 }, { f: 'spinach', q: 150 },
+      { f: 'garlic', q: 0.2 }, { f: 'parmesan', q: 40 }, { f: 'lemon', q: 0.5 },
+      { f: 'olive_oil', q: 15 }, { f: 'black_pepper', q: 2 }
+    ],
+    steps: [
+      'Cook the penne; reserve a big cup of pasta water.',
+      'Sizzle the sliced garlic in the oil, then wilt the spinach, 1 minute.',
+      'Off heat, stir the ricotta with half the parmesan, lemon zest and a ladle of hot pasta water into a sauce right in the pan.',
+      'Fold in the pasta, loosening with more water until silky.',
+      'Finish with lemon juice, the rest of the parmesan and aggressive black pepper.'
+    ],
+    tip: 'Ricotta + pasta water = alfredo energy with a third of the effort.'
+  },
+  {
+    id: 'balsamic_chicken_caprese', name: 'Balsamic chicken caprese', emoji: '🍗', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['gluten-free', 'low-carb', 'high-protein'], allergens: ['dairy'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'chicken_breast', q: 400 }, { f: 'mozzarella', q: 100 }, { f: 'tomato', q: 2 },
+      { f: 'basil', q: 0.3 }, { f: 'balsamic_vinegar', q: 40 }, { f: 'olive_oil', q: 15 }, { f: 'garlic', q: 0.2 }
+    ],
+    steps: [
+      'Halve the breasts into cutlets, season, and sear in the oil 3–4 minutes per side.',
+      'Add the balsamic and garlic to the pan; let it bubble down to a glaze that coats the chicken, 2 minutes.',
+      'Top each cutlet with sliced tomato and mozzarella; cover 2 minutes to melt.',
+      'Rest a minute.',
+      'Serve painted with the pan glaze and covered in torn basil.'
+    ],
+    tip: 'Balsamic reduces to candy-glaze in minutes — watch it, it goes from perfect to burnt fast.'
+  },
+  {
+    id: 'weeknight_minestrone', name: 'Weeknight minestrone', emoji: '🍜', cuisine: 'Italian',
+    meal: ['dinner'], diets: ['vegan', 'vegetarian', 'dairy-free'], allergens: ['gluten'],
+    time: 35, servings: 4,
+    ing: [
+      { f: 'white_beans', q: 400 }, { f: 'penne', q: 120 }, { f: 'zucchini', q: 1 },
+      { f: 'carrots', q: 120 }, { f: 'celery', q: 80 }, { f: 'onion', q: 1 },
+      { f: 'crushed_tomatoes', q: 300 }, { f: 'garlic', q: 0.3 }, { f: 'oregano', q: 3 },
+      { f: 'olive_oil', q: 25 }, { f: 'parsley', q: 0.3 }
+    ],
+    steps: [
+      'Soften the diced onion, carrot and celery in the oil, 6 minutes.',
+      'Add the garlic and oregano, then the crushed tomatoes and 4 cups of water; simmer 10 minutes.',
+      'Add the diced zucchini, beans and pasta; simmer until the pasta is just done, 10 minutes.',
+      'Season hard — vegetable soups are shy until salted.',
+      'Finish with parsley and olive oil; parmesan for the non-vegans at the table.'
+    ],
+    tip: 'Minestrone is a fridge-clearing format, not a recipe — swap in whatever vegetables are fading.'
+  },
+  {
+    id: 'lemon_ricotta_pancakes', name: 'Lemon-ricotta pancakes', emoji: '🥞', cuisine: 'Italian',
+    meal: ['breakfast'], diets: ['vegetarian'], allergens: ['gluten', 'dairy', 'eggs'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'ricotta', q: 250 }, { f: 'flour', q: 120 }, { f: 'eggs', q: 2 },
+      { f: 'milk', q: 80 }, { f: 'lemon', q: 1 }, { f: 'maple_syrup', q: 60 },
+      { f: 'butter', q: 15 }, { f: 'sugar', q: 20 }
+    ],
+    steps: [
+      'Whisk the ricotta, eggs, milk, sugar and the zest of the whole lemon.',
+      'Fold in the flour just until combined — lumps are fine, tough pancakes are not.',
+      'Cook quarter-cup rounds in butter over medium, 2–3 minutes per side.',
+      'They stay custardy in the middle; that is the point, not underdone batter.',
+      'Serve with maple syrup and a squeeze of the naked lemon.'
+    ],
+    tip: 'Ricotta pancakes are what diner pancakes dream of becoming.'
+  },
+  {
+    id: 'chicken_souvlaki_bowls', name: 'Chicken souvlaki bowls with yogurt sauce', emoji: '🍢', cuisine: 'Mediterranean',
+    meal: ['dinner'], diets: ['high-protein'], allergens: ['dairy', 'gluten'],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'chicken_thigh', q: 400 }, { f: 'greek_yogurt', q: 150 }, { f: 'cucumber', q: 1 },
+      { f: 'couscous', q: 140 }, { f: 'oregano', q: 4 }, { f: 'lemon', q: 1 },
+      { f: 'garlic', q: 0.3 }, { f: 'olive_oil', q: 25 }, { f: 'tomato', q: 1 }
+    ],
+    steps: [
+      'Marinate the cubed chicken in half the oil, oregano, half the lemon’s juice and half the garlic, 10 minutes.',
+      'Stir grated, squeezed cucumber into the yogurt with the rest of the garlic and a pinch of salt — instant tzatziki.',
+      'Pour boiling water over the couscous (equal volume), cover 5 minutes, fluff.',
+      'Sear the chicken hard on skewers or straight in the pan, 8–10 minutes, until charred at the edges.',
+      'Bowl it: couscous, chicken, diced tomato, tzatziki, remaining lemon.'
+    ],
+    tip: 'Squeeze the grated cucumber like you mean it — watery tzatziki is the only bad tzatziki.'
+  },
+  {
+    id: 'couscous_tabbouleh', name: 'Couscous tabbouleh', emoji: '🌿', cuisine: 'Mediterranean',
+    meal: ['lunch'], diets: ['vegan', 'vegetarian', 'dairy-free'], allergens: ['gluten'],
+    time: 15, servings: 2,
+    ing: [
+      { f: 'couscous', q: 120 }, { f: 'parsley', q: 1 }, { f: 'tomato', q: 2 },
+      { f: 'cucumber', q: 1 }, { f: 'scallions', q: 0.3 }, { f: 'lemon', q: 1.5 }, { f: 'olive_oil', q: 30 }
+    ],
+    steps: [
+      'Hydrate the couscous in an equal volume of boiling water, covered, 5 minutes; fluff and cool.',
+      'Chop the entire parsley bunch fine — in tabbouleh, parsley is a vegetable, not a garnish.',
+      'Dice the tomatoes and cucumber small; slice the scallions.',
+      'Toss everything with the lemon juice, oil and a serious pinch of salt.',
+      'Rest 10 minutes so the couscous drinks the dressing.'
+    ],
+    tip: 'The parsley-to-grain ratio should make you slightly nervous. That’s authentic.'
+  },
+  {
+    id: 'white_bean_tuna_salad', name: 'Italian white bean & tuna salad', emoji: '🐟', cuisine: 'Mediterranean',
+    meal: ['lunch'], diets: ['gluten-free', 'dairy-free', 'high-protein'], allergens: ['fish'],
+    time: 10, servings: 2,
+    ing: [
+      { f: 'tuna_canned', q: 284 }, { f: 'white_beans', q: 400 }, { f: 'onion', q: 0.2 },
+      { f: 'parsley', q: 0.4 }, { f: 'lemon', q: 1 }, { f: 'olive_oil', q: 30 }, { f: 'black_pepper', q: 2 }
+    ],
+    steps: [
+      'Rinse and drain the beans; flake in the drained tuna.',
+      'Sliver the onion paper-thin and soak it in the lemon juice 5 minutes to tame it.',
+      'Chop the parsley roughly.',
+      'Fold everything together with the oil, onion and its lemon.',
+      'Pepper hard, salt lightly, and let it sit 5 minutes before serving.'
+    ],
+    tip: 'A Tuscan classic with two cans and one lemon — pantry lunch royalty.'
+  },
+  {
+    id: 'mezze_bowls', name: 'Mezze plate bowls', emoji: '🫒', cuisine: 'Mediterranean',
+    meal: ['lunch', 'dinner'], diets: ['vegetarian'], allergens: ['dairy', 'gluten', 'sesame'],
+    time: 15, servings: 2,
+    ing: [
+      { f: 'hummus', q: 160 }, { f: 'feta', q: 80 }, { f: 'olives', q: 80 },
+      { f: 'cucumber', q: 1 }, { f: 'cherry_tomatoes', q: 200 }, { f: 'roasted_red_peppers', q: 100 },
+      { f: 'pita', q: 2 }, { f: 'olive_oil', q: 15 }, { f: 'oregano', q: 2 }
+    ],
+    steps: [
+      'Swoosh the hummus across two wide bowls.',
+      'Arrange the halved tomatoes, sliced cucumber, olives, torn roasted peppers and feta in piles.',
+      'Warm the pitas and cut into wedges.',
+      'Drizzle everything with oil and dust with oregano.',
+      'Assemble bites at will — this is legally a cooked dinner.'
+    ],
+    tip: 'Mezze is the anti-recipe: quality ingredients, zero technique, maximum table.'
+  },
+  {
+    id: 'artichoke_lemon_chicken', name: 'Artichoke-lemon chicken skillet', emoji: '🍋', cuisine: 'Mediterranean',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'low-carb', 'high-protein'], allergens: [],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'chicken_breast', q: 400 }, { f: 'artichoke_hearts', q: 240 }, { f: 'lemon', q: 1 },
+      { f: 'garlic', q: 0.3 }, { f: 'parsley', q: 0.3 }, { f: 'olive_oil', q: 25 }, { f: 'oregano', q: 2 }
+    ],
+    steps: [
+      'Halve the breasts into cutlets, season with oregano and salt, and sear in the oil 3–4 minutes per side; set aside.',
+      'Brown the drained, halved artichokes in the same pan, cut-side down, 3 minutes.',
+      'Add the garlic for 30 seconds, then the juice of the lemon and a splash of water, scraping the pan.',
+      'Return the chicken to warm through in the sauce, 2 minutes.',
+      'Shower with parsley and serve with the pan juices.'
+    ],
+    tip: 'Canned artichokes brown beautifully if you dry them first — treat them like a vegetable, not a garnish.'
+  },
+  {
+    id: 'greek_baked_white_beans', name: 'Greek baked white beans (gigantes-style)', emoji: '🫘', cuisine: 'Mediterranean',
+    meal: ['dinner'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free'], allergens: [],
+    time: 40, servings: 2,
+    ing: [
+      { f: 'white_beans', q: 500 }, { f: 'crushed_tomatoes', q: 400 }, { f: 'onion', q: 1 },
+      { f: 'garlic', q: 0.3 }, { f: 'oregano', q: 4 }, { f: 'honey', q: 10 },
+      { f: 'olive_oil', q: 40 }, { f: 'parsley', q: 0.3 }
+    ],
+    steps: [
+      'Heat the oven to 400°F. Soften the diced onion in half the oil; add the garlic and oregano for 1 minute.',
+      'Stir in the crushed tomatoes, honey, beans and a splash of water.',
+      'Pour into a baking dish, top with the remaining oil.',
+      'Bake 25 minutes until bubbling with caramelized edges.',
+      'Rest 10 minutes and finish with parsley — served warm, never hot.'
+    ],
+    tip: 'The whisper of honey against the tomatoes is the traditional move — sweet-savory, not sweet.'
+  },
+  {
+    id: 'salmon_couscous_bowl', name: 'Lemon salmon & couscous bowl', emoji: '🐟', cuisine: 'Mediterranean',
+    meal: ['dinner'], diets: ['dairy-free', 'high-protein'], allergens: ['fish', 'gluten'],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'salmon', q: 350 }, { f: 'couscous', q: 140 }, { f: 'cucumber', q: 0.5 },
+      { f: 'olives', q: 50 }, { f: 'lemon', q: 1 }, { f: 'parsley', q: 0.3 }, { f: 'olive_oil', q: 20 }
+    ],
+    steps: [
+      'Hydrate the couscous in boiling water, covered, 5 minutes; fluff with a fork and half the oil.',
+      'Sear the seasoned salmon 4 minutes skin-side, 2 flesh-side; rest and flake.',
+      'Dice the cucumber, halve the olives, chop the parsley.',
+      'Fold the vegetables and herbs through the couscous with the lemon juice.',
+      'Top with the salmon and the last of the oil.'
+    ],
+    tip: 'Couscous is the five-minute grain — faster than toast, fancier than rice.'
+  },
+  {
+    id: 'shakshuka', name: 'Shakshuka', emoji: '🍳', cuisine: 'Mediterranean',
+    meal: ['breakfast', 'dinner'], diets: ['vegetarian', 'gluten-free', 'low-carb'], allergens: ['eggs', 'dairy'],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'eggs', q: 4 }, { f: 'crushed_tomatoes', q: 400 }, { f: 'bell_pepper', q: 1 },
+      { f: 'onion', q: 1 }, { f: 'garlic', q: 0.3 }, { f: 'cumin', q: 4 },
+      { f: 'paprika', q: 4 }, { f: 'feta', q: 60 }, { f: 'olive_oil', q: 20 }, { f: 'parsley', q: 0.3 }
+    ],
+    steps: [
+      'Soften the sliced onion and pepper in the oil over medium, 8 minutes — properly soft, this is the base.',
+      'Add the garlic, cumin and paprika for 1 minute, then the crushed tomatoes; simmer 8 minutes until thick.',
+      'Nest wells in the sauce and crack an egg into each; season the yolks.',
+      'Cover and cook 5–7 minutes until the whites set but the yolks tremble.',
+      'Crumble the feta over, add parsley, and serve from the pan with bread for the non-low-carb table.'
+    ],
+    tip: 'The sauce must be thick before the eggs go in — soup poaches badly.'
+  },
+  {
+    id: 'balsamic_roasted_veg_couscous', name: 'Balsamic roasted vegetables & couscous', emoji: '🍆', cuisine: 'Mediterranean',
+    meal: ['dinner', 'lunch'], diets: ['vegan', 'vegetarian', 'dairy-free'], allergens: ['gluten'],
+    time: 40, servings: 2,
+    ing: [
+      { f: 'eggplant', q: 1 }, { f: 'zucchini', q: 1 }, { f: 'bell_pepper', q: 1 },
+      { f: 'onion', q: 1 }, { f: 'balsamic_vinegar', q: 30 }, { f: 'couscous', q: 140 },
+      { f: 'olive_oil', q: 30 }, { f: 'oregano', q: 3 }
+    ],
+    steps: [
+      'Heat the oven to 425°F. Chunk all the vegetables evenly.',
+      'Toss with the oil, oregano and salt on a sheet pan; roast 25 minutes until charred at the corners.',
+      'Drizzle the balsamic over the hot pan and toss — it glazes on contact.',
+      'Hydrate the couscous meanwhile.',
+      'Pile the glazed vegetables over the couscous, scraping every dark sticky bit from the pan.'
+    ],
+    tip: 'Balsamic on hot-from-the-oven vegetables becomes a glaze without ever seeing a saucepan.'
+  },
+  {
+    id: 'avgolemono_soup', name: 'Avgolemono (Greek lemon chicken soup)', emoji: '🍋', cuisine: 'Mediterranean',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'high-protein'], allergens: ['eggs'],
+    time: 35, servings: 2,
+    ing: [
+      { f: 'chicken_breast', q: 300 }, { f: 'broth', q: 1000 }, { f: 'rice', q: 100 },
+      { f: 'eggs', q: 2 }, { f: 'lemon', q: 1.5 }, { f: 'parsley', q: 0.2 }, { f: 'olive_oil', q: 10 }
+    ],
+    steps: [
+      'Simmer the chicken in the broth until cooked, 12 minutes; shred it and return it, adding the rice for 15 minutes.',
+      'Whisk the eggs with the juice of the lemons until frothy.',
+      'Temper: whisk hot broth into the eggs one ladle at a time — three ladles minimum.',
+      'Off the heat, stir the tempered eggs back into the pot; it turns velvety and pale.',
+      'Do not boil it again. Season, add parsley, serve.'
+    ],
+    tip: 'Tempering feels fussy the first time and automatic forever after — silk from two eggs and a lemon.'
+  },
+  {
+    id: 'ginger_pork_rice_bowls', name: 'Ginger-glazed pork rice bowls', emoji: '🥢', cuisine: 'Asian',
+    meal: ['dinner'], diets: ['dairy-free', 'high-protein'], allergens: ['soy', 'gluten'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'pork_loin', q: 400 }, { f: 'ginger', q: 15 }, { f: 'soy_sauce', q: 35 },
+      { f: 'honey', q: 20 }, { f: 'garlic', q: 0.3 }, { f: 'rice', q: 160 },
+      { f: 'cabbage', q: 0.3 }, { f: 'scallions', q: 0.5 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Start the rice. Slice the pork thin against the grain.',
+      'Sear the pork in the oil over high heat in two batches, 2 minutes each; set aside.',
+      'Add the ginger and garlic, then the soy sauce and honey; bubble to a glaze.',
+      'Return the pork and toss to coat.',
+      'Serve over rice with a pile of thin-shaved raw cabbage and scallions for crunch.'
+    ],
+    tip: 'Thin slices against the grain make loin taste like a far more expensive cut.'
+  },
+  {
+    id: 'sesame_kale_edamame_salad', name: 'Sesame kale & edamame crunch salad', emoji: '🥗', cuisine: 'Asian',
+    meal: ['lunch'], diets: ['vegan', 'vegetarian', 'dairy-free', 'high-protein'], allergens: ['soy', 'sesame', 'nuts', 'gluten'],
+    time: 15, servings: 2,
+    ing: [
+      { f: 'kale', q: 1 }, { f: 'edamame_frozen', q: 250 }, { f: 'carrots', q: 100 },
+      { f: 'cashews', q: 40 }, { f: 'sesame_oil', q: 15 }, { f: 'soy_sauce', q: 20 },
+      { f: 'honey', q: 10 }, { f: 'lime', q: 1 }, { f: 'ginger', q: 8 }
+    ],
+    steps: [
+      'Blanch the edamame in boiling water 3 minutes; drain and cool.',
+      'Massage the stripped, shredded kale with a pinch of salt until it relaxes.',
+      'Whisk the sesame oil, soy sauce, honey, lime juice and grated ginger.',
+      'Toss the kale, edamame and ribboned carrots with the dressing.',
+      'Top with toasted cashews. Keeps dressed for a day — kale does not wilt like lettuce.'
+    ],
+    tip: 'This is the salad that survives meal prep — day two is arguably better.'
+  },
+  {
+    id: 'bacon_egg_breakfast_tacos', name: 'Bacon & egg breakfast tacos', emoji: '🌮', cuisine: 'Mexican',
+    meal: ['breakfast'], diets: [], allergens: ['gluten', 'eggs', 'dairy'],
+    time: 20, servings: 2,
+    ing: [
+      { f: 'tortillas', q: 4 }, { f: 'eggs', q: 4 }, { f: 'bacon', q: 120 },
+      { f: 'cheddar', q: 50 }, { f: 'salsa', q: 100 }, { f: 'avocado', q: 0.5 }, { f: 'scallions', q: 0.3 }
+    ],
+    steps: [
+      'Crisp the chopped bacon; pour off all but a slick of the fat.',
+      'Scramble the eggs soft in the bacon pan.',
+      'Warm the tortillas; slice the avocado.',
+      'Fill: cheddar first (it melts under the eggs), then eggs, bacon, avocado.',
+      'Salsa and scallions over everything.'
+    ],
+    tip: 'Cheese under hot eggs is self-melting engineering.'
+  },
+  {
+    id: 'pork_carnitas_bowls', name: 'Carnitas-style pork bowls', emoji: '🍖', cuisine: 'Mexican',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'high-protein'], allergens: [],
+    time: 45, servings: 2,
+    ing: [
+      { f: 'pork_loin', q: 500 }, { f: 'lime', q: 2 }, { f: 'cumin', q: 5 },
+      { f: 'oregano', q: 3 }, { f: 'garlic', q: 0.3 }, { f: 'onion', q: 0.5 },
+      { f: 'rice', q: 160 }, { f: 'black_beans', q: 250 }, { f: 'cilantro', q: 0.3 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Cube the pork and toss with cumin, oregano, salt and the juice of one lime.',
+      'Brown it hard in the oil, then add the sliced onion, garlic and ½ cup water; cover and simmer 25 minutes until shreddable.',
+      'Uncover, crank the heat, and let the liquid cook off so the edges crisp — that contrast is carnitas.',
+      'Warm the beans; cook the rice.',
+      'Bowl it all with cilantro and the second lime.'
+    ],
+    tip: 'Braise then crisp: tender inside, crackly edges — the two-texture secret.'
+  },
+  {
+    id: 'masala_green_beans_potatoes', name: 'Masala green beans & potatoes', emoji: '🫛', cuisine: 'Indian',
+    meal: ['dinner', 'lunch'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free'], allergens: [],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'green_beans', q: 300 }, { f: 'potatoes', q: 400 }, { f: 'onion', q: 0.5 },
+      { f: 'turmeric', q: 3 }, { f: 'cumin', q: 4 }, { f: 'garam_masala', q: 3 },
+      { f: 'ginger', q: 8 }, { f: 'olive_oil', q: 25 }, { f: 'lemon', q: 0.5 }
+    ],
+    steps: [
+      'Brown the small-diced potatoes in the oil, covered, stirring now and then, 10 minutes.',
+      'Add the onion, ginger, turmeric and cumin; 2 minutes.',
+      'Add the trimmed, halved green beans and a splash of water; cover 6–8 minutes until just tender.',
+      'Uncover and let everything catch a little color.',
+      'Finish with garam masala and lemon.'
+    ],
+    tip: 'A dry sabzi wants a lid early and no lid late — steam, then sizzle.'
+  },
+  {
+    id: 'chickpea_tikka_masala', name: 'Chickpea tikka masala', emoji: '🍛', cuisine: 'Indian',
+    meal: ['dinner'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free'], allergens: [],
+    time: 30, servings: 2,
+    ing: [
+      { f: 'chickpeas', q: 500 }, { f: 'crushed_tomatoes', q: 300 }, { f: 'coconut_milk', q: 200 },
+      { f: 'onion', q: 1 }, { f: 'garlic', q: 0.3 }, { f: 'ginger', q: 12 },
+      { f: 'garam_masala', q: 6 }, { f: 'paprika', q: 4 }, { f: 'cumin', q: 3 },
+      { f: 'rice', q: 140 }, { f: 'olive_oil', q: 20 }
+    ],
+    steps: [
+      'Start the rice. Golden the diced onion in the oil, 6 minutes; add garlic, ginger, cumin and paprika for 1 minute.',
+      'Add the crushed tomatoes and simmer 8 minutes until darkened and thick — this patience IS tikka masala.',
+      'Blend the sauce smooth with the coconut milk (or don’t; rustic is fine).',
+      'Add the chickpeas and simmer 8 minutes to marry.',
+      'Finish with garam masala; serve over rice.'
+    ],
+    tip: 'The long tomato reduction is the restaurant secret — thin sauce, thin flavor.'
+  },
+  {
+    id: 'coconut_shrimp_curry', name: 'Coconut shrimp curry', emoji: '🍤', cuisine: 'Indian',
+    meal: ['dinner'], diets: ['gluten-free', 'dairy-free', 'high-protein'], allergens: ['shellfish'],
+    time: 25, servings: 2,
+    ing: [
+      { f: 'shrimp', q: 400 }, { f: 'coconut_milk', q: 250 }, { f: 'crushed_tomatoes', q: 150 },
+      { f: 'onion', q: 1 }, { f: 'garlic', q: 0.3 }, { f: 'ginger', q: 12 },
+      { f: 'curry_powder', q: 10 }, { f: 'garam_masala', q: 3 }, { f: 'rice', q: 140 },
+      { f: 'cilantro', q: 0.3 }, { f: 'olive_oil', q: 15 }
+    ],
+    steps: [
+      'Start the rice. Golden the diced onion in the oil; bloom the curry powder with the garlic and ginger, 1 minute.',
+      'Add the crushed tomatoes; cook 3 minutes.',
+      'Pour in the coconut milk and simmer 5 minutes to a light sauce.',
+      'Slide in the dried shrimp; 2–3 minutes only, until just pink and curled.',
+      'Finish with garam masala and cilantro over rice — the shrimp keep cooking in the hot sauce, so err early.'
+    ],
+    tip: 'Shrimp curries live or die in a 90-second window — sauce first, shrimp last.'
+  },
+  {
+    id: 'turmeric_khichdi', name: 'Turmeric khichdi (rice & lentil comfort pot)', emoji: '🍚', cuisine: 'Indian',
+    meal: ['dinner', 'lunch'], diets: ['vegan', 'vegetarian', 'gluten-free', 'dairy-free'], allergens: [],
+    time: 35, servings: 2,
+    ing: [
+      { f: 'rice', q: 120 }, { f: 'lentils_dry', q: 120 }, { f: 'turmeric', q: 4 },
+      { f: 'cumin', q: 4 }, { f: 'ginger', q: 10 }, { f: 'carrots', q: 100 },
+      { f: 'peas_frozen', q: 100 }, { f: 'olive_oil', q: 20 }, { f: 'lemon', q: 0.5 }
+    ],
+    steps: [
+      'Rinse the rice and lentils together until the water runs clearish.',
+      'Bloom the cumin and ginger in the oil, 30 seconds; add the turmeric, rice, lentils and diced carrot.',
+      'Add 4 cups of water and a big pinch of salt; simmer partially covered 25 minutes, stirring occasionally, until porridgy.',
+      'Stir in the peas for the last 3 minutes.',
+      'Finish with lemon. Loose and spoonable is correct — it thickens as it sits.'
+    ],
+    tip: 'Khichdi is what Indian kitchens make when someone needs comfort — rice-and-lentils as a hug.'
   }
 ];
 /* =================================================================== */
