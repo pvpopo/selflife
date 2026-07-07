@@ -1987,6 +1987,19 @@ const SEED = [
 ];
 /* =================================================================== */
 
+/* Workflow-generated batches land in dev/seed-generated.json (an array of
+   recipe docs) and flow through the exact same validation as hand-authored
+   ones. Duplicate ids inside the generated file keep the last occurrence. */
+const GENERATED_PATH = path.join(__dirname, 'seed-generated.json');
+if (fs.existsSync(GENERATED_PATH)) {
+  const generated = JSON.parse(fs.readFileSync(GENERATED_PATH, 'utf8'));
+  const seen = {};
+  generated.forEach((r) => { if (r && r.id) seen[r.id] = r; });
+  const unique = Object.values(seen);
+  console.log('Loaded ' + unique.length + ' generated recipes from seed-generated.json\n');
+  unique.forEach((r) => SEED.push(r));
+}
+
 let failures = 0;
 const diets = {}; const cuisines = {};
 SEED.forEach((r) => {
