@@ -16,8 +16,16 @@ globalThis.localStorage = {
   removeItem: (k) => { delete mem[k]; }, key: (i) => Object.keys(mem)[i] || null,
   get length() { return Object.keys(mem).length; }
 };
-['js/util.js', 'js/data/foods.js'].forEach((f) => eval(fs.readFileSync(path.join(__dirname, '..', f), 'utf8')));
+['js/util.js', 'js/data/foods.js', 'js/data/recipes.js'].forEach((f) => eval(fs.readFileSync(path.join(__dirname, '..', f), 'utf8')));
 const FOODS = globalThis.SL.foods;
+
+// every id already taken: built-ins + hand-authored seed + prior generated batches
+const takenIds = new Set(globalThis.SL.recipes.list.map((r) => r.id));
+const seedSrc = fs.readFileSync(path.join(__dirname, 'seed-recipes.js'), 'utf8');
+[...seedSrc.matchAll(/id: '([a-z0-9_]+)'/g)].forEach((m) => takenIds.add(m[1]));
+const genPath = path.join(__dirname, 'seed-generated.json');
+const priorGenerated = fs.existsSync(genPath) ? JSON.parse(fs.readFileSync(genPath, 'utf8')) : [];
+priorGenerated.forEach((r) => takenIds.add(r.id));
 
 /* invented id → catalog id (null = delete the ingredient) */
 const RENAMES = {
@@ -69,7 +77,7 @@ if (typeof payload === 'string') payload = JSON.parse(payload);
 if (!payload || !Array.isArray(payload.recipes)) { console.error('no recipes array in result'); process.exit(1); }
 console.log('extracted ' + payload.recipes.length + ' recipes from workflow output');
 
-const kept = [], dropped = [];
+const kept = [], dropped = [], renamedIds = [];
 payload.recipes.forEach((r) => {
   const fixedIng = [];
   let salvageable = true;
@@ -100,8 +108,18 @@ payload.recipes.forEach((r) => {
   r.ing = Object.entries(merged).map(([f, q]) => ({ f, q: Math.round(q * 10) / 10 }));
   // decode HTML entities the authors occasionally emit
   r.name = String(r.name).replace(/&amp;/g, '&').replace(/&#39;/g, '’');
+  // id collisions (vs existing catalog or sibling blocks): auto-suffix
+  let id = String(r.id).toLowerCase().replace(/[^a-z0-9_]/g, '_');
+  let n = 2;
+  while (takenIds.has(id)) { id = r.id + '_' + n; n++; }
+  takenIds.add(id);
+  if (id !== r.id) renamedIds.push(r.id + ' → ' + id);
+  r.id = id;
   kept.push(r);
 });
 
-fs.writeFileSync(path.join(__dirname, 'seed-generated.json'), JSON.stringify(kept, null, 1));
-console.log('kept ' + kept.length + ', dropped ' + dropped.length + (dropped.length ? ':\n  ' + [...new Set(dropped)].join('\n  ') : ''));
+// append to (not replace) any prior generated batches
+const combined = priorGenerated.concat(kept);
+fs.writeFileSync(genPath, JSON.stringify(combined, null, 1));
+console.log('kept ' + kept.length + ' (file now ' + combined.length + '), dropped ' + dropped.length + (dropped.length ? ':\n  ' + [...new Set(dropped)].join('\n  ') : ''));
+if (renamedIds.length) console.log('auto-renamed ' + renamedIds.length + ' colliding ids');
