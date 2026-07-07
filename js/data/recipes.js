@@ -1,4 +1,4 @@
-﻿/* ShelfLife â€” data/recipes.js
+/* ShelfLife — data/recipes.js
    Every ingredient references a food id from data/foods.js and its quantity is
    expressed in that food's unit ('g', 'ml', or 'ct'). Nutrition per serving is
    computed at runtime from the food catalog (see nutrition.js), so the recipe
