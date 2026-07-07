@@ -238,6 +238,9 @@ const U = SL.util;
   const backdated = SL.inventory.addPurchases([{ foodId: 'spinach', packages: 1 }], 'receipt', backISO)[0];
   check(backdated.purchasedISO === backISO && backdated.expiresISO > backdated.purchasedISO, 'receipt purchase date drives the estimate window');
   SL.inventory.remove(backdated.id);
+  // consensus data-quality gates: untethered or implausible observations never leave the device
+  check(await SL.expiry.recordObservation('spinach', 'fridge', 6, { source: 'manual' }) === false, 'manually-dated items are never shared to the consensus');
+  check(SL.expiry.plausibleDays('spinach', 'fridge', 6) === true && SL.expiry.plausibleDays('spinach', 'fridge', 300) === false, 'implausible spans (>4x baseline) are rejected');
 
   console.log('\n== Non-food inventory ==');
   check(SL.nonfood.classify('BOUNTY PAPER TOWELS 6CT') === 'paper', 'paper goods classified');

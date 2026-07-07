@@ -57,16 +57,33 @@
   }
 
   /* Share one anonymous observation: this food, stored this way, was good
-     for N days after purchase. Fires when a user corrects a date. */
-  async function recordObservation(foodId, storage, days) {
+     for N days after purchase. Data-quality rules keep the consensus clean:
+     - only items whose purchase date has provenance qualify — receipt-dated
+       ('receipt') or bought-in-app-today ('purchase'); manually added stock
+       has an assumed date and is never shared
+     - the observed span must be sane vs. the catalog baseline (a typo'd
+       year or misallocated receipt would otherwise poison the median) */
+  function plausibleDays(foodId, storage, days) {
     if (!(days >= 0 && days <= 365)) return false;
+    const food = FOODS.byId(foodId);
+    if (!food) return false;
+    const base = FOODS.shelfDays(food, storage);
+    return days <= Math.min(365, Math.max(30, base * 4));
+  }
+
+  async function recordObservation(foodId, storage, days, meta) {
+    const m = meta || {};
+    if (m.source !== 'receipt' && m.source !== 'purchase') return false; // untethered date → keep it local
+    if (!plausibleDays(foodId, storage, days)) return false;
     const auth = g.SL.auth;
     if (!auth || !auth.supabaseClient || !auth.cloudUserId || !auth.cloudUserId()) return false;
     try {
       const client = await auth.supabaseClient();
       if (!client) return false;
       const { error } = await client.from('shelf_observations').insert({
-        food_id: foodId, storage, days: Math.round(days), user_id: auth.cloudUserId()
+        food_id: foodId, storage, days: Math.round(days),
+        purchased_on: m.purchasedISO || null, source: m.source,
+        user_id: auth.cloudUserId()
       });
       return !error;
     } catch (e) { return false; }
@@ -152,5 +169,5 @@
   }
 
   g.SL = g.SL || {};
-  g.SL.expiry = { estimateDays, estimateSource, refreshConsensus, recordObservation, parseDate, MIN_OBSERVATIONS };
+  g.SL.expiry = { estimateDays, estimateSource, refreshConsensus, recordObservation, plausibleDays, parseDate, MIN_OBSERVATIONS };
 })(typeof window !== 'undefined' ? window : globalThis);

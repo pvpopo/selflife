@@ -39,10 +39,14 @@
   /* ---------- date correction: label photo or manual pick ---------- */
   function saveCorrectedDate(item, iso, how, container) {
     inv.update(item.id, { expiresISO: iso, verified: true });
-    // share the anonymous observation so estimates improve for everyone
+    // share the anonymous observation so estimates improve for everyone —
+    // but only when the purchase date has provenance (receipt-dated or
+    // bought in-app), so misdated items can't pollute the consensus
     const days = U.daysBetween(U.parseISO(item.purchasedISO), U.parseISO(iso));
     if (g.SL.expiry) {
-      g.SL.expiry.recordObservation(item.foodId, item.storage, days).then((shared) => {
+      g.SL.expiry.recordObservation(item.foodId, item.storage, days, {
+        source: item.source, purchasedISO: item.purchasedISO
+      }).then((shared) => {
         if (shared) ui.toast('Date set from ' + how + ' — thanks, this improves everyone’s estimates');
         else ui.toast('Date set from ' + how);
       });

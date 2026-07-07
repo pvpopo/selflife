@@ -124,7 +124,9 @@ The link needs Walmart item IDs, and the module resolves them in three tiers (be
 Three layers, most authoritative wins:
 
 1. **Catalog baseline** — FoodKeeper-style shelf life per storage location (`foods.js`), counted from the purchase date. Receipt scans use the **date printed on the receipt**, so a Tuesday receipt scanned Friday still counts from Tuesday.
-2. **Community consensus** — when someone corrects a date (label scan or manual edit), the app shares an anonymous observation: food + storage + how many days it was actually good for. Nothing personal — no user id is readable, no item, no store account. Once 3+ observations exist for a food/storage pair, the community median replaces the catalog guess for everyone ("store-brand milk really lasts 11 days"). Requires the Supabase project; create the tables with:
+2. **Community consensus** — when someone corrects a date (label scan or manual edit), the app shares an anonymous observation: food + storage + how many days it was actually good for. Nothing personal — no user id is readable, no item, no store account. Once 3+ observations exist for a food/storage pair, the community median replaces the catalog guess for everyone ("store-brand milk really lasts 11 days").
+
+   **Data quality — observations are tethered to real purchase dates.** Only items whose purchase date has provenance qualify: receipt-dated items (`source: 'receipt'`, purchase date read off the receipt itself) and in-app purchases (`source: 'purchase'`, bought via the cart flow that day). Manually added stock has an *assumed* date and never feeds the consensus — a week-old jug of milk added today would otherwise report a bogus 4-day shelf life. Implausible spans (beyond 4× the catalog baseline — a typo'd year, a misallocated receipt) are also rejected client-side, and the median aggregation shrugs off any stragglers that slip through. Requires the Supabase project; create the tables with:
 
 ```sql
 create table if not exists public.shelf_observations (
@@ -132,6 +134,8 @@ create table if not exists public.shelf_observations (
   food_id text not null,
   storage text not null default 'fridge',
   days int not null check (days between 0 and 365),
+  purchased_on date,
+  source text check (source in ('receipt','purchase')),
   user_id uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now()
 );
