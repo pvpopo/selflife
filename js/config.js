@@ -26,6 +26,11 @@
        catalog foods to Walmart products so the whole cart adds in one tap.
        Leave blank and the app falls back to hand-mapped ids + search links.
        Setup: see "Real-store carts" in the README. */
-    walmartProxy: 'https://shelflife-walmart.richvici.workers.dev'
+    walmartProxy: 'https://shelflife-walmart.richvici.workers.dev',
+
+    /* Second real store lane: URL of your deployed proxy/kroger-worker.js.
+       Kroger's public API adds true per-store stock levels. Setup steps are
+       at the top of that file; blank = lane stays off. */
+    krogerProxy: ''
   };
 })(typeof window !== 'undefined' ? window : globalThis);

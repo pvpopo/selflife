@@ -122,6 +122,10 @@
   const facade = Object.assign({}, local, {
     cloudReady: configured,
 
+    /* shared Supabase access for other modules (expiry consensus, etc.) */
+    supabaseClient() { return configured ? ensureClient() : Promise.resolve(null); },
+    cloudUserId() { return cloud ? cloud.uid : null; },
+
     current() { return cloud ? nsFor(cloud.uid) : local.current(); },
     isGuest() { return cloud ? false : local.isGuest(); },
     handle() { return cloud ? cloud.handle : local.current(); },

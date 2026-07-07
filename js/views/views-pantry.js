@@ -36,6 +36,63 @@
     });
   }
 
+  /* ---------- date correction: label photo or manual pick ---------- */
+  function saveCorrectedDate(item, iso, how, container) {
+    inv.update(item.id, { expiresISO: iso, verified: true });
+    // share the anonymous observation so estimates improve for everyone
+    const days = U.daysBetween(U.parseISO(item.purchasedISO), U.parseISO(iso));
+    if (g.SL.expiry) {
+      g.SL.expiry.recordObservation(item.foodId, item.storage, days).then((shared) => {
+        if (shared) ui.toast('Date set from ' + how + ' — thanks, this improves everyone’s estimates');
+        else ui.toast('Date set from ' + how);
+      });
+    } else ui.toast('Date set from ' + how);
+    render(container);
+  }
+
+  function scanLabelDate(item, container, closeParent) {
+    ui.sheet({
+      title: 'Scan the date label',
+      render(body, close) {
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'Photograph the best-by / use-by print on the package. It’s read on your device — the photo never leaves your phone.'));
+        const input = U.el('input', { class: 'file-input', type: 'file', accept: 'image/*', capture: 'environment', id: 'label-file' });
+        body.appendChild(U.el('label', { class: 'btn primary wide', for: 'label-file' }, '\u{1F4F8} Photo of the date'));
+        body.appendChild(input);
+        const progress = U.el('p', { class: 'muted center', 'aria-live': 'polite' }, '');
+        body.appendChild(progress);
+
+        input.addEventListener('change', async () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+          progress.textContent = 'Loading OCR engine…';
+          try {
+            const text = await receipt.scanImage(file, (pct) => { progress.textContent = 'Reading label… ' + pct + '%'; });
+            const iso = g.SL.expiry.parseDate(text, 'label');
+            if (!iso) { progress.textContent = 'Couldn’t find a date in that photo — try closer/steadier, or set it by hand below.'; return; }
+            close(); if (closeParent) closeParent();
+            ui.confirm('Date found: ' + U.fmtDateLong(iso), 'Use this as the use-by date for ' + FOODS.byId(item.foodId).name + '?', 'Use this date')
+              .then((yes) => { if (yes) saveCorrectedDate(item, iso, 'the label', container); });
+          } catch (err) {
+            progress.textContent = err.message || 'Scan failed — set the date by hand below.';
+          }
+        });
+
+        body.appendChild(U.el('div', { class: 'divider-or' }, 'or set it by hand'));
+        const dateIn = U.el('input', { class: 'input', type: 'date', value: item.expiresISO, 'aria-label': 'Use-by date' });
+        body.appendChild(dateIn);
+        body.appendChild(U.el('button', {
+          class: 'btn ghost wide',
+          onclick: () => {
+            if (!dateIn.value) return;
+            close(); if (closeParent) closeParent();
+            saveCorrectedDate(item, dateIn.value, 'your entry', container);
+          }
+        }, 'Save this date'));
+      }
+    });
+  }
+
   /* ---------- item detail ---------- */
   function openItem(item, container) {
     const food = FOODS.byId(item.foodId);
@@ -47,8 +104,20 @@
         const facts = U.el('div', { class: 'item-facts' });
         facts.appendChild(U.el('div', { class: 'item-fact' }, [U.el('span', { class: 'muted' }, 'Quantity'), U.el('b', { class: 'mono' }, U.fmtQty(item.qty, food.unit))]));
         facts.appendChild(U.el('div', { class: 'item-fact' }, [U.el('span', { class: 'muted' }, 'Purchased'), U.el('b', { class: 'mono' }, U.fmtDate(item.purchasedISO))]));
-        facts.appendChild(U.el('div', { class: 'item-fact' }, [U.el('span', { class: 'muted' }, 'Est. use by'), ui.expiryTag(st.days)]));
+        const src = item.verified ? null : (g.SL.expiry ? g.SL.expiry.estimateSource(food, item.storage) : { kind: 'catalog' });
+        facts.appendChild(U.el('div', { class: 'item-fact' }, [
+          U.el('span', { class: 'muted' }, item.verified ? 'Use by (from label)' : 'Est. use by'),
+          ui.expiryTag(st.days)
+        ]));
         body.appendChild(facts);
+        if (src && src.kind === 'community') {
+          body.appendChild(U.el('p', { class: 'muted small' }, 'Estimate refined from ' + src.n + ' community label scans of this food.'));
+        }
+
+        body.appendChild(U.el('button', {
+          class: 'btn ghost wide',
+          onclick: () => scanLabelDate(item, container, close)
+        }, '\u{1F4F8} Scan the date label (or fix the date)'));
 
         body.appendChild(U.el('h3', { class: 'sub' }, 'Is it still good?'));
         body.appendChild(U.el('p', { class: 'sheet-text' }, food.spoil));
@@ -167,7 +236,7 @@
           try {
             const text = await receipt.scanImage(file, (pct) => { progress.textContent = 'Reading receipt\u2026 ' + pct + '%'; });
             close();
-            reviewParsed(receipt.parseReceipt(text), container);
+            reviewParsed(receipt.parseReceipt(text), container, receipt.receiptDate(text));
           } catch (err) {
             progress.textContent = err.message || 'Scan failed \u2014 try pasting the text below.';
           }
@@ -182,31 +251,46 @@
             const parsed = receipt.parseReceipt(ta.value);
             if (!parsed.length) { ui.toast('Couldn\u2019t find item lines in that text.', 'warn'); return; }
             close();
-            reviewParsed(parsed, container);
+            reviewParsed(parsed, container, receipt.receiptDate(ta.value));
           }
         }, 'Parse pasted text'));
       }
     });
   }
 
-  function reviewParsed(parsed, container) {
+  function reviewParsed(parsed, container, dateISO) {
     if (!parsed.length) {
       ui.toast('No item lines found on that receipt.', 'warn');
       return;
     }
-    // rows: {raw, qty, match, storage, include}
+    const NF = g.SL.nonfood;
+    // rows: food matches go to the pantry; priced unmatched lines are
+    // presumed non-food purchases and auto-categorized
     const rows = parsed.map((p) => ({
-      raw: p.raw, text: p.text, qty: Math.max(1, p.qty || 1),
-      match: p.match, include: !!p.match,
+      raw: p.raw, text: p.text, qty: Math.max(1, p.qty || 1), price: p.price,
+      match: p.match, nonfood: p.match ? null : NF.classify(p.text),
+      include: !!p.match || (!p.match && p.price != null),
       storage: p.match ? FOODS.byId(p.match).storage : 'pantry'
     }));
+    let purchasedISO = dateISO || null;
 
     ui.sheet({
       title: 'Review scanned items',
       tall: true,
       render(body, close) {
         body.appendChild(U.el('p', { class: 'muted small' },
-          'OCR is guesswork on thermal paper \u2014 fix any bad matches before adding. Unmatched lines are skipped unless you assign them.'));
+          'OCR is guesswork on thermal paper \u2014 fix anything before adding. Lines that aren\u2019t food become household inventory, categorized automatically.'));
+
+        const dateRow = U.el('div', { class: 'field row-between' }, [
+          U.el('label', { class: 'field-label' }, purchasedISO ? 'Receipt date (dates count from here)' : 'Purchase date'),
+          (() => {
+            const d = U.el('input', { class: 'input date-inline', type: 'date', value: purchasedISO || U.iso(U.today()) });
+            d.addEventListener('change', () => { purchasedISO = d.value || null; });
+            return d;
+          })()
+        ]);
+        body.appendChild(dateRow);
+        if (dateISO) body.appendChild(U.el('p', { class: 'muted small' }, '\ud83d\udcc5 Found ' + U.fmtDateLong(dateISO) + ' printed on the receipt.'));
 
         rows.forEach((row) => {
           const box = U.el('div', { class: 'review-row' + (row.include ? '' : ' skipped') });
@@ -215,8 +299,7 @@
             class: 'check ' + (row.include ? 'on' : ''), type: 'button',
             'aria-label': 'Include ' + row.text,
             onclick: () => {
-              row.include = !row.include && !!row.match;
-              if (!row.match) ui.toast('Assign a food first', 'warn');
+              row.include = !row.include;
               toggle.classList.toggle('on', row.include);
               toggle.textContent = row.include ? '\u2713' : '';
               box.classList.toggle('skipped', !row.include);
@@ -226,35 +309,57 @@
           head.appendChild(U.el('span', { class: 'review-raw mono' }, row.raw));
           box.appendChild(head);
 
+          const label = () => row.match
+            ? '\u2192 ' + FOODS.byId(row.match).name
+            : '\u2192 ' + NF.byCat(row.nonfood).emoji + ' non-food \u00b7 ' + NF.byCat(row.nonfood).label;
           const matchBtn = U.el('button', {
             class: 'review-match', type: 'button',
-            onclick: () => ui.pickFood('Match \u201c' + row.text + '\u201d', (food) => {
-              row.match = food.id;
-              row.storage = food.storage;
-              row.include = true;
-              matchBtn.textContent = '\u2192 ' + food.name;
-              toggle.classList.add('on'); toggle.textContent = '\u2713';
-              box.classList.remove('skipped');
-            })
-          }, row.match ? '\u2192 ' + FOODS.byId(row.match).name : '\u2192 tap to assign a food');
+            onclick: () => assignRow(row, () => { matchBtn.textContent = label(); toggle.classList.add('on'); toggle.textContent = '\u2713'; box.classList.remove('skipped'); })
+          }, label());
           box.appendChild(matchBtn);
           body.appendChild(box);
         });
+
+        function assignRow(row, done) {
+          ui.sheet({
+            title: 'What is \u201c' + row.text + '\u201d?',
+            render(body2, close2) {
+              body2.appendChild(U.el('button', {
+                class: 'btn primary wide',
+                onclick: () => { close2(); ui.pickFood('Match \u201c' + row.text + '\u201d', (food) => { row.match = food.id; row.nonfood = null; row.storage = food.storage; row.include = true; done(); }); }
+              }, '\ud83c\udf4e It\u2019s a food \u2014 pick from catalog'));
+              body2.appendChild(U.el('div', { class: 'divider-or' }, 'or a household item'));
+              const chips = U.el('div', { class: 'chip-row' });
+              NF.CATEGORIES.forEach((c) => {
+                chips.appendChild(ui.chip(c.emoji + ' ' + c.label, {
+                  small: true, active: row.nonfood === c.id,
+                  onclick: () => { row.match = null; row.nonfood = c.id; row.include = true; close2(); done(); }
+                }));
+              });
+              body2.appendChild(chips);
+            }
+          });
+        }
 
         body.appendChild(U.el('div', { class: 'sheet-actions' }, [
           U.el('button', { class: 'btn ghost', onclick: close }, 'Cancel'),
           U.el('button', {
             class: 'btn primary',
             onclick: () => {
-              const lines = rows
+              const foodLines = rows
                 .filter((r) => r.include && r.match)
                 .map((r) => ({ foodId: r.match, packages: r.qty, storage: r.storage }));
-              if (!lines.length) { ui.toast('Nothing selected to add.', 'warn'); return; }
-              inv.addPurchases(lines, 'receipt');
+              const nfRows = rows.filter((r) => r.include && !r.match);
+              if (!foodLines.length && !nfRows.length) { ui.toast('Nothing selected to add.', 'warn'); return; }
+              if (foodLines.length) inv.addPurchases(foodLines, 'receipt', purchasedISO || undefined);
+              nfRows.forEach((r) => NF.add({ name: r.text, cat: r.nonfood, qty: r.qty, purchasedISO: purchasedISO || undefined, price: r.price }));
               close(); render(container);
-              ui.toast(lines.length + ' items added with estimated dates');
+              const bits = [];
+              if (foodLines.length) bits.push(foodLines.length + ' food');
+              if (nfRows.length) bits.push(nfRows.length + ' household');
+              ui.toast(bits.join(' + ') + ' items added' + (purchasedISO ? ' \u00b7 dated from receipt' : ''));
             }
-          }, 'Add to pantry')
+          }, 'Add everything')
         ]));
       }
     });
@@ -315,6 +420,101 @@
       card.appendChild(U.el('h3', { class: 'card-title' }, icon + ' ' + FOODS.STORAGE_LABELS[storage] + ' \u00b7 ' + fresh.length));
       fresh.forEach((item) => card.appendChild(itemRow(item, container)));
       container.appendChild(card);
+    });
+
+    container.appendChild(nonfoodCard(container));
+  }
+
+  /* ---------- household (non-food) inventory ---------- */
+  function nonfoodCard(container) {
+    const NF = g.SL.nonfood;
+    const all = NF.items();
+    const card = U.el('section', { class: 'card' });
+    card.appendChild(U.el('div', { class: 'card-title-row' }, [
+      U.el('h3', { class: 'card-title' }, '\u{1F9FB} Household & more' + (all.length ? ' \u00b7 ' + all.length : '')),
+      U.el('button', { class: 'btn small ghost', onclick: () => addNonfood(container) }, '+ Add')
+    ]));
+    if (!all.length) {
+      card.appendChild(U.el('p', { class: 'muted small' },
+        'Non-food purchases land here \u2014 receipt lines that aren\u2019t groceries are categorized automatically (cleaning, paper goods, personal care\u2026).'));
+      return card;
+    }
+    const groups = NF.grouped();
+    NF.CATEGORIES.forEach((c) => {
+      const items = groups[c.id];
+      if (!items || !items.length) return;
+      card.appendChild(U.el('div', { class: 'aisle-label small-caps' }, c.emoji + ' ' + c.label));
+      items.forEach((it) => {
+        card.appendChild(U.el('button', {
+          class: 'inv-row', type: 'button', onclick: () => openNonfood(it, container)
+        }, [
+          U.el('span', { class: 'list-info' }, [
+            U.el('b', {}, it.name),
+            U.el('small', { class: 'muted' }, (it.qty > 1 ? '\u00D7' + it.qty + ' \u00b7 ' : '') + 'bought ' + U.fmtDate(it.purchasedISO))
+          ]),
+          it.price != null ? U.el('span', { class: 'mono muted small' }, U.money(it.price)) : null
+        ]));
+      });
+    });
+    return card;
+  }
+
+  function openNonfood(item, container) {
+    const NF = g.SL.nonfood;
+    ui.sheet({
+      title: item.name,
+      render(body, close) {
+        body.appendChild(U.el('div', { class: 'field row-between' }, [
+          U.el('label', { class: 'field-label' }, 'Quantity'),
+          ui.stepper(item.qty, 1, 99, (v) => NF.update(item.id, { qty: v }))
+        ]));
+        const chips = U.el('div', { class: 'chip-row' });
+        NF.CATEGORIES.forEach((c) => {
+          chips.appendChild(ui.chip(c.emoji + ' ' + c.label, {
+            small: true, active: item.cat === c.id,
+            onclick: () => { NF.update(item.id, { cat: c.id }); close(); render(container); }
+          }));
+        });
+        body.appendChild(U.el('div', { class: 'field' }, [U.el('label', { class: 'field-label' }, 'Category'), chips]));
+        body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+          U.el('button', { class: 'btn ghost', onclick: () => { close(); render(container); } }, 'Done'),
+          U.el('button', {
+            class: 'btn danger',
+            onclick: () => { NF.remove(item.id); close(); render(container); ui.toast('Removed'); }
+          }, 'Used up \u2014 remove')
+        ]));
+      }
+    });
+  }
+
+  function addNonfood(container) {
+    const NF = g.SL.nonfood;
+    ui.sheet({
+      title: 'Add a household item',
+      render(body, close) {
+        const nameIn = U.el('input', { class: 'input', type: 'text', placeholder: 'e.g. Paper towels 6pk' });
+        body.appendChild(nameIn);
+        let cat = null;
+        const chips = U.el('div', { class: 'chip-row' });
+        NF.CATEGORIES.forEach((c) => {
+          chips.appendChild(ui.chip(c.emoji + ' ' + c.label, {
+            small: true,
+            onclick: (e) => { cat = c.id; U.$$('.chip', chips).forEach((x) => x.classList.remove('active')); e.currentTarget ? e.currentTarget.classList.add('active') : null; }
+          }));
+        });
+        body.appendChild(U.el('div', { class: 'field' }, [U.el('label', { class: 'field-label' }, 'Category (auto-guessed if left alone)'), chips]));
+        body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+          U.el('button', { class: 'btn ghost', onclick: close }, 'Cancel'),
+          U.el('button', {
+            class: 'btn primary',
+            onclick: () => {
+              if (!nameIn.value.trim()) { ui.toast('Give it a name first', 'warn'); return; }
+              NF.add({ name: nameIn.value, cat: cat || undefined });
+              close(); render(container); ui.toast('Added to household inventory');
+            }
+          }, 'Add')
+        ]));
+      }
     });
   }
 

@@ -72,6 +72,17 @@
     return g.SL.cartlink ? g.SL.cartlink.dataFor(foodId) : null;
   }
 
+  /* Kroger: second real lane — location-level stock via the Kroger API. */
+  const KROGER_ID = 'kroger';
+
+  function krogerLive(zip) {
+    return !!(g.SL.kroger && g.SL.kroger.enabled() && g.SL.kroger.locationFor(zip));
+  }
+
+  function krogerData(zip, foodId) {
+    return g.SL.kroger ? g.SL.kroger.dataFor(zip, foodId) : null;
+  }
+
   /* ---- which stores exist near this zip ---- */
   function nearbyStores(zip) {
     const z = String(zip || '00000').trim() || '00000';
@@ -90,8 +101,12 @@
     })).sort((a, b) => a.dist - b.dist);
     const dc = chainById.dashcart;
     result.push({ id: dc.id, name: dc.name, tag: dc.tag, delivery: true, fee: dc.fee, dist: 0 });
+    if (krogerLive(z)) {
+      const loc = g.SL.kroger.locationFor(z);
+      result.unshift({ id: KROGER_ID, name: loc.name, tag: 'live stock · ' + (loc.address || 'kroger.com'), delivery: false, fee: 0, dist: 0, online: true, liveNote: 'live · in-store stock' });
+    }
     if (walmartLive()) {
-      result.unshift({ id: WALMART.id, name: WALMART.name, tag: WALMART.tag, delivery: false, fee: 0, dist: 0, online: true });
+      result.unshift({ id: WALMART.id, name: WALMART.name, tag: WALMART.tag, delivery: false, fee: 0, dist: 0, online: true, liveNote: 'live · walmart.com' });
     }
     return result;
   }
@@ -101,6 +116,10 @@
     if (storeId === WALMART.id) {
       const m = walmartData(foodId);
       return !!(m && m.id && m.available !== false);
+    }
+    if (storeId === KROGER_ID) {
+      const m = krogerData(String(zip || ''), foodId);
+      return !!(m && m.available !== false);
     }
     const chain = effectiveChain(storeId);
     const baseId = chainById[storeId].base || storeId;
@@ -150,6 +169,11 @@
       const m = walmartData(food.id);
       if (m && typeof m.price === 'number') return { price: m.price, deal: null, live: true };
       // matched but priceless (hand-mapped id): estimate from catalog baseline
+      return { price: food.price, deal: null, live: false };
+    }
+    if (storeId === KROGER_ID) {
+      const m = krogerData(String(zip || ''), food.id);
+      if (m && typeof m.price === 'number') return { price: m.price, deal: null, live: true };
       return { price: food.price, deal: null, live: false };
     }
     const chain = effectiveChain(storeId);

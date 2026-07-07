@@ -60,6 +60,9 @@
     // arriving from a password-reset email → prompt for the new password
     if (auth.watchRecovery) auth.watchRecovery(() => g.SL.views.account.promptNewPassword());
 
+    // pull the community shelf-life consensus in the background (24h TTL)
+    if (g.SL.expiry) g.SL.expiry.refreshConsensus();
+
     // PWA: relative path so it works on GitHub Pages project sites
     if ('serviceWorker' in navigator && g.location.protocol.startsWith('http')) {
       navigator.serviceWorker.register('./sw.js').catch(() => { /* offline shell is a bonus, not a requirement */ });

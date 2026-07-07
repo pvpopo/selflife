@@ -117,6 +117,42 @@ The link needs Walmart item IDs, and the module resolves them in three tiers (be
 
 **AI agent hand-off (`js/agent.js`).** Alternatively, the same card produces a guard-railed markdown brief for an AI browsing agent (e.g. Claude with the Chrome extension): store, fulfillment, ZIP, every item with package size and acceptable substitutes, plus hard rules — use the existing session, never touch credentials or payment, stop at cart review. Works for Walmart, Kroger, Target, Safeway, H-E-B, Instacart, and Amazon Fresh.
 
+**Kroger lane (`proxy/kroger-worker.js` + `js/kroger.js`).** Kroger's public API is free, needs no paid membership, and — unlike Walmart's — reports **true per-store stock levels**. Setup (~10 min): register at [developer.kroger.com](https://developer.kroger.com) with the Products API, deploy the worker with your client ID/secret (walkthrough at the top of the file), and paste the worker URL into `js/config.js → krogerProxy`. Your nearest Kroger-family store (Kroger, Ralphs, Fred Meyer, King Soopers…) then joins the comparison with live location-level availability and prices.
+
+## Smarter expiration dates
+
+Three layers, most authoritative wins:
+
+1. **Catalog baseline** — FoodKeeper-style shelf life per storage location (`foods.js`), counted from the purchase date. Receipt scans use the **date printed on the receipt**, so a Tuesday receipt scanned Friday still counts from Tuesday.
+2. **Community consensus** — when someone corrects a date (label scan or manual edit), the app shares an anonymous observation: food + storage + how many days it was actually good for. Nothing personal — no user id is readable, no item, no store account. Once 3+ observations exist for a food/storage pair, the community median replaces the catalog guess for everyone ("store-brand milk really lasts 11 days"). Requires the Supabase project; create the tables with:
+
+```sql
+create table if not exists public.shelf_observations (
+  id bigint generated always as identity primary key,
+  food_id text not null,
+  storage text not null default 'fridge',
+  days int not null check (days between 0 and 365),
+  user_id uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now()
+);
+alter table public.shelf_observations enable row level security;
+create policy "insert own observations" on public.shelf_observations
+  for insert to authenticated with check (auth.uid() = user_id);
+
+create or replace view public.shelf_consensus as
+  select food_id, storage, count(*)::int as n,
+         percentile_cont(0.5) within group (order by days)::int as days
+  from public.shelf_observations
+  group by food_id, storage;
+grant select on public.shelf_consensus to anon, authenticated;
+```
+
+3. **The label itself** — every pantry item has *"📸 Scan the date label"*: photograph the best-by print, OCR runs on-device (Tesseract.js, photo never uploaded), the date parser handles `08/15/26`, `2026-08-15`, `BEST BY AUG 15` and friends, and the item switches from estimate to verified date. A manual date picker sits right under it.
+
+## Non-food inventory
+
+Receipt lines that aren't groceries (paper towels, detergent, toothpaste…) aren't dropped — they're auto-classified (cleaning / paper & wraps / personal care / health / pet / baby / kitchen & home / other, `js/nonfood.js`) into a **Household & more** section on the Pantry tab: quantity, category, purchase date, price. No expiry pressure, no meal planning — just an editable record of what the household owns.
+
 ## Cloud sign-in (Google & Apple) — optional
 
 The code is already in place (`js/auth-cloud.js`); it lights up when you give it a Supabase project. Until then the Google/Apple buttons explain what's missing and local accounts work as always. Supabase's JS client works from static sites — the anon key is designed to be public, row-level security does the guarding, and the OAuth flow uses PKCE so no tokens ever land in your code or URL history.

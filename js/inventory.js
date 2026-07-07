@@ -21,7 +21,9 @@
 
   function computeExpiry(foodId, storage, purchasedISO) {
     const food = FOODS.byId(foodId);
-    const days = FOODS.shelfDays(food, storage);
+    // community consensus (label-scan corrections) overrides the catalog
+    // baseline once enough observations exist — see expiry.js
+    const days = g.SL.expiry ? g.SL.expiry.estimateDays(food, storage) : FOODS.shelfDays(food, storage);
     return U.iso(U.addDays(U.parseISO(purchasedISO), days));
   }
 
@@ -46,9 +48,11 @@
     return item;
   }
 
-  /* lines: [{foodId, packages, storage?}] — used by the cart "purchased" flow
-     and by confirmed receipt scans. Quantity = packages × package size. */
-  function addPurchases(lines, source) {
+  /* lines: [{foodId, packages, storage?, purchasedISO?}] — used by the cart
+     "purchased" flow and by confirmed receipt scans. Quantity = packages ×
+     package size; a receipt's printed date becomes the purchase date so
+     estimates count from the day it was actually bought. */
+  function addPurchases(lines, source, purchasedISO) {
     const added = [];
     lines.forEach((line) => {
       const food = FOODS.byId(line.foodId);
@@ -57,6 +61,7 @@
         foodId: line.foodId,
         qty: line.packages * food.pkg.qty,
         storage: line.storage || food.storage,
+        purchasedISO: line.purchasedISO || purchasedISO,
         source: source || 'purchase'
       }));
     });

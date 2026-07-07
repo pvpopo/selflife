@@ -29,8 +29,9 @@ if (!globalThis.crypto || !globalThis.crypto.subtle) {
 const root = path.join(__dirname, '..');
 const LOGIC_FILES = [
   'js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/data/stores.js',
-  'js/db.js', 'js/auth.js', 'js/nutrition.js', 'js/inventory.js',
-  'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js', 'js/cartlink.js'
+  'js/db.js', 'js/auth.js', 'js/expiry.js', 'js/nutrition.js', 'js/inventory.js',
+  'js/nonfood.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js',
+  'js/cartlink.js', 'js/kroger.js'
 ];
 for (const f of LOGIC_FILES) {
   // receipt.js references document only inside functions; safe to load.
@@ -218,6 +219,35 @@ const U = SL.util;
   check(SL.cartlink.cartUrl(clItems).includes('10450115'), 'cached proxy matches join the one-tap cart link');
   SL.db.gdel('walmartIds');
   check(!SL.cartlink.canResolve() || typeof fetch === 'function', 'resolver only activates when a proxy is configured');
+
+  console.log('\n== Expiry intelligence ==');
+  const nextYear = new Date().getFullYear() + 1;
+  const dLabel = SL.expiry.parseDate('LOT 4432\nBEST BY 08/15/' + String(nextYear % 100).padStart(2, '0') + '\nKEEP REFRIGERATED', 'label');
+  check(dLabel === nextYear + '-08-15', 'label OCR text yields the BEST BY date (' + dLabel + ')');
+  const dMon = SL.expiry.parseDate('USE BY AUG 15', 'label');
+  check(!!dMon && dMon.slice(5) === '08-15', 'month-name dates parse with inferred year (' + dMon + ')');
+  const past = U.addDays(U.today(), -10);
+  const mdy = (past.getMonth() + 1) + '/' + past.getDate() + '/' + String(past.getFullYear()).slice(2);
+  const dRec = SL.receipt.receiptDate('FRESHMART #204\n' + mdy + ' 14:23\nCHKN BRST 9.49');
+  check(dRec === U.iso(past), 'receipt header date becomes the purchase date (' + dRec + ')');
+  SL.db.gset('shelfConsensus', { ts: Date.now(), map: { 'spinach:fridge': { n: 5, days: 9 } } });
+  check(SL.expiry.estimateDays(SL.foods.byId('spinach'), 'fridge') === 9, 'community consensus (n>=3) overrides the catalog estimate');
+  SL.db.gdel('shelfConsensus');
+  check(SL.expiry.estimateDays(SL.foods.byId('spinach'), 'fridge') === SL.foods.shelfDays(SL.foods.byId('spinach'), 'fridge'), 'estimate falls back to catalog baseline without consensus');
+  const backISO = U.iso(U.addDays(U.today(), -2));
+  const backdated = SL.inventory.addPurchases([{ foodId: 'spinach', packages: 1 }], 'receipt', backISO)[0];
+  check(backdated.purchasedISO === backISO && backdated.expiresISO > backdated.purchasedISO, 'receipt purchase date drives the estimate window');
+  SL.inventory.remove(backdated.id);
+
+  console.log('\n== Non-food inventory ==');
+  check(SL.nonfood.classify('BOUNTY PAPER TOWELS 6CT') === 'paper', 'paper goods classified');
+  check(SL.nonfood.classify('TIDE PODS 42CT') === 'cleaning', 'cleaning supplies classified');
+  check(SL.nonfood.classify('COLGATE TOOTHPASTE') === 'personal', 'personal care classified');
+  check(SL.nonfood.classify('MYSTERY GADGET') === 'other', 'unknown items fall back to Other');
+  const nf = SL.nonfood.add({ name: 'Bounty paper towels', qty: 2, price: 12.99 });
+  check(!!nf && nf.cat === 'paper' && SL.nonfood.items().length === 1, 'non-food item stored with auto category');
+  SL.nonfood.remove(nf.id);
+  check(!SL.kroger.enabled(), 'Kroger lane stays off until a proxy is configured');
 
   console.log('\n== Auth extras ==');
   await SL.auth.changePassword('password123', 'newpassword456');

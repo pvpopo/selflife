@@ -16,13 +16,22 @@
   let lastOptions = null; // ephemeral optimizer results for this visit
   let compareQueued = false; // set by the Plan tab's approve flow
 
-  /* Pull live walmart.com matches (price + availability) for the active list
-     so the synchronous optimizer can read them from the cache. */
-  async function warmWalmart(list) {
+  /* Pull live store data (Walmart matches, Kroger locations + stock) for the
+     active list so the synchronous optimizer can read it from the caches. */
+  async function warmLive(list) {
+    const items = g.SL.agent.itemsFromList(shopping.activeLines(list), FOODS);
+    const jobs = [];
     const CL = g.SL.cartlink;
-    if (!CL || !CL.canResolve()) return;
-    try { await CL.resolveIds(g.SL.agent.itemsFromList(shopping.activeLines(list), FOODS)); }
-    catch (e) { ui.toast(e.message, 'warn'); }
+    if (CL && CL.canResolve()) jobs.push(CL.resolveIds(items));
+    if (g.SL.kroger && g.SL.kroger.enabled()) jobs.push(g.SL.kroger.warm(planner.prefs().zip, items));
+    if (!jobs.length) return;
+    const results = await Promise.allSettled(jobs);
+    const failed = results.find((r) => r.status === 'rejected');
+    if (failed) ui.toast((failed.reason && failed.reason.message) || 'Some live store data is unavailable right now.', 'warn');
+  }
+
+  function anyLiveLane() {
+    return (g.SL.cartlink && g.SL.cartlink.canResolve()) || (g.SL.kroger && g.SL.kroger.enabled());
   }
 
   /* ---------- list section ---------- */
@@ -129,7 +138,7 @@
     box.appendChild(U.el('div', { class: 'option-head' }, [
       U.el('div', {}, [
         U.el('b', {}, names),
-        U.el('small', { class: 'muted' }, opt.stores.map((s) => s.delivery ? 'delivery' : (s.online ? 'live \u00b7 walmart.com' : s.dist + ' mi')).join(' \u00b7 '))
+        U.el('small', { class: 'muted' }, opt.stores.map((s) => s.delivery ? 'delivery' : (s.liveNote || (s.online ? 'live' : s.dist + ' mi'))).join(' \u00b7 '))
       ]),
       ui.tag(U.el('b', {}, U.money(opt.total)), isBest ? 'deal' : null)
     ]));
@@ -158,10 +167,12 @@
         p.zip ? 'ZIP ' + p.zip : 'Set ZIP')
     ]));
 
-    const CL = g.SL.cartlink;
+    const liveLanes = [];
+    if (g.SL.cartlink && g.SL.cartlink.canResolve()) liveLanes.push('Walmart (walmart.com prices)');
+    if (g.SL.kroger && g.SL.kroger.enabled()) liveLanes.push('Kroger (per-store stock)');
     card.appendChild(U.el('p', { class: 'muted small' },
-      (CL && CL.canResolve())
-        ? 'Walmart availability & prices are live from walmart.com. The other stores are a simulated demo (seeded by your ZIP) until their APIs are wired \u2014 see About.'
+      liveLanes.length
+        ? liveLanes.join(' and ') + (liveLanes.length === 1 ? ' is' : ' are') + ' live. The remaining stores are a simulated demo (seeded by your ZIP) until their APIs are wired \u2014 see About.'
         : 'Simulated stores & prices, seeded by your ZIP \u2014 the comparison, deals and substitutions are real logic on demo data. See About for wiring real store APIs.'));
 
     const list = shopping.currentList();
@@ -181,10 +192,10 @@
         class: 'btn primary wide',
         onclick: async (e) => {
           const btn = e.currentTarget;
-          if (g.SL.cartlink && g.SL.cartlink.canResolve()) {
+          if (anyLiveLane()) {
             btn.disabled = true;
-            btn.textContent = 'Checking live Walmart prices…';
-            await warmWalmart(list);
+            btn.textContent = 'Checking live store prices…';
+            await warmLive(list);
           }
           lastOptions = shopping.optimize();
           render(container);
@@ -508,5 +519,5 @@
 
   g.SL = g.SL || {};
   g.SL.views = g.SL.views || {};
-  g.SL.views.shop = { render, queueCompare: () => { compareQueued = true; lastOptions = null; } };
+  g.SL.views.shop = { render, warmLive, queueCompare: () => { compareQueued = true; lastOptions = null; } };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -93,6 +93,12 @@
     return parsed.filter((p, i) => i === 0 || p.raw !== parsed[i - 1].raw);
   }
 
+  /* The receipt's printed date (usually the header/footer) — becomes the
+     purchase date so expiry estimates count from the actual shopping day. */
+  function receiptDate(text) {
+    return g.SL.expiry ? g.SL.expiry.parseDate(text, 'receipt') : null;
+  }
+
   g.SL = g.SL || {};
-  g.SL.receipt = { ensureTesseract, scanImage, parseReceipt };
+  g.SL.receipt = { ensureTesseract, scanImage, parseReceipt, receiptDate };
 })(typeof window !== 'undefined' ? window : globalThis);
