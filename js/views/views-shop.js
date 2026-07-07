@@ -19,6 +19,10 @@
   /* Pull live store data (Walmart matches, Kroger locations + stock) for the
      active list so the synchronous optimizer can read it from the caches. */
   async function warmLive(list) {
+    // discover real nearby stores first so the optimizer prices against them
+    if (g.SL.places) {
+      try { await g.SL.places.ensure(planner.prefs()); } catch (e) { /* roster falls back to demo */ }
+    }
     const items = g.SL.agent.itemsFromList(shopping.activeLines(list), FOODS);
     const jobs = [];
     const CL = g.SL.cartlink;
@@ -32,6 +36,86 @@
 
   function anyLiveLane() {
     return (g.SL.cartlink && g.SL.cartlink.canResolve()) || (g.SL.kroger && g.SL.kroger.enabled());
+  }
+
+  /* ---------- where are you shopping? ---------- */
+  function locationSheet(container) {
+    const PL = g.SL.places;
+    ui.sheet({
+      title: 'Where are you shopping?',
+      render(body, close) {
+        const p = planner.prefs();
+        const status = U.el('p', { class: 'muted small', 'aria-live': 'polite' },
+          typeof p.lat === 'number'
+            ? 'Currently: ' + (p.place || p.lat + ', ' + p.lon) + ' — real stores within ' + (p.radiusMi || 5) + ' miles via OpenStreetMap.'
+            : 'No location set — the store comparison uses a simulated demo roster until you set one.');
+        body.appendChild(status);
+
+        async function saveLocation(loc) {
+          const cur = planner.prefs();
+          cur.lat = loc.lat; cur.lon = loc.lon; cur.place = loc.place || cur.place;
+          if (loc.zip) cur.zip = loc.zip;
+          planner.savePrefs(cur);
+          status.textContent = 'Finding grocery stores near ' + (loc.place || 'you') + '…';
+          try {
+            const entry = await PL.ensure(planner.prefs());
+            close(); render(container);
+            ui.toast(entry && entry.stores.length
+              ? 'Found ' + entry.stores.length + ' real stores near ' + (loc.place || 'you')
+              : 'No supermarkets found in range — try a bigger radius', entry && entry.stores.length ? undefined : 'warn');
+          } catch (e) { status.textContent = e.message; }
+        }
+
+        body.appendChild(U.el('button', {
+          class: 'btn primary wide',
+          onclick: async (ev) => {
+            ev.currentTarget.disabled = true;
+            status.textContent = 'Looking up your location…';
+            try {
+              const loc = await PL.locate();
+              status.textContent = 'You’re near ' + (loc.place || (loc.lat + ', ' + loc.lon)) + (loc.zip ? ' (' + loc.zip + ')' : '') + '.';
+              await saveLocation(loc);
+            } catch (e) { status.textContent = e.message; ev.currentTarget && (ev.currentTarget.disabled = false); }
+          }
+        }, '📍 Use my current location'));
+
+        body.appendChild(U.el('div', { class: 'divider-or' }, 'or by ZIP'));
+        const zipIn = U.el('input', { class: 'input', type: 'text', inputmode: 'numeric', placeholder: 'ZIP code', value: p.zip || '' });
+        body.appendChild(zipIn);
+        body.appendChild(U.el('button', {
+          class: 'btn ghost wide',
+          onclick: async () => {
+            status.textContent = 'Looking up that ZIP…';
+            try { await saveLocation(await PL.geocodeZip(zipIn.value)); }
+            catch (e) { status.textContent = e.message; }
+          }
+        }, 'Find stores near this ZIP'));
+
+        const radWrap = U.el('div', { class: 'field' });
+        radWrap.appendChild(U.el('label', { class: 'field-label' }, 'Search radius'));
+        const radRow = U.el('div', { class: 'chip-row' });
+        [2, 5, 10, 20].forEach((mi) => {
+          radRow.appendChild(ui.chip(mi + ' mi', {
+            small: true, active: (p.radiusMi || 5) === mi,
+            onclick: async () => {
+              const cur = planner.prefs();
+              cur.radiusMi = mi;
+              planner.savePrefs(cur);
+              if (typeof cur.lat === 'number') {
+                status.textContent = 'Re-searching within ' + mi + ' miles…';
+                try { const entry = await PL.ensure(planner.prefs()); close(); render(container); ui.toast('Found ' + (entry ? entry.stores.length : 0) + ' stores within ' + mi + ' mi'); }
+                catch (e) { status.textContent = e.message; }
+              } else { close(); locationSheet(container); }
+            }
+          }));
+        });
+        radWrap.appendChild(radRow);
+        body.appendChild(radWrap);
+
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'Store discovery uses OpenStreetMap — free and privacy-friendly; your coordinates stay on this device except for the map lookups themselves.'));
+      }
+    });
   }
 
   /* ---------- list section ---------- */
@@ -170,10 +254,13 @@
     const liveLanes = [];
     if (g.SL.cartlink && g.SL.cartlink.canResolve()) liveLanes.push('Walmart (walmart.com prices)');
     if (g.SL.kroger && g.SL.kroger.enabled()) liveLanes.push('Kroger (per-store stock)');
+    const realRoster = g.SL.places && g.SL.places.cachedFor();
     card.appendChild(U.el('p', { class: 'muted small' },
-      liveLanes.length
-        ? liveLanes.join(' and ') + (liveLanes.length === 1 ? ' is' : ' are') + ' live. The remaining stores are a simulated demo (seeded by your ZIP) until their APIs are wired \u2014 see About.'
-        : 'Simulated stores & prices, seeded by your ZIP \u2014 the comparison, deals and substitutions are real logic on demo data. See About for wiring real store APIs.'));
+      realRoster
+        ? 'These are real stores near ' + (realRoster.place || 'you') + ' (OpenStreetMap). ' + (liveLanes.length ? liveLanes.join(' and ') + ' pricing is live; other stores show estimates until their APIs are wired.' : 'Prices are estimates until retailer APIs are wired \u2014 see About.')
+        : liveLanes.length
+          ? liveLanes.join(' and ') + (liveLanes.length === 1 ? ' is' : ' are') + ' live. The remaining stores are a simulated demo (seeded by your ZIP) \u2014 set a location (\ud83d\udccd above) for real nearby stores.'
+          : 'Simulated demo stores \u2014 tap \ud83d\udccd above to pull real grocery stores near you. Prices stay estimates until retailer APIs are wired.'));
 
     const list = shopping.currentList();
     const active = list ? shopping.activeLines(list) : [];
@@ -506,7 +593,12 @@
       }
     }
     container.innerHTML = '';
-    container.appendChild(ui.header('Buy smart', 'Shop'));
+    const p0 = planner.prefs();
+    const locLabel = (typeof p0.lat === 'number')
+      ? '📍 ' + (p0.place || 'Located') + ' · ' + (p0.radiusMi || 5) + ' mi'
+      : '📍 Set location';
+    container.appendChild(ui.header('Buy smart', 'Shop',
+      U.el('button', { class: 'btn small ghost', onclick: () => locationSheet(container) }, locLabel)));
     container.appendChild(listCard(container));
     const cart = cartCard(container);
     container.appendChild(optimizerCard(container));

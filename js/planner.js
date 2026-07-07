@@ -24,7 +24,12 @@
     servings: 2,
     slots: { breakfast: true, lunch: true, dinner: true },
     zip: '',
-    maxStores: 2
+    maxStores: 2,
+    // real store discovery (places.js): coordinates + search radius
+    lat: null,
+    lon: null,
+    place: '',
+    radiusMi: 5
   };
 
   function prefs() { return { ...DEFAULT_PREFS, ...db.get(PREFS_KEY, {}), slots: { ...DEFAULT_PREFS.slots, ...(db.get(PREFS_KEY, {}).slots || {}) } }; }

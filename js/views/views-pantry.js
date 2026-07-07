@@ -128,6 +128,11 @@
         body.appendChild(U.el('p', { class: 'muted small' }, inv.DISCLAIMER));
 
         body.appendChild(U.el('button', {
+          class: 'btn primary wide',
+          onclick: () => { close(); cookItUp(item, container); }
+        }, '🍳 Use it in a meal'));
+
+        body.appendChild(U.el('button', {
           class: 'btn ghost wide',
           onclick: () => ui.foodInfo(food)
         }, 'ℹ️ Nutrition, shelf life & swaps for ' + food.name.toLowerCase()));
@@ -174,6 +179,41 @@
             }
           }, st.level === 'past' ? 'Tossed it \u2014 remove' : 'All used up \u2014 remove')
         ]));
+      }
+    });
+  }
+
+  /* ---------- cook it up: recipes for this item, ranked by what else
+     they'd rescue from the expiring shelf ---------- */
+  function cookItUp(item, container) {
+    const food = FOODS.byId(item.foodId);
+    const recipes = planner.recipesUsing(item.foodId, 6);
+    ui.sheet({
+      title: 'Cook the ' + food.name.toLowerCase(),
+      tall: true,
+      render(body) {
+        if (!recipes.length) {
+          body.appendChild(U.el('p', { class: 'muted' }, 'No recipes match your diet and allergen filters for this ingredient. Loosen a filter in preferences to see options.'));
+          return;
+        }
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'Ranked to work through your pantry: recipes that also use up other food expiring in the next few days float to the top.'));
+        recipes.forEach((r) => {
+          const others = planner.rescues(r).filter((x) => x.foodId !== item.foodId);
+          const n = g.SL.nutrition.perServing(r);
+          body.appendChild(U.el('button', {
+            class: 'swap-row', type: 'button',
+            onclick: () => g.SL.views.plan.openRecipe(r)
+          }, [
+            U.el('span', { class: 'recipe-emoji sm', 'aria-hidden': 'true' }, r.emoji),
+            U.el('span', { class: 'swap-name' }, [
+              U.el('b', {}, r.name),
+              U.el('small', { class: 'muted' }, r.cuisine + ' · ' + r.time + ' min · ' + n.cal + ' cal'),
+              others.length ? U.el('small', { class: 'rescue-note' }, '⚡ also uses: ' + others.slice(0, 3).map((x) => FOODS.byId(x.foodId).name.toLowerCase() + ' (' + x.days + 'd)').join(', ')) : null
+            ])
+          ]));
+        });
+        body.appendChild(U.el('p', { class: 'muted small center' }, 'Open any recipe to add it to this week’s plan.'));
       }
     });
   }

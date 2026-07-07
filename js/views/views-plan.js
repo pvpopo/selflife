@@ -184,11 +184,12 @@
     });
   }
 
-  /* ---------- swap sheet ---------- */
+  /* ---------- swap/pick sheet: search the whole repository, ranked so
+     recipes that rescue expiring stock and use the pantry come first ---------- */
   function openSwap(dayIndex, slot, currentId) {
-    const alts = planner.alternatives(slot, currentId, 10);
+    const pool = planner.alternatives(slot, currentId, 500);
     ui.sheet({
-      title: 'Swap ' + slot,
+      title: (currentId ? 'Swap ' : 'Pick ') + slot,
       tall: true,
       render(body, close) {
         if (currentId) {
@@ -197,21 +198,52 @@
             onclick: () => { planner.setSlot(dayIndex, slot, null); if (shopping.currentList()) shopping.rebuildList(); close(); render(U.$('#view')); ui.toast('Slot cleared'); }
           }, 'Leave this slot empty'));
         }
-        if (!alts.length) {
+        if (!pool.length) {
           body.appendChild(U.el('p', { class: 'muted' }, 'No other recipes match your diet and allergen settings for this slot. Loosen a filter in preferences to see more.'));
           return;
         }
-        alts.forEach((r) => {
-          const n = nutrition.perServing(r);
-          body.appendChild(U.el('button', {
-            class: 'swap-row', type: 'button',
-            onclick: () => { planner.setSlot(dayIndex, slot, r.id); const hadList = !!shopping.currentList(); if (hadList) shopping.rebuildList(); close(); render(U.$('#view')); ui.toast('Swapped in ' + r.name + (hadList ? ' · list updated' : '')); }
-          }, [
-            U.el('span', { class: 'recipe-emoji sm', 'aria-hidden': 'true' }, r.emoji),
-            U.el('span', { class: 'swap-name' }, [U.el('b', {}, r.name), U.el('small', { class: 'muted' }, r.cuisine + ' \u00b7 ' + r.time + ' min')]),
-            ui.tag(U.el('b', {}, n.cal + ' cal'))
-          ]));
+
+        const search = U.el('input', {
+          class: 'input', type: 'search',
+          placeholder: 'Search ' + pool.length + ' matching recipes…',
+          'aria-label': 'Search recipes for this slot'
         });
+        body.appendChild(search);
+        body.appendChild(U.el('p', { class: 'muted small' }, 'Sorted smart: recipes that use up your expiring food and pantry stock rank first.'));
+        const listWrap = U.el('div');
+        body.appendChild(listWrap);
+
+        function draw() {
+          listWrap.innerHTML = '';
+          const q = U.normalize(search.value);
+          const hits = !q ? pool : pool.filter((r) => {
+            const hay = U.normalize(r.name + ' ' + r.cuisine + ' ' + r.ing.map((i) => (FOODS.byId(i.f) || {}).name).join(' '));
+            return hay.includes(q);
+          });
+          if (!hits.length) {
+            listWrap.appendChild(U.el('p', { class: 'muted' }, 'Nothing matches — try a different word.'));
+            return;
+          }
+          hits.slice(0, 15).forEach((r) => {
+            const n = nutrition.perServing(r);
+            const resc = planner.rescues(r);
+            listWrap.appendChild(U.el('button', {
+              class: 'swap-row', type: 'button',
+              onclick: () => { planner.setSlot(dayIndex, slot, r.id); const hadList = !!shopping.currentList(); if (hadList) shopping.rebuildList(); close(); render(U.$('#view')); ui.toast((currentId ? 'Swapped in ' : 'Added ') + r.name + (hadList ? ' · list updated' : '')); }
+            }, [
+              U.el('span', { class: 'recipe-emoji sm', 'aria-hidden': 'true' }, r.emoji),
+              U.el('span', { class: 'swap-name' }, [
+                U.el('b', {}, r.name),
+                U.el('small', { class: 'muted' }, r.cuisine + ' · ' + r.time + ' min'),
+                resc.length ? U.el('small', { class: 'rescue-note' }, '⚡ uses your ' + rescueNames(resc, 2) + ' (' + resc[0].days + 'd left)') : null
+              ]),
+              ui.tag(U.el('b', {}, n.cal + ' cal'))
+            ]));
+          });
+          if (hits.length > 15) listWrap.appendChild(U.el('p', { class: 'muted small center' }, '+ ' + (hits.length - 15) + ' more — keep typing to narrow it down.'));
+        }
+        search.addEventListener('input', U.debounce(draw, 150));
+        draw();
       }
     });
   }

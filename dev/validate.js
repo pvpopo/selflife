@@ -31,7 +31,7 @@ const LOGIC_FILES = [
   'js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/data/stores.js',
   'js/db.js', 'js/auth.js', 'js/expiry.js', 'js/nutrition.js', 'js/inventory.js',
   'js/nonfood.js', 'js/subs.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js',
-  'js/cartlink.js', 'js/kroger.js'
+  'js/cartlink.js', 'js/kroger.js', 'js/places.js'
 ];
 for (const f of LOGIC_FILES) {
   // receipt.js references document only inside functions; safe to load.
@@ -273,6 +273,14 @@ const U = SL.util;
   check(!!nf && nf.cat === 'paper' && SL.nonfood.items().length === 1, 'non-food item stored with auto category');
   SL.nonfood.remove(nf.id);
   check(!SL.kroger.enabled(), 'Kroger lane stays off until a proxy is configured');
+
+  console.log('\n== Store discovery (places) ==');
+  const dNYtoLA = SL.places.distMi(40.7128, -74.006, 34.0522, -118.2437);
+  check(dNYtoLA > 2400 && dNYtoLA < 2500, 'haversine distance sane (NYC–LA = ' + dNYtoLA + ' mi)');
+  check(SL.places.chainOf('Walmart Supercenter') === 'walmart', 'Walmart banners chain-match');
+  check(SL.places.chainOf('Fred Meyer') === 'kroger' && SL.places.chainOf('King Soopers') === 'kroger', 'Kroger-family banners chain-match');
+  check(SL.places.chainOf("Trader Joe's") === null, 'independent stores stay unmatched');
+  check(SL.places.cachedFor() === null || SL.stores.nearbyStores('98101').length > 0, 'roster resolves with or without a location set');
 
   console.log('\n== Auth extras ==');
   await SL.auth.changePassword('password123', 'newpassword456');

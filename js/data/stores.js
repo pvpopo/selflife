@@ -83,9 +83,42 @@
     return g.SL.kroger ? g.SL.kroger.dataFor(zip, foodId) : null;
   }
 
+  /* ---- real stores discovered via OpenStreetMap (places.js) ----
+     When the user has set a location, the roster is REAL nearby stores with
+     real names and distances. Chain-matched stores attach to live retailer
+     lanes; the rest get clearly-labeled estimated pricing seeded by name. */
+  function osmRoster() {
+    return (g.SL.places && g.SL.places.cachedFor) ? g.SL.places.cachedFor() : null;
+  }
+
+  function osmStore(storeId) {
+    const r = osmRoster();
+    return r ? r.stores.find((s) => s.id === storeId) : null;
+  }
+
   /* ---- which stores exist near this zip ---- */
   function nearbyStores(zip) {
     const z = String(zip || '00000').trim() || '00000';
+
+    const osm = osmRoster();
+    if (osm) {
+      const result = osm.stores.map((s) => ({
+        id: s.id,
+        name: s.name,
+        tag: s.chain === 'walmart' && walmartLive() ? 'live · walmart.com prices'
+          : s.chain === 'kroger' && g.SL.kroger && g.SL.kroger.enabled() ? 'live · Kroger stock'
+          : 'nearby · estimated prices',
+        delivery: false,
+        fee: 0,
+        dist: s.dist,
+        real: true,
+        liveNote: (s.chain === 'walmart' && walmartLive()) ? 'live · walmart.com'
+          : (s.chain === 'kroger' && g.SL.kroger && g.SL.kroger.enabled()) ? 'live · in-store stock' : null
+      }));
+      const dc = chainById.dashcart;
+      result.push({ id: dc.id, name: dc.name, tag: 'Delivery · demo', delivery: true, fee: dc.fee, dist: 0 });
+      return result;
+    }
     const rng = U.rngFor('stores:' + z);
     const physical = CHAINS.filter((c) => !c.delivery);
     // Pick 4–5 physical stores deterministically, always include the delivery option.
@@ -113,6 +146,20 @@
 
   /* ---- is a given food stocked at a given store (stable per zip) ---- */
   function isAvailable(storeId, foodId, zip) {
+    if (String(storeId).indexOf('osm_') === 0) {
+      const e = osmStore(storeId);
+      if (!e) return false;
+      if (e.chain === 'walmart' && walmartLive()) {
+        const m = walmartData(foodId);
+        return !!(m && m.id && m.available !== false);
+      }
+      if (e.chain === 'kroger') {
+        const m = krogerData(String(zip || ''), foodId);
+        if (m) return m.available !== false;
+      }
+      if (!FOODS.byId(foodId)) return false;
+      return U.rngFor(['avail', e.name, foodId].join(':'))() < 0.93;
+    }
     if (storeId === WALMART.id) {
       const m = walmartData(foodId);
       return !!(m && m.id && m.available !== false);
@@ -135,26 +182,30 @@
   }
 
   /* ---- weekly deals: a rotating set of discounted foods per store ---- */
-  function dealSet(storeId, zip, date) {
-    const baseId = chainById[storeId].base || storeId;
+  function dealSetSeeded(seedBase, zip, date, produceLove) {
     const week = U.isoWeek(date || new Date()) + ':' + (date || new Date()).getFullYear();
-    const rng = U.rngFor(['deals', baseId, String(zip || ''), week].join(':'));
-    const chain = chainById[baseId];
-    const pool = FOODS.list.filter((f) => {
-      if (chain.produceLove) return true;
-      return true;
-    });
+    const rng = U.rngFor(['deals', seedBase, String(zip || ''), week].join(':'));
+    const pool = FOODS.list;
     const deals = {};
     const n = 8 + Math.floor(rng() * 5); // 8–12 deals
     let guard = 0;
     while (Object.keys(deals).length < n && guard++ < 200) {
       const f = pool[Math.floor(rng() * pool.length)];
       if (deals[f.id]) continue;
-      if (chain.produceLove && f.cat !== 'produce' && rng() < 0.45) continue; // co-op leans produce
+      if (produceLove && f.cat !== 'produce' && rng() < 0.45) continue; // co-op leans produce
       const pct = 0.10 + rng() * 0.20; // 10–30% off
       deals[f.id] = Math.round(pct * 100) / 100;
     }
     return deals;
+  }
+
+  function dealSet(storeId, zip, date) {
+    if (String(storeId).indexOf('osm_') === 0) {
+      const e = osmStore(storeId);
+      return dealSetSeeded(e ? e.name : storeId, zip, date, false);
+    }
+    const baseId = chainById[storeId].base || storeId;
+    return dealSetSeeded(baseId, zip, date, !!chainById[baseId].produceLove);
   }
 
   /* charm pricing: 3.47 -> 3.49, 3.51 -> 3.49 */
@@ -165,6 +216,28 @@
 
   /* ---- price of one package of `food` at `storeId` ---- */
   function priceFor(storeId, food, zip, date) {
+    if (String(storeId).indexOf('osm_') === 0) {
+      const e = osmStore(storeId);
+      if (e && e.chain === 'walmart' && walmartLive()) {
+        const m = walmartData(food.id);
+        if (m && typeof m.price === 'number') return { price: m.price, deal: null, live: true };
+      }
+      if (e && e.chain === 'kroger') {
+        const m = krogerData(String(zip || ''), food.id);
+        if (m && typeof m.price === 'number') return { price: m.price, deal: null, live: true };
+      }
+      const jitter = 0.88 + U.rngFor(['price', e ? e.name : storeId, food.id].join(':'))() * 0.24;
+      let price = food.price * jitter;
+      const deals = dealSet(storeId, zip, date);
+      let deal = null;
+      if (deals[food.id]) {
+        const pct = deals[food.id];
+        const was = charm(price);
+        price = price * (1 - pct);
+        deal = { pct: Math.round(pct * 100), was };
+      }
+      return { price: charm(price), deal };
+    }
     if (storeId === WALMART.id) {
       const m = walmartData(food.id);
       if (m && typeof m.price === 'number') return { price: m.price, deal: null, live: true };
