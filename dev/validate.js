@@ -30,7 +30,7 @@ const root = path.join(__dirname, '..');
 const LOGIC_FILES = [
   'js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/data/stores.js',
   'js/db.js', 'js/auth.js', 'js/expiry.js', 'js/nutrition.js', 'js/inventory.js',
-  'js/nonfood.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js',
+  'js/nonfood.js', 'js/subs.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js',
   'js/cartlink.js', 'js/kroger.js'
 ];
 for (const f of LOGIC_FILES) {
@@ -252,6 +252,17 @@ const U = SL.util;
   check(SL.recipes.CUISINES.includes('Testland'), 'cuisine list refreshes after registration');
   const replaced = SL.recipes.register([{ ...okDoc, name: 'Test remote dish v2' }]);
   check(replaced === 1 && SL.recipes.list.length === recipeCountBefore + 1 && SL.recipes.byId('test_remote_dish').name === 'Test remote dish v2', 'same-id registration replaces, never duplicates');
+
+  console.log('\n== Substitutions ==');
+  const vHoney = SL.subs.veganize(SL.recipes.byId('honey_lime_chicken_rice') || { ing: [{ f: 'chicken_thigh', q: 1 }, { f: 'honey', q: 1 }], diets: [] });
+  check(vHoney.possible && vHoney.swaps.some((s) => s.from === 'chicken_thigh' && s.to === 'tofu') && vHoney.swaps.some((s) => s.from === 'honey' && s.to === 'maple_syrup'), 'veganize proposes tofu-for-chicken and maple-for-honey with notes');
+  const vBurger = SL.subs.veganize({ ing: [{ f: 'ground_beef', q: 400 }, { f: 'cheddar', q: 60 }], diets: [] });
+  check(!vBurger.possible && vBurger.blockers.some((b) => b.foodId === 'cheddar'), 'veganize is honest about cheese blockers');
+  check(SL.subs.veganize({ ing: [{ f: 'tofu', q: 1 }], diets: ['vegan'] }).alreadyVegan === true, 'already-vegan recipes are recognized');
+  check(SL.subs.pinchFor('spaghetti').some((s) => s.id === 'penne'), 'pinch swaps offer penne for spaghetti');
+  check(SL.subs.pinchFor('kale').some((s) => s.id === 'spinach'), 'pinch swaps offer spinach for kale');
+  const rankedUsing = SL.planner.recipesUsing('spinach', 5);
+  check(rankedUsing.length > 0 && rankedUsing.every((r) => r.ing.some((i) => i.f === 'spinach')), 'recipesUsing returns ranked spinach recipes');
 
   console.log('\n== Non-food inventory ==');
   check(SL.nonfood.classify('BOUNTY PAPER TOWELS 6CT') === 'paper', 'paper goods classified');

@@ -168,12 +168,18 @@
     return g.SL.nutrition.sumPerServing(list);
   }
 
-  /* Which planned meals a given inventory food shows up in (for "use it up"). */
+  /* Recipes that use a given inventory food, ranked the smart way: how much
+     expiring stock the recipe rescues plus how much of it the pantry already
+     covers — so with a 1000-recipe pool, the suggestions that surface are
+     the ones that genuinely work through what you own. */
   function recipesUsing(foodId, limit) {
     const p = prefs();
     return RECIPES.list
       .filter((r) => eligible(r, p) && r.ing.some((ing) => ing.f === foodId))
-      .slice(0, limit || 3);
+      .map((r) => ({ r, s: expiringBoost(r, p) + coverageScore(r, p) }))
+      .sort((a, b) => b.s - a.s)
+      .slice(0, limit || 3)
+      .map((x) => x.r);
   }
 
   /* Expiring stock (≤ horizon days) this recipe would use — the "cook this

@@ -127,6 +127,11 @@
         body.appendChild(U.el('p', { class: 'sheet-text' }, food.spoil));
         body.appendChild(U.el('p', { class: 'muted small' }, inv.DISCLAIMER));
 
+        body.appendChild(U.el('button', {
+          class: 'btn ghost wide',
+          onclick: () => ui.foodInfo(food)
+        }, 'ℹ️ Nutrition, shelf life & swaps for ' + food.name.toLowerCase()));
+
         body.appendChild(U.el('h3', { class: 'sub' }, 'Storage'));
         const stRow = U.el('div', { class: 'chip-row' });
         ['pantry', 'fridge', 'freezer'].forEach((s) => {

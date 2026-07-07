@@ -71,25 +71,68 @@
             'Contains: ' + recipe.allergens.map((a) => ui.ALLERGEN_LABELS[a] || a).join(', ')));
         }
 
-        body.appendChild(U.el('h3', { class: 'sub' }, 'Ingredients \u00b7 for ' + p.servings + ' ' + U.plural(p.servings, 'serving')));
-        const scale = p.servings / recipe.servings;
+        // ---- ingredients: dynamic servings, tappable foods, pinch hints ----
+        let servings = p.servings;
+        const ingHead = U.el('div', { class: 'row-between' });
+        const ingTitle = U.el('h3', { class: 'sub' }, '');
+        ingHead.appendChild(ingTitle);
+        ingHead.appendChild(ui.stepper(servings, 1, 12, (v) => { servings = v; drawIngredients(); }));
+        body.appendChild(ingHead);
         const ingList = U.el('ul', { class: 'ing-list' });
-        recipe.ing.forEach((ing) => {
-          const food = FOODS.byId(ing.f);
-          const need = ing.q * scale;
-          const have = inv.usableQty(ing.f);
-          const enough = have >= need;
-          const some = have > 0 && !enough;
-          const days = have > 0 ? inv.soonestDays(ing.f) : Infinity;
-          ingList.appendChild(U.el('li', { class: 'ing-row' }, [
-            U.el('span', { class: 'ing-check ' + (enough ? 'ok' : some ? 'part' : ''), 'aria-hidden': 'true' }, enough ? '\u2713' : some ? '\u25d1' : ''),
-            U.el('span', { class: 'ing-name' }, food.name),
-            (isFinite(days) && days <= 4) ? ui.expiryTag(days) : null,
-            U.el('span', { class: 'ing-qty mono' }, U.fmtQty(need, food.unit))
-          ]));
-        });
         body.appendChild(ingList);
-        body.appendChild(U.el('p', { class: 'legend muted' }, '\u2713 in your pantry \u00b7 \u25d1 partly \u2014 based on estimated-fresh stock'));
+        const totalLine = U.el('p', { class: 'legend muted' }, '');
+        body.appendChild(totalLine);
+
+        function drawIngredients() {
+          ingTitle.textContent = 'Ingredients \u00b7 ' + servings + ' ' + U.plural(servings, 'serving');
+          ingList.innerHTML = '';
+          const scale = servings / recipe.servings;
+          const subsAvail = g.SL.subs ? g.SL.subs.inStockAlternatives(recipe, servings) : [];
+          recipe.ing.forEach((ing) => {
+            const food = FOODS.byId(ing.f);
+            if (!food) return;
+            const need = ing.q * scale;
+            const have = inv.usableQty(ing.f);
+            const enough = have >= need;
+            const some = have > 0 && !enough;
+            const days = have > 0 ? inv.soonestDays(ing.f) : Infinity;
+            const alt = subsAvail.find((a) => a.foodId === ing.f);
+            const row = U.el('li', { class: 'ing-row tappable' }, [
+              U.el('span', { class: 'ing-check ' + (enough ? 'ok' : some ? 'part' : ''), 'aria-hidden': 'true' }, enough ? '\u2713' : some ? '\u25d1' : ''),
+              U.el('span', { class: 'ing-name' }, [
+                food.name,
+                alt ? U.el('small', { class: 'pinch-hint' }, 'in a pinch: ' + alt.sub.name + ' \u2713') : null
+              ]),
+              (isFinite(days) && days <= 4) ? ui.expiryTag(days) : null,
+              U.el('span', { class: 'ing-qty mono' }, U.fmtQty(need, food.unit))
+            ]);
+            row.addEventListener('click', () => ui.foodInfo(food));
+            ingList.appendChild(row);
+          });
+          totalLine.textContent = '\u2713 in your pantry \u00b7 \u25d1 partly \u00b7 tap any ingredient for nutrition, shelf life & swaps \u00b7 whole recipe \u2248 ' + (n.cal * servings) + ' cal';
+        }
+        drawIngredients();
+
+        // ---- make it vegan ----
+        if (g.SL.subs && !(recipe.diets || []).includes('vegan')) {
+          const v = g.SL.subs.veganize(recipe);
+          if (v.possible && v.swaps.length) {
+            const card = U.el('div', { class: 'vegan-card' });
+            card.appendChild(U.el('b', {}, '\ud83c\udf31 Make it vegan'));
+            v.swaps.forEach((s) => {
+              card.appendChild(U.el('p', { class: 'vegan-swap' }, [
+                U.el('b', {}, FOODS.byId(s.from).name),
+                ' \u2192 ' + (s.to ? FOODS.byId(s.to).name : 'omit') + ' \u00b7 ',
+                U.el('span', { class: 'muted' }, s.note)
+              ]));
+            });
+            body.appendChild(card);
+          } else if (v.swaps.length || v.blockers.length) {
+            const names = v.blockers.map((b) => FOODS.byId(b.foodId).name.toLowerCase()).join(', ');
+            body.appendChild(U.el('p', { class: 'muted small' },
+              '\ud83c\udf31 Not cleanly veganizable: ' + names + ' ' + (v.blockers.length === 1 ? 'has' : 'have') + ' no honest stand-in in the catalog.'));
+          }
+        }
 
         body.appendChild(U.el('h3', { class: 'sub' }, 'Steps'));
         const steps = U.el('ol', { class: 'steps' });

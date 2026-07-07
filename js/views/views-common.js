@@ -296,6 +296,69 @@
   /* meal-slot label helper */
   ui.slotLabel = function (s) { return U.cap(s); };
 
+  /* ---------- ingredient encyclopedia sheet ----------
+     Everything the app knows about one food: USDA-style nutrition per 100g,
+     how it's sold, honest shelf life per storage location (with "not
+     recommended" clarity), what spoilage actually looks like, and what can
+     stand in for it. Reachable from any ingredient list or pantry row. */
+  ui.foodInfo = function (foodOrId) {
+    const FOODS = g.SL.foods;
+    const food = typeof foodOrId === 'string' ? FOODS.byId(foodOrId) : foodOrId;
+    if (!food) return;
+    ui.sheet({
+      title: food.name,
+      tall: true,
+      render(body) {
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'Sold as ' + food.pkg.label + ' · typically ' + U.money(food.price)
+          + (food.unit === 'ct' && food.gpu ? ' · 1 ≈ ' + food.gpu + ' g' : '')));
+
+        body.appendChild(U.el('h3', { class: 'sub' }, 'Nutrition · per 100 ' + (food.unit === 'ml' ? 'ml' : 'g') + ' (USDA-based)'));
+        body.appendChild(ui.macros(food.nutr));
+
+        body.appendChild(U.el('h3', { class: 'sub' }, 'How long it keeps'));
+        const table = U.el('div', { class: 'shelf-table' });
+        [['pantry', '🏺 Pantry'], ['fridge', '🧊 Fridge'], ['freezer', '❄️ Freezer']].forEach(([loc, label]) => {
+          const days = food.shelf[loc];
+          const isDefault = food.storage === loc;
+          let value;
+          if (!days) value = U.el('span', { class: 'muted' }, 'not recommended');
+          else if (days >= 365) value = U.el('b', {}, (Math.round(days / 36.5) / 10) + ' ' + U.plural(Math.round(days / 365), 'year'));
+          else value = U.el('b', {}, days + ' ' + U.plural(days, 'day'));
+          table.appendChild(U.el('div', { class: 'shelf-table-row' + (isDefault ? ' default' : '') }, [
+            U.el('span', {}, label + (isDefault ? ' · usual spot' : '')),
+            value
+          ]));
+        });
+        body.appendChild(table);
+        if (g.SL.expiry) {
+          const src = g.SL.expiry.estimateSource(food, food.storage);
+          body.appendChild(U.el('p', { class: 'muted small' },
+            src.kind === 'community'
+              ? 'The ' + food.storage + ' estimate has been refined by ' + src.n + ' community label scans.'
+              : 'Estimates follow USDA FoodKeeper-style guidance and sharpen automatically as users scan real date labels.'));
+        }
+
+        body.appendChild(U.el('h3', { class: 'sub' }, 'Is it still good?'));
+        body.appendChild(U.el('p', { class: 'sheet-text' }, food.spoil));
+
+        const pinch = g.SL.subs ? g.SL.subs.pinchFor(food.id) : [];
+        if (pinch.length) {
+          body.appendChild(U.el('h3', { class: 'sub' }, 'Works in a pinch'));
+          const row = U.el('div', { class: 'chip-row' });
+          pinch.forEach((s) => {
+            row.appendChild(ui.chip((s.inStock ? '✓ ' : '') + s.name, {
+              small: true, active: s.inStock,
+              onclick: () => ui.foodInfo(s.id)
+            }));
+          });
+          body.appendChild(row);
+          body.appendChild(U.el('p', { class: 'muted small' }, '✓ = already in your pantry. Tap any to inspect it.'));
+        }
+      }
+    });
+  };
+
   g.SL = g.SL || {};
   g.SL.ui = ui;
 })(typeof window !== 'undefined' ? window : globalThis);
