@@ -15,33 +15,41 @@
   /* ---------- vegan transforms ---------- */
   // non-vegan food → workable catalog swap + the technique note that makes it work
   const VEGAN_SWAPS = {
-    butter: { to: 'olive_oil', note: 'equal amount — sautés and roasts identically; skip for baking' },
-    milk: { to: 'coconut_milk', note: 'thin 1:1 with water to match milk’s body' },
-    greek_yogurt: { to: 'coconut_milk', note: 'in sauces; add a squeeze of lemon for the missing tang' },
-    sour_cream: { to: 'avocado', note: 'as a topping — mash with lime and salt' },
+    butter: { to: 'vegan_butter', note: 'swaps 1:1 everywhere, baking included' },
+    milk: { to: 'oat_milk', note: 'the closest body and neutrality of the plant milks' },
+    heavy_cream: { to: 'coconut_milk', note: 'the thick top of the can whips and enriches like cream' },
+    cream_cheese: { to: 'vegan_ricotta', note: 'softer — chill it and add a pinch of salt' },
+    greek_yogurt: { to: 'plant_yogurt', note: 'swap 1:1; strain in a coffee filter for extra thickness' },
+    sour_cream: { to: 'plant_yogurt', note: 'add a squeeze of lemon for the missing tang' },
     honey: { to: 'maple_syrup', note: 'swap 1:1' },
-    broth: { to: null, note: 'use water plus an extra pinch of salt' },
+    broth: { to: 'vegetable_broth', note: 'swap 1:1' },
+    cheddar: { to: 'vegan_cheddar_shreds', note: 'melts best under a lid with a splash of water' },
+    mozzarella: { to: 'vegan_mozzarella_shreds', note: 'browns less — finish under the broiler for color' },
+    feta: { to: 'vegan_feta', note: 'crumbles and brines convincingly' },
+    ricotta: { to: 'vegan_ricotta', note: 'almond-based; swap 1:1' },
+    cottage_cheese: { to: 'vegan_ricotta', note: 'closest texture in the plant aisle' },
+    goat_cheese: { to: 'vegan_ricotta', note: 'add lemon zest and black pepper to fake the tang' },
+    parmesan: { to: 'nutritional_yeast', note: 'the classic — half the amount, same savory finish' },
+    eggs: { to: 'flax_seeds', note: 'for binding: 1 tbsp ground flax + 3 tbsp water per egg; for scrambles use crumbled tofu instead' },
+    mayonnaise: { to: 'tahini', note: 'whisked with lemon and water — different but excellent' },
     chicken_breast: { to: 'tofu', note: 'pressed firm tofu, seared hard, same seasoning' },
     chicken_thigh: { to: 'tofu', note: 'pressed firm tofu, seared hard, same seasoning' },
-    pork_loin: { to: 'tofu', note: 'or thick-cut mushrooms for a meatier chew' },
+    pork_loin: { to: 'tempeh', note: 'sliced and seared — nutty, meaty chew' },
+    pork_chops: { to: 'tempeh', note: 'thick slabs, seared and glazed like a chop' },
     ground_beef: { to: 'lentils_dry', note: 'use half the weight, simmered until tender' },
     ground_turkey: { to: 'lentils_dry', note: 'use half the weight, simmered until tender' },
-    bacon: { to: 'mushrooms', note: 'sear crisp with paprika and a drop of maple — smoke and sweet' },
+    italian_sausage: { to: 'tempeh', note: 'crumbled and fried with fennel-adjacent italian_seasoning and red_pepper_flakes' },
+    bacon: { to: 'tempeh', note: 'thin slices seared with paprika + maple — the classic tempeh bacon' },
+    deli_ham: { to: 'tempeh', note: 'thin smoky-seared slices' },
+    deli_turkey: { to: 'tofu', note: 'pressed, sliced thin, seasoned' },
     salmon: { to: 'tofu', note: 'texture differs — works in bowls and curries, not as a "fillet"' },
+    cod: { to: 'tofu', note: 'texture differs — best battered or in stews' },
     shrimp: { to: 'tofu', note: 'texture differs — best in stir-fries and curries' },
-    tuna_canned: { to: 'chickpeas', note: 'roughly smashed — the classic vegan tuna-salad move' },
-    parmesan: { to: 'walnuts', note: 'toasted, salted and crumbled fine — a parm-ish finishing dust' }
+    tuna_canned: { to: 'chickpeas', note: 'roughly smashed — the classic vegan tuna-salad move' }
   };
 
-  // foods with no honest vegan stand-in in this catalog
-  const VEGAN_BLOCKERS = {
-    eggs: 'eggs as the star (scrambles, frittatas) have no clean catalog stand-in',
-    cheddar: 'no convincing melt substitute in the catalog',
-    mozzarella: 'no convincing melt substitute in the catalog',
-    feta: 'no brined-cheese substitute in the catalog',
-    ricotta: 'no fresh-cheese substitute in the catalog',
-    cottage_cheese: 'no fresh-cheese substitute in the catalog'
-  };
+  // with the vegan aisle in the catalog, very little truly blocks now
+  const VEGAN_BLOCKERS = {};
 
   const ANIMAL_FOODS = new Set([
     ...Object.keys(VEGAN_SWAPS), ...Object.keys(VEGAN_BLOCKERS)
@@ -88,8 +96,32 @@
     ['tomato', 'cherry_tomatoes'],
     ['corn_frozen', 'peas_frozen', 'edamame_frozen'],
     ['paprika', 'chili_powder'], ['curry_powder', 'garam_masala'],
-    ['salmon', 'tuna_canned'],
-    ['potatoes', 'sweet_potatoes']
+    ['salmon', 'tuna_canned', 'cod'],
+    ['potatoes', 'sweet_potatoes', 'butternut_squash'],
+    // batch-5 families
+    ['basil', 'parsley', 'cilantro', 'dill', 'mint', 'chives'],
+    ['thyme', 'rosemary', 'italian_seasoning', 'oregano'],
+    ['red_pepper_flakes', 'cayenne', 'hot_sauce', 'jalapeno'],
+    ['garlic', 'garlic_powder'], ['onion', 'red_onion', 'shallots', 'onion_powder'],
+    ['milk', 'oat_milk', 'almond_milk'],
+    ['greek_yogurt', 'plant_yogurt'], ['butter', 'vegan_butter'],
+    ['cheddar', 'vegan_cheddar_shreds'], ['mozzarella', 'vegan_mozzarella_shreds'],
+    ['ricotta', 'vegan_ricotta', 'cream_cheese', 'goat_cheese'], ['feta', 'vegan_feta', 'goat_cheese'],
+    ['parmesan', 'nutritional_yeast'],
+    ['tofu', 'tempeh'],
+    ['broth', 'vegetable_broth'],
+    ['tortillas', 'corn_tortillas'],
+    ['rice', 'brown_rice'], ['penne', 'orzo'],
+    ['red_wine_vinegar', 'rice_vinegar', 'balsamic_vinegar'],
+    ['black_beans', 'kidney_beans', 'pinto_beans'],
+    ['crushed_tomatoes', 'diced_tomatoes'],
+    ['berries', 'strawberries', 'blueberries'],
+    ['broccoli', 'brussels_sprouts'], ['spinach', 'arugula', 'bok_choy'],
+    ['green_beans', 'snap_peas'],
+    ['peanut_butter', 'tahini'], ['chia_seeds', 'flax_seeds'],
+    ['pork_loin', 'pork_chops'], ['deli_ham', 'deli_turkey', 'bacon'],
+    ['panko', 'oats'], ['mayonnaise', 'greek_yogurt'],
+    ['lemon', 'oranges']
   ];
 
   const pinchMap = {};

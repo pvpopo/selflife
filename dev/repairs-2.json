@@ -1,0 +1,1195 @@
+[
+ {
+  "id": "mexican_beef_taco_skillet",
+  "name": "Smoky Taco Beef Skillet",
+  "emoji": "🌶️",
+  "cuisine": "Mexican",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "low-carb",
+   "high-protein",
+   "gluten-free"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 30,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "ground_beef",
+    "q": 400
+   },
+   {
+    "f": "olive_oil",
+    "q": 10
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "bell_pepper",
+    "q": 1
+   },
+   {
+    "f": "tomato",
+    "q": 2
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
+    "f": "cheddar",
+    "q": 60
+   },
+   {
+    "f": "sour_cream",
+    "q": 40
+   },
+   {
+    "f": "lime",
+    "q": 1
+   }
+  ],
+  "steps": [
+   "Heat the olive oil in a wide skillet over medium-high heat until it shimmers, then add the diced onion and bell pepper and cook for 4 minutes until the edges pick up a little char.",
+   "Push the vegetables to one side, add the ground beef in a single layer, and let it sear undisturbed for 3 minutes so it develops a deep brown crust before breaking it up.",
+   "Season with the chili powder, cumin, smoked paprika, salt, and pepper, letting the spices sizzle in the fat for 30 seconds, then stir in the chopped tomatoes and simmer for 8 minutes until the juices reduce to a thick, glossy coating.",
+   "Kill the heat, scatter the cheddar over the top, and cover for 2 minutes until the cheese melts into molten pockets.",
+   "Finish with dollops of sour cream and a hard squeeze of lime, and serve straight from the pan while it still sizzles."
+  ],
+  "tip": "The lime is not decoration — that acid is what makes a taco skillet taste like tacos instead of seasoned regret."
+ },
+ {
+  "id": "smoky_no_bean_beef_chili",
+  "name": "Smoky No-Bean Beef Chili",
+  "emoji": "🍲",
+  "cuisine": "American",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "low-carb",
+   "high-protein",
+   "gluten-free",
+   "dairy-free"
+  ],
+  "allergens": [],
+  "time": 55,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "ground_beef",
+    "q": 700
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "bell_pepper",
+    "q": 2
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "tomato",
+    "q": 6
+   },
+   {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "cinnamon",
+    "q": 1
+   },
+   {
+    "f": "broth",
+    "q": 500
+   },
+   {
+    "f": "olive_oil",
+    "q": 15
+   }
+  ],
+  "steps": [
+   "Heat the olive oil in a heavy pot over high heat and brown the ground beef in two batches, 4 minutes each, so it sears instead of steams; set it aside with its juices.",
+   "Drop the heat to medium, add the diced onion and bell peppers, and cook for 5 minutes until softened and sweet, scraping up the browned bits stuck to the pot.",
+   "Stir in the garlic, the chili powder, cumin, and smoked paprika, plus a pinch of cinnamon, and toast the spices for 60 seconds until they smell dark and toasty.",
+   "Return the beef, add the chopped tomatoes and broth, and bring to a lazy simmer.",
+   "Cook uncovered for 30 minutes, stirring occasionally, until the chili is thick enough that a spoon dragged through it leaves a brief trail, then season boldly with salt and serve steaming."
+  ],
+  "tip": "Chili tastes 20 percent better tomorrow, so make it tonight and take all the credit at lunch."
+ },
+ {
+  "id": "herb_roasted_pork_loin_green_beans",
+  "name": "Garlic-Herb Roasted Pork Loin with Blistered Green Beans",
+  "emoji": "🍖",
+  "cuisine": "American",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "low-carb",
+   "high-protein",
+   "gluten-free",
+   "dairy-free"
+  ],
+  "allergens": [],
+  "time": 60,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "pork_loin",
+    "q": 500
+   },
+   {
+    "f": "green_beans",
+    "q": 300
+   },
+   {
+    "f": "olive_oil",
+    "q": 30
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "rosemary",
+    "q": 0.25
+   },
+   {
+    "f": "thyme",
+    "q": 0.25
+   },
+   {
+    "f": "lemon",
+    "q": 1
+   }
+  ],
+  "steps": [
+   "Heat the oven to 200C and pat the pork loin bone-dry, then rub it all over with half the olive oil, the minced garlic, chopped rosemary and thyme leaves, salt, and plenty of cracked pepper.",
+   "Sear the loin in a hot ovenproof skillet for 3 minutes per side until it wears a deep mahogany crust and the herbs cling to the meat.",
+   "Scatter the green beans around the pork, toss them in the remaining oil, and roast for 20 to 25 minutes until the meat reads 63C at the center and the beans are blistered and squeaky-tender.",
+   "Rest the pork under foil for 10 full minutes so the juices settle back into the meat instead of onto your cutting board.",
+   "Slice against the grain into thick coins, squeeze the lemon over everything, and serve with the herby pan drippings spooned on top."
+  ],
+  "tip": "A resting pork loin is like a toddler at bedtime — disturb it early and everyone ends up in tears."
+ },
+ {
+  "id": "creamy_spinach_pork_curry",
+  "name": "Creamy Spinach and Ginger Pork Curry",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "low-carb",
+   "high-protein",
+   "gluten-free"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 40,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "pork_loin",
+    "q": 450
+   },
+   {
+    "f": "spinach",
+    "q": 300
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "ginger",
+    "q": 20
+   },
+   {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
+    "f": "butter",
+    "q": 30
+   },
+   {
+    "f": "greek_yogurt",
+    "q": 150
+   },
+   {
+    "f": "lemon",
+    "q": 1
+   }
+  ],
+  "steps": [
+   "Melt the butter in a deep skillet over medium heat and cook the finely chopped onion for 6 to 8 minutes until soft and golden at the edges.",
+   "Add the minced garlic and ginger with the curry powder and toast for 1 minute until the kitchen smells unmistakably like dinner.",
+   "Add the cubed pork loin and sear for 4 to 5 minutes, turning to coat every piece in the spiced butter.",
+   "Pile in the spinach in handfuls, letting each batch wilt down glossy and dark before adding the next, then splash in a few tablespoons of water and simmer covered for 10 minutes until the pork is just cooked through.",
+   "Off the heat, stir in the greek yogurt a spoonful at a time until the sauce turns pale and creamy, then brighten with lemon juice and salt to taste."
+  ],
+  "tip": "Temper the yogurt off the heat or it will split faster than a bad band."
+ },
+ {
+  "id": "turkey_taco_skillet",
+  "name": "Smoky Turkey Taco Skillet",
+  "emoji": "🌮",
+  "cuisine": "Mexican",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "low-carb",
+   "high-protein",
+   "gluten-free"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 25,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "ground_turkey",
+    "q": 450
+   },
+   {
+    "f": "olive_oil",
+    "q": 15
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "bell_pepper",
+    "q": 1
+   },
+   {
+    "f": "tomato",
+    "q": 2
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
+    "f": "cheddar",
+    "q": 80
+   },
+   {
+    "f": "sour_cream",
+    "q": 60
+   },
+   {
+    "f": "avocado",
+    "q": 1
+   },
+   {
+    "f": "lime",
+    "q": 1
+   }
+  ],
+  "steps": [
+   "Heat the olive oil in a large skillet over medium-high heat until it shimmers, then add the diced onion and bell pepper and cook for 4 minutes until the edges pick up a little char.",
+   "Push the vegetables aside, add the ground turkey, and let it sear undisturbed for 2 minutes before breaking it up; season with the chili powder, cumin, smoked paprika, and a big pinch of salt.",
+   "Stir in the chopped tomatoes and simmer for 5 to 6 minutes, until the juices reduce into a thick, brick-red sauce that coats the back of a spoon.",
+   "Kill the heat, scatter the cheddar over the top, and cover for 2 minutes so the cheese melts into glossy pools.",
+   "Serve straight from the pan with dollops of sour cream, sliced avocado, and a hard squeeze of lime over everything."
+  ],
+  "tip": "Let the turkey sit and sear before stirring — pale, steamed taco meat is a crime with an easy fix."
+ },
+ {
+  "id": "no_bean_turkey_chili",
+  "name": "No-Bean Turkey Chili",
+  "emoji": "🌶️",
+  "cuisine": "American",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "low-carb",
+   "high-protein",
+   "gluten-free"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 50,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "ground_turkey",
+    "q": 700
+   },
+   {
+    "f": "olive_oil",
+    "q": 20
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "bell_pepper",
+    "q": 2
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "tomato",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 15
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "broth",
+    "q": 500
+   },
+   {
+    "f": "zucchini",
+    "q": 1
+   },
+   {
+    "f": "cheddar",
+    "q": 80
+   },
+   {
+    "f": "sour_cream",
+    "q": 100
+   }
+  ],
+  "steps": [
+   "Brown the ground turkey in olive oil in a heavy pot over medium-high heat for 6 to 8 minutes, letting it develop dark crusty bits on the bottom of the pot — that fond is the chili's backbone.",
+   "Add the diced onion, bell peppers, and garlic and cook 5 minutes until softened, then bloom the chili powder, cumin, and smoked paprika directly in the fat for 1 minute until the kitchen smells like a barbecue joint.",
+   "Stir in the chopped tomatoes and broth, scraping up the browned bits, and simmer uncovered for 25 minutes until thick enough to mound on a spoon.",
+   "Add the diced zucchini for the last 10 minutes so it stays tender-firm instead of dissolving.",
+   "Taste, correct the salt bravely, and ladle into bowls under a landslide of cheddar and sour cream."
+  ],
+  "tip": "Chili improves overnight, so make it a day early and accept the applause tomorrow."
+ },
+ {
+  "id": "smoky_eggplant_shakshuka",
+  "name": "Smoky Eggplant Shakshuka",
+  "emoji": "🍳",
+  "cuisine": "Mediterranean",
+  "meal": [
+   "breakfast",
+   "dinner"
+  ],
+  "diets": [
+   "vegetarian",
+   "gluten-free",
+   "low-carb"
+  ],
+  "allergens": [
+   "dairy",
+   "eggs"
+  ],
+  "time": 40,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "eggplant",
+    "q": 1
+   },
+   {
+    "f": "tomato",
+    "q": 4
+   },
+   {
+    "f": "eggs",
+    "q": 4
+   },
+   {
+    "f": "feta",
+    "q": 60
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "bell_pepper",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.3
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "olive_oil",
+    "q": 30
+   }
+  ],
+  "steps": [
+   "Cube the eggplant and sear it in olive oil in a wide skillet over medium-high heat for 8 minutes, resisting the urge to stir until each side is mahogany and creamy inside.",
+   "Push the eggplant aside, soften the onion, bell pepper, and garlic for 4 minutes until sweet and slumped.",
+   "Sprinkle in the smoked paprika and let it bloom in the oil for 30 seconds, then add the chopped tomatoes, crushing them with your spoon, and simmer 8 to 10 minutes until the sauce darkens and thickens enough to hold a trench.",
+   "Carve four wells with the back of a spoon, crack an egg into each, cover, and cook 5 to 7 minutes until the whites set but the yolks still shiver.",
+   "Shower with crumbled feta straight off the heat so it softens into salty pockets."
+  ],
+  "tip": "Pull the pan when the eggs look one minute underdone — carryover heat finishes them while you find forks."
+ },
+ {
+  "id": "coconut_eggplant_tofu_curry",
+  "name": "Coconut Eggplant Curry",
+  "emoji": "🍆",
+  "cuisine": "Indian",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "vegan",
+   "vegetarian",
+   "dairy-free",
+   "gluten-free",
+   "low-carb"
+  ],
+  "allergens": [
+   "soy"
+  ],
+  "time": 45,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "eggplant",
+    "q": 2
+   },
+   {
+    "f": "coconut_milk",
+    "q": 400
+   },
+   {
+    "f": "tomato",
+    "q": 3
+   },
+   {
+    "f": "tofu",
+    "q": 400
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "curry_powder",
+    "q": 12
+   },
+   {
+    "f": "spinach",
+    "q": 150
+   },
+   {
+    "f": "olive_oil",
+    "q": 30
+   }
+  ],
+  "steps": [
+   "Cut the eggplants into chunky 3-centimeter pieces and brown them in oil over medium-high heat in two batches, about 6 minutes per batch, until the cut faces are burnished and the flesh turns silky.",
+   "Soften the onion in the same pot for 5 minutes, then add the garlic and curry powder and toast for 1 minute until the whole kitchen smells like dinner.",
+   "Add the chopped tomatoes and simmer 8 minutes, mashing them down until the mixture thickens into a rusty, jammy base.",
+   "Pour in the coconut milk, return the eggplant with cubed tofu, and simmer gently for 12 to 15 minutes until the sauce coats a spoon and the eggplant collapses at the touch of a fork.",
+   "Wilt in the spinach during the last 2 minutes and season boldly — coconut milk drinks up salt like it is owed."
+  ],
+  "tip": "Browned eggplant is the entire curry; pale eggplant is a spongy apology, so take the extra six minutes."
+ },
+ {
+  "id": "smoky_no_bean_beef_chili_2",
+  "name": "Smoky No-Bean Beef Chili",
+  "emoji": "🌶️",
+  "cuisine": "Mexican",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "gluten-free",
+   "high-protein",
+   "low-carb"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 55,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "ground_beef",
+    "q": 600
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "bell_pepper",
+    "q": 2
+   },
+   {
+    "f": "tomato",
+    "q": 6
+   },
+   {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "broth",
+    "q": 500
+   },
+   {
+    "f": "cheddar",
+    "q": 100
+   },
+   {
+    "f": "sour_cream",
+    "q": 100
+   }
+  ],
+  "steps": [
+   "Brown the ground beef in a heavy pot over medium-high heat for 7 to 8 minutes, breaking it into rough crumbles and letting a dark fond build on the bottom of the pot.",
+   "Add the diced onion and bell peppers and cook 5 minutes, scraping up the browned bits, until the vegetables soften and pick up color.",
+   "Stir in the minced garlic with the chili powder, smoked paprika, cumin, salt, and pepper, toasting for 1 minute until the whole kitchen smells smoky.",
+   "Add the chopped tomatoes and broth, bring to a boil, then reduce to a low, blipping simmer and cook uncovered for 30 minutes, until the chili is thick enough to mound on a spoon.",
+   "Taste and sharpen the seasoning, then ladle into bowls and crown each with shredded cheddar and a cool spoonful of sour cream."
+  ],
+  "tip": "Let the beef sit untouched for the first few minutes — fiddling with it steams the meat, and steam never won a chili cook-off."
+ },
+ {
+  "id": "peanut_tofu_cabbage_stew",
+  "name": "Spicy Peanut Tofu Cabbage Stew",
+  "emoji": "🥜",
+  "cuisine": "Asian",
+  "meal": [
+   "lunch",
+   "dinner"
+  ],
+  "diets": [
+   "vegan",
+   "vegetarian",
+   "dairy-free",
+   "low-carb"
+  ],
+  "allergens": [
+   "soy",
+   "gluten",
+   "nuts",
+   "sesame"
+  ],
+  "time": 40,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "tofu",
+    "q": 600
+   },
+   {
+    "f": "peanut_butter",
+    "q": 120
+   },
+   {
+    "f": "cabbage",
+    "q": 0.3
+   },
+   {
+    "f": "bell_pepper",
+    "q": 1
+   },
+   {
+    "f": "ginger",
+    "q": 20
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "red_pepper_flakes",
+    "q": 4
+   },
+   {
+    "f": "soy_sauce",
+    "q": 45
+   },
+   {
+    "f": "sesame_oil",
+    "q": 15
+   },
+   {
+    "f": "lime",
+    "q": 1
+   }
+  ],
+  "steps": [
+   "Press the tofu for 10 minutes, cut it into 2-centimeter cubes, and sear in the sesame oil over medium-high heat for 6 to 8 minutes, turning until the faces are burnished and crisp.",
+   "Add the minced ginger, garlic, and red pepper flakes to the pot and stir for 30 seconds, until the aroma blooms and the chile heat hits the back of your throat.",
+   "Whisk the peanut butter and soy sauce into 1 liter of hot water until smooth, pour it over the tofu, and bring to a gentle simmer.",
+   "Add the shredded cabbage and sliced bell pepper and simmer uncovered for 10 minutes, until the cabbage is silky and the broth has thickened to the texture of thin cream.",
+   "Squeeze in the lime juice, taste for salt and heat — add another pinch of flakes if it doesn't bite back — and serve in deep bowls while the broth still clings to every cube of tofu."
+  ],
+  "tip": "The peanut broth thickens as it sits, so keep a kettle of hot water nearby to loosen leftovers back into stew instead of dip."
+ },
+ {
+  "id": "indian_yogurt_cauliflower_curry_stew",
+  "name": "Indian Yogurt and Cauliflower Curry Stew",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "vegetarian",
+   "gluten-free",
+   "low-carb"
+  ],
+  "allergens": [
+   "dairy",
+   "nuts"
+  ],
+  "time": 45,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "cauliflower",
+    "q": 1
+   },
+   {
+    "f": "spinach",
+    "q": 200
+   },
+   {
+    "f": "tomato",
+    "q": 4
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "ginger",
+    "q": 20
+   },
+   {
+    "f": "curry_powder",
+    "q": 12
+   },
+   {
+    "f": "butter",
+    "q": 60
+   },
+   {
+    "f": "greek_yogurt",
+    "q": 300
+   },
+   {
+    "f": "almonds",
+    "q": 80
+   }
+  ],
+  "steps": [
+   "Melt the butter in a heavy pot over medium heat and fry the sliced onion for 8 to 10 minutes, until deeply golden at the edges, then add the minced garlic, ginger, and the curry powder and toast 1 fragrant minute.",
+   "Add the chopped tomatoes and cook 8 minutes, mashing as they soften, until the mixture thickens into a rusty paste and the butter beads at the edges.",
+   "Add the cauliflower florets with 500 milliliters of water and a big pinch of salt, cover, and simmer 12 minutes, until the florets are tender but still hold their shape.",
+   "Stir in the spinach until it wilts, then pull the pot off the heat and fold in the greek yogurt one spoonful at a time so it melts into a creamy, pale-orange sauce without splitting.",
+   "Scatter with toasted sliced almonds and serve hot, with the sauce thick enough to eat with a fork but worth chasing with a spoon."
+  ],
+  "tip": "Always add yogurt off the heat — a boiled yogurt curry splits into curds and regret."
+ },
+ {
+  "id": "tandoori_chicken_cauliflower_traybake",
+  "name": "Tandoori-Style Chicken Cauliflower Traybake",
+  "emoji": "🍗",
+  "cuisine": "Indian",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "gluten-free",
+   "low-carb",
+   "high-protein"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 60,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "chicken_breast",
+    "q": 400
+   },
+   {
+    "f": "cauliflower",
+    "q": 0.7
+   },
+   {
+    "f": "greek_yogurt",
+    "q": 150
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.3
+   },
+   {
+    "f": "garam_masala",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "turmeric",
+    "q": 3
+   },
+   {
+    "f": "cayenne",
+    "q": 1
+   },
+   {
+    "f": "olive_oil",
+    "q": 20
+   }
+  ],
+  "steps": [
+   "Whisk the yogurt with the minced garlic, garam masala, paprika, turmeric, cayenne, and salt into a brick-red tandoori marinade.",
+   "Cut the chicken into large chunks, coat them completely in two-thirds of the marinade, and let them sit at least 20 minutes while the oven heats to 220C.",
+   "Toss the cauliflower florets and thick onion wedges with olive oil, salt, and the remaining marinade on a large sheet pan.",
+   "Nestle the chicken among the vegetables in a single layer with breathing room so everything roasts instead of steams.",
+   "Roast for 25 to 28 minutes until the yogurt crust chars at the edges and the cauliflower tips blacken sweetly.",
+   "Rest 5 minutes and serve with the scorched pan juices spooned over the top."
+  ],
+  "tip": "Those charred, almost-burnt yogurt edges are the whole point — resist the urge to rescue them early."
+ },
+ {
+  "id": "weeknight_coconut_chicken_curry",
+  "name": "Weeknight Coconut Chicken Curry",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "high-protein",
+   "dairy-free",
+   "gluten-free"
+  ],
+  "allergens": [],
+  "time": 30,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "chicken_breast",
+    "q": 300
+   },
+   {
+    "f": "coconut_milk",
+    "q": 250
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.3
+   },
+   {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
+    "f": "tomato",
+    "q": 2
+   },
+   {
+    "f": "rice",
+    "q": 120
+   },
+   {
+    "f": "olive_oil",
+    "q": 10
+   }
+  ],
+  "steps": [
+   "Start the rice: rinse, cover with water, and simmer lidded on low for 15 minutes, then rest off the heat.",
+   "Heat the oil in a deep skillet over medium and cook the sliced onion 4 to 5 minutes until soft and golden at the edges.",
+   "Stir in the minced garlic with the curry powder and a pinch of salt, toasting for 30 seconds until the kitchen smells unmistakably like dinner.",
+   "Add the chopped tomatoes and cook 3 minutes until they break down, then pour in the coconut milk and bring to a gentle bubble.",
+   "Slide in the cubed chicken and simmer 8 to 10 minutes, stirring occasionally, until the chicken is cooked through and the sauce coats a spoon.",
+   "Taste, adjust the salt, and ladle the curry over the fluffy rice."
+  ],
+  "tip": "Toasting the curry powder in the onions for thirty seconds does more for flavor than doubling the amount ever will."
+ },
+ {
+  "id": "smoky_stovetop_chicken_chili",
+  "name": "Smoky 30-Minute Chicken Chili",
+  "emoji": "🌶️",
+  "cuisine": "American",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "high-protein",
+   "gluten-free"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 30,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "chicken_breast",
+    "q": 500
+   },
+   {
+    "f": "black_beans",
+    "q": 400
+   },
+   {
+    "f": "broth",
+    "q": 750
+   },
+   {
+    "f": "tomato",
+    "q": 3
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.3
+   },
+   {
+    "f": "bell_pepper",
+    "q": 1
+   },
+   {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "olive_oil",
+    "q": 15
+   },
+   {
+    "f": "sour_cream",
+    "q": 80
+   },
+   {
+    "f": "cheddar",
+    "q": 60
+   }
+  ],
+  "steps": [
+   "Heat the oil in a Dutch oven over medium-high and sauté the diced onion and bell pepper for 4 minutes until softened and starting to color.",
+   "Add the garlic with the chili powder, cumin, and smoked paprika, stirring 30 seconds until the spices darken and bloom.",
+   "Stir in the diced chicken and cook 3 minutes until the outside turns opaque, then add the chopped tomatoes, beans, and broth.",
+   "Bring to a boil, then simmer briskly, uncovered, for 15 minutes until the chicken is tender and the chili has thickened enough to mound on a spoon.",
+   "Mash a ladleful of beans against the pot wall and stir it back in for body, then season with salt to taste.",
+   "Serve in deep bowls topped with grated cheddar and a cool spoonful of sour cream."
+  ],
+  "tip": "Simmering uncovered is the whole trick — a lid traps steam and turns your chili into soup with commitment issues."
+ },
+ {
+  "id": "pork_loin_yogurt_curry",
+  "name": "Pork Loin Tikka-Style Yogurt Curry",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "gluten-free",
+   "high-protein"
+  ],
+  "allergens": [
+   "dairy"
+  ],
+  "time": 45,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "pork_loin",
+    "q": 400
+   },
+   {
+    "f": "greek_yogurt",
+    "q": 150
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "tomato",
+    "q": 3
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "curry_powder",
+    "q": 6
+   },
+   {
+    "f": "garam_masala",
+    "q": 4
+   },
+   {
+    "f": "turmeric",
+    "q": 2
+   },
+   {
+    "f": "spinach",
+    "q": 100
+   },
+   {
+    "f": "rice",
+    "q": 120
+   },
+   {
+    "f": "olive_oil",
+    "q": 15
+   }
+  ],
+  "steps": [
+   "Cube the pork loin and toss it with a third of the yogurt, salt, the curry powder, garam masala, and turmeric, letting it sit while you prep — even 15 minutes tenderizes noticeably.",
+   "Cook the rice, then heat the olive oil in a deep pan over medium heat and fry the finely chopped onion for 8 minutes until deeply golden and smelling sweet, not just soft.",
+   "Add the minced garlic and chopped tomatoes and cook them down for 5 minutes, mashing occasionally, until the mixture darkens and the oil separates at the edges.",
+   "Add the pork with its marinade and simmer gently for 12 to 15 minutes, stirring now and then, until the meat is just cooked through and the sauce thickens to coat a spoon.",
+   "Stir in the spinach and remaining yogurt off the heat so it stays creamy rather than curdling, then serve the curry over the rice."
+  ],
+  "tip": "Take the yogurt off direct heat before stirring it in — a broken curry tastes fine but looks like a science experiment."
+ },
+ {
+  "id": "mexican_pork_potato_stew",
+  "name": "Smoky Mexican Pork and Potato Stew",
+  "emoji": "🍲",
+  "cuisine": "Mexican",
+  "meal": [
+   "dinner"
+  ],
+  "diets": [
+   "gluten-free",
+   "dairy-free",
+   "high-protein"
+  ],
+  "allergens": [],
+  "time": 60,
+  "servings": 4,
+  "ing": [
+   {
+    "f": "pork_loin",
+    "q": 600
+   },
+   {
+    "f": "broth",
+    "q": 1000
+   },
+   {
+    "f": "potatoes",
+    "q": 500
+   },
+   {
+    "f": "bell_pepper",
+    "q": 2
+   },
+   {
+    "f": "onion",
+    "q": 1
+   },
+   {
+    "f": "garlic",
+    "q": 0.4
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 5
+   },
+   {
+    "f": "lime",
+    "q": 1
+   },
+   {
+    "f": "olive_oil",
+    "q": 20
+   }
+  ],
+  "steps": [
+   "Cube the pork loin, season with salt, the smoked paprika, and cumin, and brown it in olive oil over medium-high heat in a heavy pot until every side has a mahogany crust, about 6 minutes total.",
+   "Lift the pork out, then soften the chopped onion, bell peppers, and garlic in the same pot for 5 minutes, scraping up the browned bits stuck to the bottom — that fond is the soul of the stew.",
+   "Return the pork, pour in the broth, and bring to a simmer, skimming any foam that rises.",
+   "Add the potatoes cut into bite-size chunks and simmer uncovered for 25 to 30 minutes, until they are fork-tender and the broth has reduced to something silky and faintly red from the paprika.",
+   "Squeeze in the lime juice, taste for salt, and ladle into bowls while it steams."
+  ],
+  "tip": "Brown the pork in batches even when you're hungry — a crowded pot makes gray stew meat and gray stew meat makes sad soup."
+ },
+ {
+  "id": "pork_black_bean_rice_bowl",
+  "name": "Cumin Pork and Black Bean Rice Bowl",
+  "emoji": "🥑",
+  "cuisine": "Mexican",
+  "meal": [
+   "dinner",
+   "lunch"
+  ],
+  "diets": [
+   "gluten-free",
+   "dairy-free",
+   "high-protein"
+  ],
+  "allergens": [],
+  "time": 35,
+  "servings": 2,
+  "ing": [
+   {
+    "f": "pork_loin",
+    "q": 350
+   },
+   {
+    "f": "rice",
+    "q": 120
+   },
+   {
+    "f": "black_beans",
+    "q": 200
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 3
+   },
+   {
+    "f": "avocado",
+    "q": 1
+   },
+   {
+    "f": "tomato",
+    "q": 2
+   },
+   {
+    "f": "onion",
+    "q": 0.5
+   },
+   {
+    "f": "lime",
+    "q": 1
+   },
+   {
+    "f": "olive_oil",
+    "q": 10
+   }
+  ],
+  "steps": [
+   "Get the rice simmering, then dice the pork loin into small cubes and toss with salt, the cumin, and the chili powder until evenly dusted.",
+   "Heat the olive oil in a skillet over medium-high and cook the pork with the diced onion for 6 to 8 minutes, stirring occasionally, until the cubes are browned outside and just cooked through.",
+   "Add the black beans with a splash of water and warm them 2 minutes, mashing a few against the pan so they get creamy and bind to the pork.",
+   "Dice the tomatoes and toss with lime juice and a pinch of salt for a thirty-second salsa.",
+   "Build the bowls: rice on the bottom, the pork and beans in the middle, then the tomato salsa and fanned slices of avocado on top with a last squeeze of lime."
+  ],
+  "tip": "Mash a spoonful of the beans into the pan and suddenly your bowl has a sauce nobody had to make."
+ }
+]

@@ -1,0 +1,532 @@
+[
+  {
+    "id": "midnight_black_bean_sweet_potato_chili",
+    "name": "Midnight Black Bean and Sweet Potato Chili",
+    "emoji": "🫘",
+    "cuisine": "Mexican",
+    "meal": ["lunch", "dinner"],
+    "diets": ["vegan", "vegetarian", "dairy-free", "gluten-free"],
+    "allergens": [],
+    "time": 50,
+    "servings": 4,
+    "ing": [
+      { "f": "black_beans", "q": 720 },
+      { "f": "sweet_potatoes", "q": 400 },
+      { "f": "crushed_tomatoes", "q": 800 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "bell_pepper", "q": 1 },
+      { "f": "olive_oil", "q": 30 },
+      { "f": "chili_powder", "q": 12 },
+      { "f": "cumin", "q": 5 }
+    ],
+    "steps": [
+      "Warm the olive oil in a large pot over medium heat and sweat the diced onion and bell pepper for 6 minutes until soft and fragrant.",
+      "Stir in the minced garlic, chili powder, and cumin and toast for 30 seconds until the spices darken a shade, then add the sweet potatoes cut into 2-centimeter cubes and toss to coat them in the red-stained aromatics.",
+      "Pour in the crushed tomatoes plus 250 milliliters of water, bring to a boil, then reduce to a steady simmer for 15 minutes until the sweet potato yields slightly to a knife tip.",
+      "Add the drained black beans and simmer 15 minutes more, stirring occasionally, until the chili turns thick, glossy, and brick-red and the sweet potatoes are fully tender.",
+      "Mash a few sweet potato cubes against the side of the pot to thicken things naturally, rest 5 minutes off the heat, taste for salt, and serve."
+    ],
+    "tip": "Cut the sweet potatoes evenly unless you enjoy a chili where half the cubes are mush and the other half fight back."
+  },
+  {
+    "id": "creamy_white_chicken_chili",
+    "name": "Creamy White Chicken Chili",
+    "emoji": "🥣",
+    "cuisine": "American",
+    "meal": ["dinner"],
+    "diets": ["gluten-free", "high-protein", "low-carb"],
+    "allergens": ["dairy"],
+    "time": 50,
+    "servings": 4,
+    "ing": [
+      { "f": "chicken_breast", "q": 500 },
+      { "f": "chickpeas", "q": 240 },
+      { "f": "broth", "q": 750 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "bell_pepper", "q": 1 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "sour_cream", "q": 120 },
+      { "f": "cheddar", "q": 60 },
+      { "f": "green_chiles", "q": 100 },
+      { "f": "chili_powder", "q": 6 },
+      { "f": "cumin", "q": 5 }
+    ],
+    "steps": [
+      "Heat the olive oil in a Dutch oven over medium heat and soften the diced onion and bell pepper for 5 minutes until they smell sweet and lose their crunch.",
+      "Add the minced garlic, chili powder, and cumin and stir for 30 seconds until fragrant, then tip in the green chiles, nestle in the whole chicken breasts, and pour the broth over the top.",
+      "Simmer gently, partially covered, for 18 to 20 minutes until the chicken shreds easily at the prod of a fork, then lift it out and pull it apart with two forks.",
+      "Return the shredded chicken to the pot with the drained chickpeas, mashing a handful of chickpeas first so they thicken the broth, and simmer 8 minutes until slightly creamy.",
+      "Take the pot off the heat, stir in the sour cream until the chili turns pale and velvety, and finish each bowl with a snowfall of grated cheddar."
+    ],
+    "tip": "Add the sour cream off the heat or it will curdle and your chili will look like it has regrets."
+  },
+  {
+    "id": "smoky_salmon_potato_chowder_stew",
+    "name": "Smoky Salmon and Potato Chowder Stew",
+    "emoji": "🐟",
+    "cuisine": "American",
+    "meal": ["dinner"],
+    "diets": ["gluten-free", "high-protein"],
+    "allergens": ["fish", "dairy"],
+    "time": 45,
+    "servings": 4,
+    "ing": [
+      { "f": "salmon", "q": 500 },
+      { "f": "potatoes", "q": 500 },
+      { "f": "milk", "q": 500 },
+      { "f": "broth", "q": 250 },
+      { "f": "onion", "q": 1 },
+      { "f": "celery", "q": 100 },
+      { "f": "carrots", "q": 100 },
+      { "f": "butter", "q": 30 },
+      { "f": "paprika", "q": 4 },
+      { "f": "thyme", "q": 0.2 }
+    ],
+    "steps": [
+      "Melt the butter in a heavy pot over medium heat and sweat the diced onion, celery, and carrots for 6 minutes until soft and sweet-smelling, without letting them color.",
+      "Stir in the smoked paprika and thyme leaves and cook 30 seconds until the fat turns brick-red and the pot smells faintly of campfire, then add the potatoes cut into 2-centimeter cubes.",
+      "Pour in the broth and milk and bring to the barest simmer, lazy bubbles just breaking the surface; cook gently 15 minutes, stirring so the milk does not catch, until the potatoes crush easily against the pot wall.",
+      "Mash a few potatoes into the liquid to thicken the chowder, then lower in the salmon cut into large chunks and poach 5 to 6 minutes until it flakes into rosy petals.",
+      "Rest the pot off the heat for 3 minutes, taste for salt, and ladle up, keeping the salmon pieces as intact as your patience allows."
+    ],
+    "tip": "Keep the heat whisper-low once the milk goes in, because a boiled chowder breaks and no amount of stirring apologizes for that."
+  },
+  {
+    "id": "smoky_beef_street_taco_wraps",
+    "name": "Smoky Skillet Beef Taco Wraps",
+    "emoji": "🌮",
+    "cuisine": "Mexican",
+    "meal": ["dinner"],
+    "diets": ["high-protein"],
+    "allergens": ["dairy", "gluten"],
+    "time": 25,
+    "servings": 2,
+    "ing": [
+      { "f": "ground_beef", "q": 300 },
+      { "f": "tortillas", "q": 4 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.2 },
+      { "f": "tomato", "q": 1 },
+      { "f": "cheddar", "q": 40 },
+      { "f": "sour_cream", "q": 40 },
+      { "f": "romaine", "q": 0.3 },
+      { "f": "lime", "q": 1 },
+      { "f": "paprika", "q": 4 },
+      { "f": "cumin", "q": 3 }
+    ],
+    "steps": [
+      "Set a wide skillet over medium-high heat, add the beef, and press it flat like a burger; leave it alone for 3 minutes so the underside develops a crackly brown crust.",
+      "Break the meat into rubble, stir in the diced onion and minced garlic, and cook 4 minutes more until the onion turns translucent and the kitchen smells like taco night.",
+      "Add the chopped tomato, the smoked paprika, the cumin, and a firm pinch of salt, and simmer 3 to 4 minutes until the mixture is juicy but no longer watery.",
+      "Warm the tortillas in a dry pan for 20 seconds per side until they smell toasty and bend without cracking.",
+      "Pile the beef down the center of each tortilla, then finish with shredded romaine, grated cheddar, a swipe of sour cream, and a hard squeeze of lime before folding."
+    ],
+    "tip": "Char one side of each tortilla just past comfortable — a few black freckles do more for flavor than any extra topping."
+  },
+  {
+    "id": "chili_lime_shrimp_wraps",
+    "name": "Chili-Lime Shrimp Wraps with Cool Crema",
+    "emoji": "🍤",
+    "cuisine": "Mexican",
+    "meal": ["lunch", "dinner"],
+    "diets": ["high-protein"],
+    "allergens": ["shellfish", "gluten", "dairy"],
+    "time": 20,
+    "servings": 2,
+    "ing": [
+      { "f": "shrimp", "q": 350 },
+      { "f": "tortillas", "q": 4 },
+      { "f": "avocado", "q": 1 },
+      { "f": "lime", "q": 2 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "greek_yogurt", "q": 80 },
+      { "f": "romaine", "q": 0.3 },
+      { "f": "garlic", "q": 0.2 },
+      { "f": "chili_powder", "q": 6 }
+    ],
+    "steps": [
+      "Pat the shrimp bone-dry with paper towels, then toss them with the olive oil, minced garlic, the zest and juice of one lime, and the chili powder until every shrimp wears a rusty red coat.",
+      "Whisk the yogurt with the juice of the second lime and a pinch of salt until it is pourable, and shred the romaine into thin ribbons.",
+      "Heat a skillet over high until it is smoking faintly, then sear the shrimp in a single layer for 90 seconds per side, until they curl into loose commas and the chili crust darkens at the edges.",
+      "Warm the tortillas in the same pan, letting them soak up the garlicky chili drippings for a few seconds on each side.",
+      "Layer romaine, sliced avocado, and shrimp onto each tortilla, drizzle with the lime crema, and fold while everything is still hot."
+    ],
+    "tip": "A shrimp curled into a tight O is overcooked — pull them at the C shape and they will finish in the wrap."
+  },
+  {
+    "id": "tandoori_spiced_chicken_wraps",
+    "name": "Tandoori-Spiced Yogurt Chicken Wraps",
+    "emoji": "🌯",
+    "cuisine": "Indian",
+    "meal": ["dinner"],
+    "diets": ["high-protein"],
+    "allergens": ["dairy", "gluten"],
+    "time": 40,
+    "servings": 2,
+    "ing": [
+      { "f": "chicken_breast", "q": 400 },
+      { "f": "greek_yogurt", "q": 150 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "lemon", "q": 1 },
+      { "f": "tortillas", "q": 4 },
+      { "f": "onion", "q": 0.5 },
+      { "f": "cucumber", "q": 0.5 },
+      { "f": "olive_oil", "q": 10 },
+      { "f": "garam_masala", "q": 6 },
+      { "f": "paprika", "q": 4 },
+      { "f": "turmeric", "q": 2 }
+    ],
+    "steps": [
+      "Stir two-thirds of the yogurt with the minced garlic, the juice of half the lemon, the garam masala, paprika, turmeric, and a big pinch of salt — the tandoori marinade should turn sunset-orange and cling thickly to a spoon.",
+      "Cut the chicken into bite-size chunks, coat them completely in the marinade, and let them sit at least 15 minutes while the yogurt quietly tenderizes.",
+      "Heat the oil in a skillet over medium-high and cook the chicken in a single layer for 8 to 10 minutes, turning occasionally, until the spiced yogurt coating chars in spots and the pieces feel springy.",
+      "Slice the onion paper-thin and toss it with the remaining lemon juice and a pinch of salt for a quick pickle, and slice the cucumber into cool half-moons.",
+      "Warm the tortillas until pliable, then load each with charred chicken, pickled onion, cucumber, and dollops of the reserved yogurt before rolling snugly."
+    ],
+    "tip": "Those blackened yogurt patches are not mistakes, they are the closest a home skillet gets to a tandoor — chase them."
+  },
+  {
+    "id": "smoky_black_bean_tacos",
+    "name": "Smoky Mashed Black Bean Tacos",
+    "emoji": "🫘",
+    "cuisine": "Mexican",
+    "meal": ["dinner", "lunch"],
+    "diets": ["vegan", "vegetarian", "dairy-free"],
+    "allergens": ["gluten"],
+    "time": 25,
+    "servings": 2,
+    "ing": [
+      { "f": "black_beans", "q": 480 },
+      { "f": "tortillas", "q": 6 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "tomato", "q": 1 },
+      { "f": "avocado", "q": 1 },
+      { "f": "lime", "q": 1 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "paprika", "q": 4 },
+      { "f": "cumin", "q": 3 }
+    ],
+    "steps": [
+      "Heat the olive oil in a skillet over medium and cook half the onion, diced, for 4 minutes until soft and just starting to caramelize at the edges.",
+      "Add the minced garlic, the smoked paprika, and the cumin and cook 30 seconds until fragrant, then tip in the black beans with a splash of water.",
+      "Simmer 5 minutes, then mash roughly with the back of a spoon until the mixture is creamy but still studded with whole beans, loosening with water if it tightens up.",
+      "Char the tortillas directly over a flame or in a scorching dry pan until they smell toasty and carry black-flecked blisters.",
+      "Spread the smoky beans thickly on each tortilla and top with diced tomato, the remaining raw onion, avocado slices, and a bright squeeze of lime."
+    ],
+    "tip": "Refried-ish beans thicken as they sit, so keep them a little looser than seems right — they will meet you in the middle."
+  },
+  {
+    "id": "quinoa_pepper_burrito_skillet",
+    "name": "Smoky Quinoa and Pepper Burrito Skillet",
+    "emoji": "🫑",
+    "cuisine": "Mexican",
+    "meal": ["lunch", "dinner"],
+    "diets": ["vegan", "vegetarian", "dairy-free", "gluten-free"],
+    "allergens": [],
+    "time": 35,
+    "servings": 2,
+    "ing": [
+      { "f": "quinoa", "q": 140 },
+      { "f": "black_beans", "q": 180 },
+      { "f": "bell_pepper", "q": 2 },
+      { "f": "zucchini", "q": 1 },
+      { "f": "tomato", "q": 2 },
+      { "f": "onion", "q": 0.5 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "avocado", "q": 1 },
+      { "f": "lime", "q": 1 },
+      { "f": "paprika", "q": 4 },
+      { "f": "cumin", "q": 3 }
+    ],
+    "steps": [
+      "Char the bell peppers, cut into wide strips, in the olive oil over high heat for 5 minutes until their skins blister black in spots, then add the onion, zucchini, and garlic for 3 minutes more.",
+      "Sprinkle in the smoked paprika and cumin and stir 30 seconds, then add the rinsed quinoa and chopped tomatoes with 300 milliliters of water, scraping the charred bits into the liquid as it comes to a boil.",
+      "Cover and simmer on low for 15 minutes, until the quinoa uncurls its little tails and the water is gone.",
+      "Fold in the black beans and let them heat through for 3 minutes with the lid back on.",
+      "Rest 5 minutes off the heat, then fluff and finish with diced avocado and lime squeezed over everything — add another squeeze if it does not make you blink slightly."
+    ],
+    "tip": "Those blackened pepper spots are not a mistake, they are the smoky backbone of the whole dish, so let them happen."
+  },
+  {
+    "id": "goan_shrimp_coconut_curry",
+    "name": "Goan-Style Shrimp Coconut Curry",
+    "emoji": "🍤",
+    "cuisine": "Indian",
+    "meal": ["dinner"],
+    "diets": ["gluten-free", "dairy-free", "high-protein"],
+    "allergens": ["shellfish"],
+    "time": 35,
+    "servings": 2,
+    "ing": [
+      { "f": "shrimp", "q": 450 },
+      { "f": "coconut_milk", "q": 250 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.4 },
+      { "f": "tomato", "q": 2 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "rice", "q": 120 },
+      { "f": "curry_powder", "q": 8 },
+      { "f": "turmeric", "q": 2 },
+      { "f": "cayenne", "q": 1 }
+    ],
+    "steps": [
+      "Start the rice simmering in salted water, then heat the oil in a deep skillet over medium and cook the finely chopped onion for 5 to 6 minutes until soft and lightly bronzed.",
+      "Stir in the minced garlic, curry powder, turmeric, and cayenne, toasting for 30 seconds until the spices darken a shade and smell heady.",
+      "Add the chopped tomatoes and cook 4 minutes until they slump, then pour in the coconut milk and simmer 8 minutes until the sauce reduces slightly and turns a sunset orange.",
+      "Season the shrimp with salt, slip them into the sauce, and poach at a bare simmer for 3 to 4 minutes until they curl into loose commas and turn pink.",
+      "Brighten with a splash of vinegar or lemon if handy, taste for salt, and ladle generously over the rice."
+    ],
+    "tip": "A shrimp curled into a tight O is overcooked — pull them at the C stage and let carryover do the rest."
+  },
+  {
+    "id": "aloo_gobi_dry_curry",
+    "name": "Aloo Gobi Dry-Fried Curry",
+    "emoji": "🥔",
+    "cuisine": "Indian",
+    "meal": ["dinner", "lunch"],
+    "diets": ["vegan", "vegetarian", "gluten-free", "dairy-free"],
+    "allergens": [],
+    "time": 40,
+    "servings": 2,
+    "ing": [
+      { "f": "cauliflower", "q": 0.8 },
+      { "f": "potatoes", "q": 400 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "tomato", "q": 2 },
+      { "f": "olive_oil", "q": 30 },
+      { "f": "curry_powder", "q": 6 },
+      { "f": "turmeric", "q": 2 },
+      { "f": "cumin", "q": 4 },
+      { "f": "garam_masala", "q": 3 }
+    ],
+    "steps": [
+      "Cut the potatoes into 2 cm cubes and the cauliflower into floret halves so they cook at the same pace, then heat the oil in your largest lidded skillet over medium-high.",
+      "Fry the potatoes for 5 minutes until their edges pick up golden crusts, then add the cauliflower, the curry powder, turmeric, cumin, and a solid pinch of salt, stirring to stain everything yellow.",
+      "Add the diced onion and garlic, then cover and cook 10 to 12 minutes, lifting the lid to toss every few minutes so nothing scorches.",
+      "When a knife slides through the potatoes without resistance, add the chopped tomatoes and cook uncovered 5 minutes until they melt into a rough coating rather than a sauce.",
+      "Finish with the garam masala and let the pan sit off heat for 2 minutes so the spices settle in."
+    ],
+    "tip": "Stir aloo gobi with a flip of the wrist, not a spoon-lashing — mushy cauliflower has ended friendships."
+  },
+  {
+    "id": "punjabi_egg_curry",
+    "name": "Punjabi-Style Egg Curry",
+    "emoji": "🥚",
+    "cuisine": "Indian",
+    "meal": ["dinner", "breakfast"],
+    "diets": ["vegetarian", "gluten-free", "dairy-free"],
+    "allergens": ["eggs"],
+    "time": 40,
+    "servings": 2,
+    "ing": [
+      { "f": "eggs", "q": 6 },
+      { "f": "tomato", "q": 3 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.4 },
+      { "f": "coconut_milk", "q": 200 },
+      { "f": "olive_oil", "q": 20 },
+      { "f": "rice", "q": 120 },
+      { "f": "curry_powder", "q": 8 },
+      { "f": "garam_masala", "q": 3 },
+      { "f": "cayenne", "q": 1 }
+    ],
+    "steps": [
+      "Boil the eggs for 9 minutes, plunge them into cold water, peel, and score each one lightly so the gravy can sneak inside; start the rice at the same time.",
+      "Heat the oil in a skillet over medium and brown the finely diced onion for 8 minutes until it reaches a deep amber — pale onions make a flat curry.",
+      "Add the garlic, curry powder, garam masala, and cayenne, toast 30 seconds, then add the chopped tomatoes and cook 7 to 8 minutes into a thick, rust-colored masala.",
+      "Pour in the coconut milk, simmer 5 minutes until the sauce coats the back of a spoon, and season with salt.",
+      "Roll the eggs in the gravy, cut them in half so the yolks face up like little suns, and simmer 2 final minutes before spooning over rice."
+    ],
+    "tip": "Score the egg whites before saucing — an unslit boiled egg repels curry like a raincoat."
+  },
+  {
+    "id": "sweet_potato_spinach_coconut_curry",
+    "name": "Sweet Potato and Spinach Coconut Curry",
+    "emoji": "🍠",
+    "cuisine": "Indian",
+    "meal": ["dinner", "lunch"],
+    "diets": ["vegan", "vegetarian", "gluten-free", "dairy-free"],
+    "allergens": [],
+    "time": 40,
+    "servings": 2,
+    "ing": [
+      { "f": "sweet_potatoes", "q": 500 },
+      { "f": "spinach", "q": 200 },
+      { "f": "coconut_milk", "q": 400 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.4 },
+      { "f": "olive_oil", "q": 20 },
+      { "f": "curry_powder", "q": 10 },
+      { "f": "red_pepper_flakes", "q": 1 }
+    ],
+    "steps": [
+      "Heat the oil in a deep pot over medium and soften the diced onion for 5 to 6 minutes until translucent with golden edges.",
+      "Stir in the minced garlic with the curry powder and red pepper flakes, toasting 30 seconds until the spices bloom and smell toasty rather than raw.",
+      "Add the sweet potatoes in 2 cm cubes, pour in the coconut milk plus 150 ml of water, and simmer covered for 15 to 18 minutes until a fork slides through without a fight.",
+      "Mash a few cubes against the pot wall to thicken the sauce into something spoon-coating and orange as a monsoon sunset.",
+      "Fold in the spinach by the handful until it collapses glossy and dark, then season with salt and serve steaming."
+    ],
+    "tip": "Cube the sweet potatoes evenly or you will be serving a curry of mush and rocks in the same bowl."
+  },
+  {
+    "id": "bengali_salmon_tomato_curry",
+    "name": "Bengali-Inspired Salmon Curry",
+    "emoji": "🐟",
+    "cuisine": "Indian",
+    "meal": ["dinner"],
+    "diets": ["gluten-free", "dairy-free", "high-protein"],
+    "allergens": ["fish"],
+    "time": 35,
+    "servings": 2,
+    "ing": [
+      { "f": "salmon", "q": 350 },
+      { "f": "tomato", "q": 3 },
+      { "f": "onion", "q": 1 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "coconut_milk", "q": 150 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "rice", "q": 110 },
+      { "f": "curry_powder", "q": 6 },
+      { "f": "turmeric", "q": 2 },
+      { "f": "cayenne", "q": 1 }
+    ],
+    "steps": [
+      "Rub the salmon chunks with salt and the turmeric and let them sit while the rice simmers — this quick cure firms the fish and stains it a beautiful gold.",
+      "Heat the oil in a wide pan over medium-high and sear the salmon 1 minute per side, just to set the outside, then move it to a plate.",
+      "Lower the heat, cook the sliced onion for 5 to 6 minutes until soft and browning, then add the garlic, curry powder, and cayenne and toast for 30 seconds.",
+      "Add the chopped tomatoes and simmer 6 to 7 minutes until they collapse into a loose gravy, then stir in the coconut milk and season with salt.",
+      "Return the salmon and poach at a gentle burble for 4 to 5 minutes until it flakes at the nudge of a spoon, then serve over rice without stirring — the fish is delicate and deserves dignity."
+    ],
+    "tip": "Once the salmon goes back in, retire your spoon to shaking-the-pan duty or you will be eating salmon crumble."
+  },
+  {
+    "id": "shakshuka_skillet_eggs",
+    "name": "Smoky Skillet Shakshuka",
+    "emoji": "🍳",
+    "cuisine": "Mediterranean",
+    "meal": ["breakfast"],
+    "diets": ["vegetarian"],
+    "allergens": ["eggs", "dairy", "gluten"],
+    "time": 35,
+    "servings": 2,
+    "ing": [
+      { "f": "olive_oil", "q": 30 },
+      { "f": "onion", "q": 1 },
+      { "f": "bell_pepper", "q": 1 },
+      { "f": "garlic", "q": 0.3 },
+      { "f": "tomato", "q": 4 },
+      { "f": "eggs", "q": 4 },
+      { "f": "feta", "q": 60 },
+      { "f": "pita", "q": 2 },
+      { "f": "paprika", "q": 5 },
+      { "f": "cumin", "q": 3 }
+    ],
+    "steps": [
+      "Warm the olive oil in a wide skillet over medium heat and cook the sliced onion and bell pepper for 8 minutes, until soft and starting to catch color at the edges.",
+      "Stir in the minced garlic with the smoked paprika and cumin, and cook for 60 seconds until the oil turns brick-red and fragrant.",
+      "Add the chopped tomatoes, season with salt, and simmer for 10 to 12 minutes, until the sauce thickens enough that a spoon dragged through it leaves a brief trail.",
+      "Nestle four wells into the sauce with the back of a spoon, crack an egg into each, cover, and cook 5 to 7 minutes until the whites are set but the yolks still wobble.",
+      "Crumble the feta over the top, let it soften for a minute, and serve straight from the pan with warm pita for dragging through the smoky sauce."
+    ],
+    "tip": "Pull the pan off the heat when the whites look barely underdone — carryover heat finishes eggs faster than your confidence suggests."
+  },
+  {
+    "id": "punjabi_style_egg_curry",
+    "name": "Weekend Egg Curry with Rice",
+    "emoji": "🥘",
+    "cuisine": "Indian",
+    "meal": ["breakfast"],
+    "diets": ["vegetarian", "gluten-free", "dairy-free"],
+    "allergens": ["eggs"],
+    "time": 40,
+    "servings": 2,
+    "ing": [
+      { "f": "eggs", "q": 6 },
+      { "f": "onion", "q": 1 },
+      { "f": "tomato", "q": 3 },
+      { "f": "garlic", "q": 0.4 },
+      { "f": "olive_oil", "q": 25 },
+      { "f": "rice", "q": 140 },
+      { "f": "curry_powder", "q": 8 },
+      { "f": "garam_masala", "q": 4 },
+      { "f": "turmeric", "q": 2 }
+    ],
+    "steps": [
+      "Simmer the rice in salted water according to its stubbornness, usually 12 to 15 minutes, then drain and keep covered.",
+      "Meanwhile boil the eggs for 9 minutes, shock them in cold water, peel, and score each one lightly so the sauce can get in.",
+      "Heat the oil in a deep skillet over medium and fry the sliced onion for 8 minutes until deeply browned, then add the garlic, curry powder, garam masala, and turmeric, stirring for 30 seconds until the spices bloom.",
+      "Add the chopped tomatoes and a splash of water and simmer 10 minutes, until the sauce thickens and the oil beads at the edges — the classic sign the masala is done.",
+      "Halve the eggs, slide them into the curry cut-side up for 2 minutes to warm through, and serve ladled over the rice."
+    ],
+    "tip": "Browning the onions past your comfort zone is where the entire curry's flavor lives."
+  },
+  {
+    "id": "chickpea_couscous_tabbouleh_bowls",
+    "name": "Herbed Chickpea Couscous Bowls",
+    "emoji": "🥗",
+    "cuisine": "Mediterranean",
+    "meal": ["lunch"],
+    "diets": ["vegetarian"],
+    "allergens": ["gluten", "dairy"],
+    "time": 25,
+    "servings": 2,
+    "ing": [
+      { "f": "couscous", "q": 140 },
+      { "f": "chickpeas", "q": 240 },
+      { "f": "cucumber", "q": 1 },
+      { "f": "tomato", "q": 2 },
+      { "f": "feta", "q": 80 },
+      { "f": "olive_oil", "q": 30 },
+      { "f": "lemon", "q": 1 },
+      { "f": "onion", "q": 0.5 },
+      { "f": "parsley", "q": 0.5 },
+      { "f": "mint", "q": 0.3 }
+    ],
+    "steps": [
+      "Pour boiling salted water over the couscous in a bowl, cover with a plate, and let it steam for 5 minutes before fluffing with a fork until every grain separates.",
+      "While it steams, dice the cucumber and tomatoes small, mince the half onion, and soak the onion in the lemon juice for 5 minutes to tame its bite.",
+      "Toast the drained chickpeas in the olive oil over medium heat for 6 to 8 minutes, shaking the pan until they blister and pop like tiny drums.",
+      "Chop the parsley and mint fine — stems and all for the parsley — then toss the couscous with the vegetables, lemony onion, warm chickpeas, and both herbs until everything is flecked green, tasting for salt since the feta will add more.",
+      "Divide between containers and crumble the feta over the top in big craggy chunks rather than stirring it through; chill fully before sealing, as the flavors deepen by day two like a good marinade should."
+    ],
+    "tip": "Salt the tomatoes and let them drain in a sieve for 5 minutes, or day three's lunch will be couscous soup."
+  },
+  {
+    "id": "smoky_turkey_black_bean_chili",
+    "name": "Smoky Turkey and Black Bean Chili",
+    "emoji": "🌶️",
+    "cuisine": "American",
+    "meal": ["lunch"],
+    "diets": ["high-protein", "gluten-free", "dairy-free"],
+    "allergens": [],
+    "time": 50,
+    "servings": 4,
+    "ing": [
+      { "f": "ground_turkey", "q": 500 },
+      { "f": "black_beans", "q": 480 },
+      { "f": "crushed_tomatoes", "q": 500 },
+      { "f": "onion", "q": 1 },
+      { "f": "bell_pepper", "q": 1 },
+      { "f": "garlic", "q": 0.4 },
+      { "f": "broth", "q": 500 },
+      { "f": "olive_oil", "q": 15 },
+      { "f": "chili_powder", "q": 15 },
+      { "f": "paprika", "q": 5 },
+      { "f": "cumin", "q": 4 }
+    ],
+    "steps": [
+      "Heat the olive oil in a heavy pot over medium-high heat and brown the ground turkey hard for 6 to 8 minutes, leaving it undisturbed in patches so it develops crusty, savory edges.",
+      "Add the diced onion, bell pepper, and garlic and cook until the onion turns translucent and the bottom of the pot collects a brown film, about 5 minutes.",
+      "Stir in the chili powder, smoked paprika, and cumin, toasting the spices for 30 seconds until they smell like a campfire.",
+      "Add the crushed tomatoes, drained black beans, and broth, scraping up every browned bit, then simmer uncovered for 25 to 30 minutes until the chili thickens enough to mound on a spoon.",
+      "Season with salt and a splash of anything acidic you have on hand, then ladle into four containers and cool before sealing.",
+      "Reheat gently with a spoonful of water, as the chili tightens up in the fridge like a fist."
+    ],
+    "tip": "Chili is the rare coworker that actually improves after three days in the office fridge."
+  }
+]

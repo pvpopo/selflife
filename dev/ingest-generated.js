@@ -58,14 +58,16 @@ const RENAMES = {
   turkey_breast: 'chicken_breast', ham: 'bacon',
   blueberries: 'berries', strawberries: 'berries', raspberries: 'berries', mixed_berries: 'berries',
   red_wine_vinegar: 'balsamic_vinegar', white_vinegar: 'balsamic_vinegar', rice_vinegar: 'balsamic_vinegar',
-  // unmappable → delete the ingredient (steps may still mention it; harmless)
-  vegetable_broth: null, vegetable_stock: null, tomato_paste: null,
-  chia_seeds: null, nutritional_yeast: null, flax_seeds: null, hemp_seeds: null,
-  tahini: null, dijon_mustard: null, mustard: null, mayo: null, mayonnaise: null,
-  vanilla: null, vanilla_extract: null, baking_powder: null, baking_soda: null,
-  red_pepper_flakes: null, cayenne: null, bay_leaf: null, bay_leaves: null, thyme: null,
-  rosemary: null, dill: null, mint: null, water: null, ice: null, capers: null,
-  cornstarch: null, raisins: null, dried_cranberries: null, coconut_flakes: null, seeds: null
+  // batch-5 catalog additions turned these from deletions into real mappings
+  vegetable_stock: 'vegetable_broth', mustard: 'dijon_mustard', mayo: 'mayonnaise',
+  vanilla: 'vanilla_extract', bay_leaf: 'bay_leaves', baking_soda: 'baking_powder',
+  flax: 'flax_seeds', flaxseed: 'flax_seeds', breadcrumbs: 'panko', bread_crumbs: 'panko',
+  smoked_sausage: 'italian_sausage', sausage: 'italian_sausage', chevre: 'goat_cheese',
+  squash: 'butternut_squash', clementines: 'oranges', mandarin: 'oranges',
+  // still unmappable → delete the ingredient (steps may still mention it; harmless)
+  hemp_seeds: null, water: null, ice: null, raisins: null,
+  dried_cranberries: null, coconut_flakes: null, seeds: null, fish_sauce: null,
+  worcestershire: null, sesame_seeds: null, pine_nuts: null
 };
 
 const outputFile = process.argv[2];

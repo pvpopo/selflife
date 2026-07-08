@@ -1,0 +1,525 @@
+[
+ {
+  "id": "lemon_herb_pork_loin_roast",
+  "name": "Lemon-Herb Pork Loin Roast with Vegetables",
+  "emoji": "🍖",
+  "cuisine": "Mediterranean",
+  "meal": ["dinner"],
+  "diets": ["gluten-free", "dairy-free", "high-protein"],
+  "allergens": [],
+  "time": 75,
+  "servings": 2,
+  "ing": [
+   { "f": "pork_loin", "q": 500 },
+   { "f": "potatoes", "q": 400 },
+   { "f": "carrots", "q": 200 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.4 },
+   { "f": "lemon", "q": 1 },
+   { "f": "rosemary", "q": 0.25 },
+   { "f": "thyme", "q": 0.25 },
+   { "f": "olive_oil", "q": 25 }
+  ],
+  "steps": [
+   "Heat the oven to 400°F (200°C). Strip and finely chop the rosemary and thyme, then rub the pork loin all over with half the olive oil, the minced garlic, chopped herbs, lemon zest, salt, and plenty of cracked pepper.",
+   "Sear the roast in a hot ovenproof pan for 2 to 3 minutes per side until the whole surface is golden and your kitchen smells like a taverna.",
+   "Toss the chunked potatoes, thick carrot coins, and onion wedges with the rest of the oil and a pinch of salt, then scatter them around the pork.",
+   "Roast for 35 to 45 minutes, turning the vegetables once, until the potatoes are crusty at the edges and the pork's center hits 145°F (63°C) on a thermometer.",
+   "Rest the roast under foil for 10 minutes, squeeze the lemon over the pan vegetables, and carve into thick, juicy slices."
+  ],
+  "tip": "Buy a meat thermometer; pork loin gives you about a five-degree window between succulent and shoe leather."
+ },
+ {
+  "id": "salmon_spinach_yogurt_curry",
+  "name": "Salmon and Spinach Yogurt Curry",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": ["dinner"],
+  "diets": ["gluten-free", "high-protein"],
+  "allergens": ["fish", "dairy"],
+  "time": 40,
+  "servings": 2,
+  "ing": [
+   { "f": "salmon", "q": 340 },
+   { "f": "greek_yogurt", "q": 150 },
+   { "f": "spinach", "q": 200 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "curry_powder", "q": 10 },
+   { "f": "butter", "q": 15 },
+   { "f": "rice", "q": 120 }
+  ],
+  "steps": [
+   "Start the rice simmering in salted water, then melt the butter in a deep skillet and cook the sliced onion over medium heat for 8 minutes until deeply golden and sweet-smelling.",
+   "Stir in the minced garlic and the curry powder and toast for 60 seconds, until the pan smells warm and slightly nutty.",
+   "Add the spinach in handfuls with a splash of water, letting each batch collapse into a silky green tangle before adding the next.",
+   "Cut the salmon into large chunks, nestle them into the greens, cover, and simmer gently for 6 to 7 minutes until the fish turns opaque and flakes at a poke.",
+   "Pull the pan off the heat, wait 2 minutes, then stir in the yogurt until the sauce turns pale gold and creamy, and serve it spooned over the rice."
+  ],
+  "tip": "Stir the yogurt in off the heat or it will split into curds and regret."
+ },
+ {
+  "id": "smoky_salmon_potato_chowder",
+  "name": "Smoky Salmon and Potato Chowder",
+  "emoji": "🥣",
+  "cuisine": "American",
+  "meal": ["dinner"],
+  "diets": ["gluten-free", "high-protein"],
+  "allergens": ["fish", "dairy"],
+  "time": 45,
+  "servings": 4,
+  "ing": [
+   { "f": "salmon", "q": 500 },
+   { "f": "potatoes", "q": 600 },
+   { "f": "milk", "q": 500 },
+   { "f": "butter", "q": 30 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "paprika", "q": 5 }
+  ],
+  "steps": [
+   "Melt the butter in a heavy pot and sweat the diced onion with a pinch of salt over medium heat for 6 minutes, until translucent and sweet but not browned.",
+   "Stir in the minced garlic and the smoked paprika, letting the spice bloom in the butter for 30 seconds until the pot turns brick red and smells faintly of campfire, then add the potatoes cut into 2cm chunks with 400ml of water and a teaspoon of salt.",
+   "Simmer for 15 minutes until a knife slides through the potatoes, then mash a few chunks against the side of the pot to thicken the broth naturally.",
+   "Pour in the milk, bring it back to a bare shiver of a simmer, and slide in the salmon cut into large bite-sized pieces.",
+   "Poach gently for 5 to 6 minutes, until the fish turns pale pink and flakes without resistance, then season with black pepper and serve while it steams."
+  ],
+  "tip": "Chowder rewards patience: keep it at a whisper of a simmer after the milk goes in and it will keep its silk instead of curdling."
+ },
+ {
+  "id": "herbed_salmon_burgers",
+  "name": "Herbed Salmon Burgers with Lemon-Yogurt Sauce",
+  "emoji": "🍔",
+  "cuisine": "American",
+  "meal": ["dinner"],
+  "diets": ["high-protein"],
+  "allergens": ["fish", "eggs", "gluten", "dairy"],
+  "time": 35,
+  "servings": 2,
+  "ing": [
+   { "f": "salmon", "q": 340 },
+   { "f": "eggs", "q": 1 },
+   { "f": "bread", "q": 2 },
+   { "f": "greek_yogurt", "q": 100 },
+   { "f": "dill", "q": 0.4 },
+   { "f": "chives", "q": 0.25 },
+   { "f": "romaine", "q": 0.5 },
+   { "f": "lemon", "q": 1 },
+   { "f": "olive_oil", "q": 15 }
+  ],
+  "steps": [
+   "Tear the bread into crumbs and pulse or finely chop the salmon until it holds together like coarse ground meat, leaving a few larger flakes for texture.",
+   "Chop the dill and snip the chives, then mix the salmon with the crumbs, egg, most of the herbs, lemon zest, salt, and pepper. Chill the mixture for 10 minutes so the patties firm up.",
+   "Shape two thick patties and pan-fry them in the olive oil over medium heat for 4 minutes per side, until deeply golden with an interior that is just cooked through and still moist.",
+   "Stir the yogurt with the lemon juice, the reserved dill, and a pinch of salt into a bright, tangy sauce while the burgers rest for 2 minutes.",
+   "Serve the patties on crisp romaine leaves with the herbed sauce spooned generously on top."
+  ],
+  "tip": "Chill the patties before frying; warm salmon mix flops like a handshake from a jellyfish."
+ },
+ {
+  "id": "crispy_tuna_oat_patties",
+  "name": "Crispy Lemon-Herb Tuna Patties",
+  "emoji": "🐟",
+  "cuisine": "American",
+  "meal": ["lunch", "dinner"],
+  "diets": ["high-protein", "gluten-free"],
+  "allergens": ["fish", "eggs", "dairy"],
+  "time": 25,
+  "servings": 2,
+  "ing": [
+   { "f": "tuna_canned", "q": 240 },
+   { "f": "eggs", "q": 2 },
+   { "f": "oats", "q": 60 },
+   { "f": "onion", "q": 0.5 },
+   { "f": "garlic", "q": 0.2 },
+   { "f": "parsley", "q": 0.25 },
+   { "f": "dill", "q": 0.2 },
+   { "f": "lemon", "q": 1 },
+   { "f": "olive_oil", "q": 30 },
+   { "f": "greek_yogurt", "q": 100 }
+  ],
+  "steps": [
+   "Pulse the oats briefly or crush them in a bag until they resemble coarse crumbs, then stir them with the well-drained tuna, eggs, grated onion, minced garlic, chopped parsley and dill, the zest of the lemon, and a generous pinch of salt.",
+   "Rest the mixture for 10 minutes so the oats drink up the moisture — it should pack like damp sand, not batter.",
+   "Shape into 6 patties about 2 centimeters thick, pressing firmly so they survive the flip.",
+   "Heat the olive oil in a heavy skillet over medium heat until it shimmers, then fry the patties 3 to 4 minutes per side until deeply golden and crusted, flipping only once.",
+   "Whisk the greek yogurt with the lemon's juice, a few extra fronds of dill, and a pinch of salt, and serve the hot patties dolloped with the tangy sauce."
+  ],
+  "tip": "If a test patty falls apart in the pan, the fix is patience, not more egg — give the oats five more minutes to hydrate."
+ },
+ {
+  "id": "spicy_tuna_tortilla_tacos",
+  "name": "Ten-Minute Spicy Tuna Tacos",
+  "emoji": "🌮",
+  "cuisine": "Mexican",
+  "meal": ["dinner"],
+  "diets": ["high-protein"],
+  "allergens": ["fish", "gluten", "dairy"],
+  "time": 20,
+  "servings": 2,
+  "ing": [
+   { "f": "tortillas", "q": 4 },
+   { "f": "tuna_canned", "q": 220 },
+   { "f": "sour_cream", "q": 80 },
+   { "f": "avocado", "q": 1 },
+   { "f": "romaine", "q": 0.5 },
+   { "f": "onion", "q": 0.5 },
+   { "f": "chili_powder", "q": 6 },
+   { "f": "hot_sauce", "q": 10 },
+   { "f": "lemon", "q": 1 },
+   { "f": "olive_oil", "q": 15 }
+  ],
+  "steps": [
+   "Stir the drained tuna with the olive oil, half the lemon's juice, the chili powder, a dash of hot sauce, and salt, breaking it into rough shreds seasoned all the way through.",
+   "Warm a dry skillet over medium-high heat and toast each tortilla 30 to 45 seconds per side until puffed in spots and lightly charred at the edges.",
+   "Whisk the sour cream with the remaining lemon juice and a pinch of salt into a pourable crema.",
+   "Sear the tuna mixture in the hot skillet for 2 minutes without stirring so the bottom crisps and catches golden-brown edges.",
+   "Load each tortilla with shredded romaine, the crisped tuna, sliced avocado, and minced onion, then zigzag the crema over the top and pass the hot sauce for anyone who wants more fire."
+  ],
+  "tip": "A tortilla straight from the bag is a sad handshake — thirty seconds on a hot pan turns it into a proper greeting."
+ },
+ {
+  "id": "tuna_spinach_yogurt_curry",
+  "name": "Creamy Tuna and Spinach Curry with Rice",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": ["dinner"],
+  "diets": ["gluten-free", "high-protein"],
+  "allergens": ["fish", "dairy"],
+  "time": 35,
+  "servings": 2,
+  "ing": [
+   { "f": "tuna_canned", "q": 220 },
+   { "f": "spinach", "q": 200 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.4 },
+   { "f": "curry_powder", "q": 12 },
+   { "f": "greek_yogurt", "q": 150 },
+   { "f": "butter", "q": 25 },
+   { "f": "rice", "q": 140 }
+  ],
+  "steps": [
+   "Start the rice in salted water so it finishes as the curry does, about 12 minutes at a gentle simmer.",
+   "Melt the butter in a deep skillet over medium heat and cook the finely diced onion for 8 to 10 minutes, stirring occasionally, until deeply golden and jammy — this is the backbone of the sauce, so do not rush it.",
+   "Add the minced garlic and the curry powder with a pinch of salt, toasting 60 seconds until the butter turns amber and intensely fragrant.",
+   "Pile in the spinach with a splash of water and cook 3 minutes until fully wilted and glossy, then fold in the drained tuna in large chunks.",
+   "Pull the pan off the heat, stir in the greek yogurt one spoonful at a time so it stays creamy instead of splitting, warm through gently, and serve ladled over the rice."
+  ],
+  "tip": "Yogurt added over raging heat curdles into cottage-cheese regret — off the flame, one spoonful at a time."
+ },
+ {
+  "id": "smoky_black_bean_chili",
+  "name": "Smoky Black Bean Chili",
+  "emoji": "🌶️",
+  "cuisine": "Mexican",
+  "meal": ["dinner"],
+  "diets": ["vegan", "vegetarian", "dairy-free", "gluten-free"],
+  "allergens": [],
+  "time": 45,
+  "servings": 4,
+  "ing": [
+   { "f": "olive_oil", "q": 30 },
+   { "f": "onion", "q": 1 },
+   { "f": "bell_pepper", "q": 2 },
+   { "f": "garlic", "q": 0.4 },
+   { "f": "paprika", "q": 5 },
+   { "f": "chili_powder", "q": 12 },
+   { "f": "cumin", "q": 5 },
+   { "f": "tomato", "q": 4 },
+   { "f": "black_beans", "q": 800 },
+   { "f": "lime", "q": 1 }
+  ],
+  "steps": [
+   "Warm the olive oil in a heavy pot over medium heat and cook the diced onion and bell peppers for 8 minutes, until the edges pick up a little char and the onion turns translucent.",
+   "Stir in the minced garlic, smoked paprika, chili powder, and cumin and toast for 60 seconds, just until the spices darken a shade and the pot smells sweet and heady rather than raw.",
+   "Add the chopped tomatoes and cook 5 minutes, mashing them against the side of the pot until they collapse into a rough, brick-red sauce.",
+   "Tip in the black beans with a splash of their liquid, bring to a lazy simmer, and cook uncovered for 20 minutes, stirring occasionally, until the chili thickens enough that a spoon dragged across the bottom leaves a trail.",
+   "Crush a ladleful of beans against the pot wall to thicken things further, then finish with lime juice and taste for salt before serving hot."
+  ],
+  "tip": "A chili that tastes flat almost always needs acid, not more heat, so squeeze before you spice."
+ },
+ {
+  "id": "chana_saag_chickpea_curry",
+  "name": "Chana Saag Chickpea Curry",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": ["dinner"],
+  "diets": ["vegetarian", "gluten-free"],
+  "allergens": ["dairy"],
+  "time": 40,
+  "servings": 4,
+  "ing": [
+   { "f": "olive_oil", "q": 30 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.4 },
+   { "f": "ginger", "q": 20 },
+   { "f": "curry_powder", "q": 15 },
+   { "f": "garam_masala", "q": 5 },
+   { "f": "tomato", "q": 3 },
+   { "f": "chickpeas", "q": 700 },
+   { "f": "spinach", "q": 300 },
+   { "f": "greek_yogurt", "q": 100 },
+   { "f": "rice", "q": 300 }
+  ],
+  "steps": [
+   "Rinse the rice and simmer it, covered, in double its volume of salted water for 15 minutes, then let it steam off the heat while you build the curry.",
+   "Heat the oil in a wide pan over medium-high and fry the sliced onion for 10 minutes until deeply golden at the edges, because that browning is where the curry's sweetness lives.",
+   "Add the minced garlic and grated ginger and sizzle for 1 minute, then stir in the curry powder and let it bloom in the oil for 30 seconds before adding the chopped tomatoes; cook 6 to 8 minutes until the oil separates and pools at the edges of the sauce.",
+   "Fold in the chickpeas with a splash of water and simmer 10 minutes so they drink up the masala, then pile in the spinach by the handful and let it wilt to a glossy dark green.",
+   "Pull the pan off the heat, dust with the garam masala, swirl in the yogurt so it stays silky instead of splitting, and serve ladled over the fluffed rice."
+  ],
+  "tip": "Yogurt curdles when boiled, so treat it like a guest who arrives after the party calms down."
+ },
+ {
+  "id": "lemon_herb_chicken_quinoa_bowl",
+  "name": "Lemon Herb Chicken Quinoa Bowl",
+  "emoji": "🍋",
+  "cuisine": "Mediterranean",
+  "meal": ["lunch", "dinner"],
+  "diets": ["gluten-free", "high-protein"],
+  "allergens": ["dairy"],
+  "time": 40,
+  "servings": 2,
+  "ing": [
+   { "f": "chicken_breast", "q": 320 },
+   { "f": "quinoa", "q": 140 },
+   { "f": "zucchini", "q": 2 },
+   { "f": "bell_pepper", "q": 1 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "oregano", "q": 3 },
+   { "f": "parsley", "q": 0.25 },
+   { "f": "olive_oil", "q": 25 },
+   { "f": "lemon", "q": 1 },
+   { "f": "spinach", "q": 100 },
+   { "f": "feta", "q": 50 }
+  ],
+  "steps": [
+   "Heat the oven to 425°F and rinse the quinoa until the water runs clear, then simmer it in double its volume of water for 15 minutes until the germ spirals loose.",
+   "Toss thick half-moons of zucchini, strips of bell pepper, and onion wedges with half the olive oil, then roast 20 minutes until the edges char and turn sweet.",
+   "Rub the chicken breasts with the oregano, salt, and pepper, sear them in the remaining oil over medium-high heat for 5 to 6 minutes per side until deeply golden and 165°F inside, then rest 5 minutes before slicing against the grain.",
+   "Squeeze the lemon over the warm quinoa along with the minced garlic, a handful of chopped parsley, and a big pinch of salt, folding until fragrant and glossy.",
+   "Pile quinoa into bowls, wilt the spinach under the hot roasted vegetables, fan the chicken on top, and finish with crumbled feta and any resting juices."
+  ],
+  "tip": "Resting the chicken is not optional — slice it early and you will watch your sauce run away across the cutting board."
+ },
+ {
+  "id": "chili_lime_shrimp_quinoa_bowl",
+  "name": "Chili-Lime Shrimp Quinoa Bowl",
+  "emoji": "🍤",
+  "cuisine": "Mexican",
+  "meal": ["lunch", "dinner"],
+  "diets": ["gluten-free", "dairy-free", "high-protein"],
+  "allergens": ["shellfish"],
+  "time": 35,
+  "servings": 2,
+  "ing": [
+   { "f": "shrimp", "q": 350 },
+   { "f": "quinoa", "q": 140 },
+   { "f": "bell_pepper", "q": 2 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.2 },
+   { "f": "chili_powder", "q": 8 },
+   { "f": "paprika", "q": 3 },
+   { "f": "lime", "q": 2 },
+   { "f": "avocado", "q": 1 },
+   { "f": "olive_oil", "q": 25 }
+  ],
+  "steps": [
+   "Simmer the quinoa in salted water for 15 minutes, then fluff it with the zest and juice of one lime.",
+   "Roast the bell pepper strips and onion wedges at 450°F with half the olive oil for 18 minutes until blistered and sweet at the edges.",
+   "Pat the shrimp bone-dry, then toss them with the minced garlic, the chili powder and paprika, a pinch of salt, and the remaining oil until every shrimp wears a rusty-red coat.",
+   "Sear the shrimp in a screaming-hot skillet for 90 seconds per side, just until they curl into loose Cs and turn opaque pink.",
+   "Build bowls of citrusy quinoa, charred peppers, and shrimp, then crown with sliced avocado and wedges of the second lime for squeezing at the table."
+  ],
+  "tip": "A shrimp curled into a tight O is overcooked and telling on you — pull them at a relaxed C every time."
+ },
+ {
+  "id": "smoky_black_bean_quinoa_burrito_bowl",
+  "name": "Smoky Black Bean Quinoa Burrito Bowl",
+  "emoji": "🌯",
+  "cuisine": "Mexican",
+  "meal": ["lunch", "dinner"],
+  "diets": ["vegan", "vegetarian", "gluten-free", "dairy-free", "high-protein"],
+  "allergens": [],
+  "time": 35,
+  "servings": 2,
+  "ing": [
+   { "f": "black_beans", "q": 400 },
+   { "f": "quinoa", "q": 140 },
+   { "f": "bell_pepper", "q": 2 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.2 },
+   { "f": "paprika", "q": 4 },
+   { "f": "cumin", "q": 3 },
+   { "f": "tomato", "q": 2 },
+   { "f": "avocado", "q": 1 },
+   { "f": "lime", "q": 1 },
+   { "f": "olive_oil", "q": 20 }
+  ],
+  "steps": [
+   "Simmer the quinoa in salted water for 15 minutes, then fluff and hold it covered off the heat.",
+   "Roast the bell pepper strips and onion wedges at 450°F with half the oil for 18 minutes until the edges blacken fajita-style.",
+   "Warm the remaining oil in a saucepan and bloom the minced garlic with the smoked paprika and cumin for 30 seconds, until the oil turns brick red and fragrant, then add the black beans and diced tomatoes.",
+   "Simmer the beans for 8 minutes, mashing a few against the pot wall so the mixture thickens into something saucy and glossy.",
+   "Layer quinoa, smoky beans, and charred vegetables into bowls, then finish with sliced avocado and a hard squeeze of lime to wake everything up."
+  ],
+  "tip": "Mashing a quarter of the beans is the free thickener nobody talks about — no cream, no flour, just physics."
+ },
+ {
+  "id": "curried_cauliflower_chickpea_quinoa_bowl",
+  "name": "Curried Cauliflower Quinoa Bowl",
+  "emoji": "🍛",
+  "cuisine": "Indian",
+  "meal": ["lunch", "dinner"],
+  "diets": ["vegetarian", "gluten-free", "high-protein"],
+  "allergens": ["dairy"],
+  "time": 45,
+  "servings": 2,
+  "ing": [
+   { "f": "cauliflower", "q": 0.8 },
+   { "f": "chickpeas", "q": 200 },
+   { "f": "quinoa", "q": 140 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "curry_powder", "q": 10 },
+   { "f": "turmeric", "q": 3 },
+   { "f": "olive_oil", "q": 25 },
+   { "f": "greek_yogurt", "q": 150 },
+   { "f": "lemon", "q": 0.5 }
+  ],
+  "steps": [
+   "Heat the oven to 450°F and toss the cauliflower florets, drained chickpeas, and onion wedges with the oil, curry powder, turmeric, and salt until everything is stained gold.",
+   "Roast for 25 to 28 minutes, flipping halfway, until the cauliflower tips char nearly black in places — that bitterness against the sweet spice is the whole dish.",
+   "Simmer the quinoa in salted water for 15 minutes while the pan roasts, then fluff.",
+   "Stir the grated garlic and lemon juice into the yogurt with a pinch of salt to make a cool, tangy raita-style sauce.",
+   "Spoon the roasted cauliflower and chickpeas over the quinoa and drape the garlic yogurt across the top, letting it melt into the hot spiced edges."
+  ],
+  "tip": "Crowd the sheet pan and the cauliflower steams instead of chars — give the florets personal space and they will reward you with crispy edges."
+ },
+ {
+  "id": "turkey_kidney_bean_chili_soup",
+  "name": "Turkey and Kidney Bean Chili Soup",
+  "emoji": "🌶️",
+  "cuisine": "Mexican",
+  "meal": ["lunch", "dinner"],
+  "diets": ["gluten-free", "dairy-free", "high-protein"],
+  "allergens": [],
+  "time": 45,
+  "servings": 4,
+  "ing": [
+   { "f": "ground_turkey", "q": 450 },
+   { "f": "kidney_beans", "q": 400 },
+   { "f": "tomato", "q": 3 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "bell_pepper", "q": 1 },
+   { "f": "chili_powder", "q": 12 },
+   { "f": "cumin", "q": 4 },
+   { "f": "corn_frozen", "q": 150 },
+   { "f": "broth", "q": 750 },
+   { "f": "olive_oil", "q": 15 }
+  ],
+  "steps": [
+   "Heat the olive oil in a large pot over medium-high and sear the ground turkey for 5 to 6 minutes, pressing it flat and leaving it alone until it browns and releases from the pan.",
+   "Add the diced onion and bell pepper and cook 5 minutes, until the pepper's edges soften and the onion picks up a little color.",
+   "Stir in the garlic, chili powder, and cumin and toast 30 seconds, then add the chopped tomatoes with a big pinch of salt and let them cook down for 5 minutes, until the mixture thickens and smells sweet and roasty.",
+   "Pour in the broth and the drained kidney beans and simmer uncovered for 15 minutes, until the liquid reduces slightly and turns brick red.",
+   "Add the corn, simmer 3 minutes more, then taste — it should carry a gentle chili burn behind the sweetness — and adjust the seasoning before ladling it out."
+  ],
+  "tip": "Chili soup improves overnight, so make it today and take the credit tomorrow."
+ },
+ {
+  "id": "smoky_black_bean_rice_soup",
+  "name": "Smoky Black Bean and Rice Soup",
+  "emoji": "🫘",
+  "cuisine": "Mexican",
+  "meal": ["lunch", "dinner"],
+  "diets": ["vegan", "vegetarian", "dairy-free", "gluten-free"],
+  "allergens": [],
+  "time": 40,
+  "servings": 4,
+  "ing": [
+   { "f": "black_beans", "q": 700 },
+   { "f": "rice", "q": 150 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.4 },
+   { "f": "bell_pepper", "q": 1 },
+   { "f": "paprika", "q": 5 },
+   { "f": "cumin", "q": 3 },
+   { "f": "tomato", "q": 1.5 },
+   { "f": "lime", "q": 1 },
+   { "f": "olive_oil", "q": 30 }
+  ],
+  "steps": [
+   "Heat the olive oil in a Dutch oven over medium heat and cook the diced onion and bell pepper for 6 to 7 minutes, until the pepper chars slightly at the edges and the kitchen smells sweet.",
+   "Add the minced garlic, smoked paprika, and cumin and stir 30 seconds until the oil turns rust-colored, then add the chopped tomatoes and cook 3 minutes, mashing them with your spoon until they melt into the vegetables.",
+   "Add the drained black beans, rice, and 1.2 liters of water; bring to a boil, then simmer partly covered for 18 minutes, until the rice is tender and the broth has darkened to deep violet-black.",
+   "Ladle about a quarter of the soup into a bowl, mash it thoroughly, and stir it back in so the broth turns thick and velvety while whole beans still pop between your teeth.",
+   "Squeeze in the lime juice, season assertively with salt, and simmer 2 final minutes before serving — the acid should make the whole pot taste suddenly brighter."
+  ],
+  "tip": "Lime at the end is non-negotiable; black beans without acid are a bass line with no melody."
+ },
+ {
+  "id": "spicy_peanut_sweet_potato_soup",
+  "name": "Spicy Peanut and Sweet Potato Soup",
+  "emoji": "🥜",
+  "cuisine": "Asian",
+  "meal": ["lunch", "dinner"],
+  "diets": ["vegan", "vegetarian", "dairy-free", "gluten-free"],
+  "allergens": ["nuts"],
+  "time": 40,
+  "servings": 4,
+  "ing": [
+   { "f": "peanut_butter", "q": 120 },
+   { "f": "sweet_potatoes", "q": 500 },
+   { "f": "coconut_milk", "q": 200 },
+   { "f": "tomato", "q": 2 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "ginger", "q": 20 },
+   { "f": "red_pepper_flakes", "q": 4 },
+   { "f": "spinach", "q": 150 }
+  ],
+  "steps": [
+   "Simmer the diced onion, minced garlic, and grated ginger in a splash of water in a large pot for 4 minutes, until softened and fragrant, then stir in the red pepper flakes and let them sizzle for 30 seconds to wake up their heat.",
+   "Add the chopped tomatoes and cook 5 minutes, crushing them down until they thicken into a rough, brick-colored base.",
+   "Add the sweet potatoes in 2-centimeter cubes and 1 liter of water, bring to a boil, and simmer 15 minutes, until the cubes are fudgy-soft at the center.",
+   "Whisk the peanut butter with a ladle of hot broth in a bowl until smooth, then stir it into the pot along with the coconut milk and simmer 5 minutes, until the soup turns thick, glossy, and the color of caramel.",
+   "Fold in the spinach until it collapses, season with salt, and taste — the pepper flakes should leave a slow, friendly burn; add another pinch if you want it fiercer."
+  ],
+  "tip": "Temper the peanut butter with hot broth first, or you will spend ten minutes chasing a stubborn blob around the pot."
+ },
+ {
+  "id": "smoky_beef_and_kidney_bean_chili",
+  "name": "Smoky Beef and Kidney Bean Chili",
+  "emoji": "🌶️",
+  "cuisine": "American",
+  "meal": ["lunch", "dinner"],
+  "diets": ["gluten-free", "dairy-free", "high-protein"],
+  "allergens": [],
+  "time": 60,
+  "servings": 4,
+  "ing": [
+   { "f": "ground_beef", "q": 500 },
+   { "f": "kidney_beans", "q": 480 },
+   { "f": "crushed_tomatoes", "q": 800 },
+   { "f": "onion", "q": 1 },
+   { "f": "garlic", "q": 0.3 },
+   { "f": "bell_pepper", "q": 1 },
+   { "f": "paprika", "q": 5 },
+   { "f": "chili_powder", "q": 15 },
+   { "f": "cumin", "q": 5 },
+   { "f": "olive_oil", "q": 15 },
+   { "f": "broth", "q": 250 }
+  ],
+  "steps": [
+   "Heat the olive oil in a heavy Dutch oven over medium-high heat and brown the ground beef for 6 to 8 minutes, breaking it into rough crumbles and letting it develop deep mahogany edges before stirring.",
+   "Add the diced onion and bell pepper and cook 5 minutes until the onion turns translucent, then stir in the minced garlic, smoked paprika, chili powder, and cumin and toast 60 seconds, until the spices coat the beef and the pot smells like a barbecue pit.",
+   "Pour in the crushed tomatoes and broth, scraping up the browned bits stuck to the bottom, and bring everything to a lively simmer.",
+   "Stir in the drained kidney beans, reduce the heat to low, and simmer uncovered for 35 to 40 minutes, stirring occasionally, until the chili thickens enough that a spoon dragged through leaves a brief trail.",
+   "Rest the pot off the heat for 5 minutes so the flavors settle, then taste for salt and ladle into deep bowls."
+  ],
+  "tip": "Chili is one of the few dishes that improves by ignoring it overnight, so make it a day ahead and take all the credit tomorrow."
+ }
+]

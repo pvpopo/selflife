@@ -3083,6 +3083,10 @@
     "q": 400
    },
    {
+    "f": "chili_powder",
+    "q": 5
+   },
+   {
     "f": "lime",
     "q": 2
    },
@@ -3104,11 +3108,11 @@
    }
   ],
   "steps": [
-   "Pat the shrimp bone dry, then toss with half the olive oil, the zest of one lime, chili powder, and a big pinch of salt.",
+   "Pat the shrimp bone dry, then toss with half the olive oil, the zest of one lime, most of the chili powder, and a big pinch of salt.",
    "Sear the shrimp in a screaming-hot skillet for 90 seconds per side until they curl into loose commas and pick up charred edges; pull them off immediately.",
-   "Whisk the remaining olive oil with the juice of both limes, salt, and a pinch of chili to make a dressing that bites back.",
+   "Whisk the remaining olive oil with the juice of both limes, salt, and the last pinch of chili powder to make a dressing that bites back.",
    "Chop the romaine into ribbons, dice the avocado, and toss both with most of the dressing in a wide bowl.",
-   "Pile the warm shrimp on top, drizzle with the last of the dressing, and shower with torn cilantro."
+   "Pile the warm shrimp on top, drizzle with the rest of the dressing, and shower with torn cilantro."
   ],
   "tip": "A shrimp curled into a tight O is overcooked; you want a relaxed C, like it is lounging in the dressing."
  },
@@ -3527,15 +3531,27 @@
    {
     "f": "olive_oil",
     "q": 15
+   },
+   {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "cumin",
+    "q": 5
    }
   ],
   "steps": [
-   "Heat the olive oil in a heavy pot over medium-high, add the ground beef in one layer, and let it sear untouched for 4 minutes until a deep brown crust forms on the bottom before breaking it up.",
+   "Heat the olive oil in a heavy pot over medium-high, add the ground beef in one layer, and let it sear untouched for 4 minutes until a deep brown crust forms before you break it up.",
    "Stir in the diced onion and bell pepper and cook 5 minutes, scraping the browned bits off the pot floor as the vegetables soften and turn glossy.",
-   "Add a heaping spoonful each of chili powder, smoked paprika, and cumin plus a pinch of salt, and toast the spices in the fat for a full minute until the whole kitchen smells like a barbecue pit.",
+   "Add the chili powder, smoked paprika, and cumin with a pinch of salt, and toast the spices in the fat for a full minute until the whole kitchen smells like a barbecue pit.",
    "Chop the tomatoes and add them with the drained black beans and a splash of water, then bring everything to a lively simmer.",
-   "Drop the heat to low, cover partially, and simmer 25 minutes, stirring occasionally, until the chili thickens enough that a spoon dragged across the bottom leaves a brief trail.",
-   "Taste, adjust the salt, and let it rest off the heat for 5 minutes so the flavors settle into each other."
+   "Drop the heat to low, cover partially, and simmer 25 minutes, stirring occasionally, until a spoon dragged across the bottom leaves a brief trail.",
+   "Taste, adjust the salt, and rest the pot off the heat for 5 minutes so the flavors settle into each other."
   ],
   "tip": "Chili is one of the few dishes that genuinely improves overnight, so make it a day early and take all the credit tomorrow."
  },
@@ -6881,13 +6897,17 @@
     "q": 45
    },
    {
+    "f": "cinnamon",
+    "q": 3
+   },
+   {
     "f": "walnuts",
     "q": 30
    }
   ],
   "steps": [
    "Heat the oven to 375F and grease a small baking dish while you dice one apple and slice the other into thin fans for the top.",
-   "Whisk the egg, milk, maple syrup, a teaspoon of cinnamon, and a pinch of salt in a bowl until fully combined.",
+   "Whisk the egg, milk, maple syrup, cinnamon, and a pinch of salt in a bowl until fully combined and faintly tan.",
    "Stir in the oats, diced apple, and roughly chopped walnuts, then pour the mixture into the dish and shingle the apple slices over the surface.",
    "Bake for 30 to 35 minutes until the center is set, the edges pull away from the dish, and the top is burnished golden with bubbling syrupy spots.",
    "Rest for 5 minutes so it firms up, then scoop into bowls and finish with an extra drizzle of maple syrup if you are feeling generous."
@@ -7970,6 +7990,10 @@
     "q": 8
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
     "f": "coconut_milk",
     "q": 200
    },
@@ -7988,7 +8012,7 @@
   ],
   "steps": [
    "Heat the olive oil in a wide, heavy pot over medium heat and cook the diced onions for 10 to 12 minutes, stirring occasionally, until they turn a deep golden brown at the edges.",
-   "Stir in the minced garlic and grated ginger and cook for 1 minute until fragrant, then add the turmeric, curry powder, and half the garam masala, toasting the spices in the oil for 30 seconds until they smell nutty.",
+   "Stir in the minced garlic and grated ginger for 1 minute until fragrant, then add the turmeric, curry powder, smoked paprika, and half the garam masala, toasting the spices in the oil for 30 seconds until they smell nutty and faintly of campfire.",
    "Add the chopped tomatoes and simmer for 6 to 8 minutes, mashing them with the back of your spoon, until they collapse into a thick, jammy masala that pulls away from the sides of the pot.",
    "Tip in the chickpeas and coconut milk with a splash of water, bring to a gentle bubble, and simmer uncovered for 12 minutes until the sauce clings to the chickpeas and darkens a shade.",
    "Fold in the spinach and remaining garam masala, letting the leaves wilt for 2 minutes, then finish with a big squeeze of lime and a shower of chopped cilantro.",
@@ -8901,6 +8925,14 @@
     "q": 15
    },
    {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "cumin",
+    "q": 3
+   },
+   {
     "f": "tomato",
     "q": 1
    },
@@ -8915,10 +8947,10 @@
   ],
   "steps": [
    "Warm the olive oil in a skillet over medium heat and cook the diced onion for 4 to 5 minutes, until the edges turn golden and it smells sweet.",
-   "Stir in the minced garlic with a big pinch of smoked paprika and cumin, then add the drained black beans and chopped tomato.",
+   "Stir in the minced garlic with the smoked paprika and cumin, letting the spices sizzle for 30 seconds, then add the drained black beans and chopped tomato.",
    "Simmer for 6 to 8 minutes, mashing about a third of the beans against the pan until the mixture is thick enough to hold its shape on a spoon.",
    "Toast the tortillas directly over a low flame or in a dry pan for 30 seconds per side, until speckled with char and pliable.",
-   "Pile the beans into the tortillas, top with sliced avocado, and finish with a hard squeeze of lime and flaky salt."
+   "Pile the smoky beans into the tortillas, top with sliced avocado, and finish with a hard squeeze of lime and flaky salt."
   ],
   "tip": "Mash some beans, not all of them — a taco filling with no texture is just soup with commitment issues."
  },
@@ -9207,6 +9239,14 @@
     "q": 10
    },
    {
+    "f": "chili_powder",
+    "q": 5
+   },
+   {
+    "f": "paprika",
+    "q": 3
+   },
+   {
     "f": "onion",
     "q": 0.5
    },
@@ -9225,7 +9265,7 @@
   ],
   "steps": [
    "Pat the chickpeas thoroughly dry, then fry them in olive oil over medium-high heat for 8 to 10 minutes, shaking the pan occasionally, until they rattle and turn deep golden.",
-   "Off the heat, toss them with the maple syrup, a teaspoon of chili powder, and a pinch of smoked paprika so each chickpea gets a sticky, spicy lacquer.",
+   "Off the heat, toss them with the maple syrup, chili powder, and smoked paprika so each chickpea gets a sticky, spicy lacquer.",
    "While they cook, slice the onion paper-thin and soak it in the juice of half the lime with a pinch of salt for a quick pickle.",
    "Char the tortillas in a dry skillet for 30 seconds per side until warm and blistered.",
    "Load each tortilla with a bed of spinach, mashed avocado, the glazed chickpeas, and a tangle of pickled onion, then finish with the last of the lime."
@@ -9527,6 +9567,18 @@
     "q": 20
    },
    {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "cumin",
+    "q": 3
+   },
+   {
     "f": "corn_frozen",
     "q": 150
    },
@@ -9545,7 +9597,7 @@
   ],
   "steps": [
    "Brown the diced onion and bell pepper in olive oil over medium-high heat for 7 minutes, letting them pick up dark edges that will flavor the whole pot.",
-   "Add the garlic with two tablespoons of chili powder, a tablespoon of smoked paprika, and a teaspoon of cumin, stirring for 1 minute until the spices smell toasty rather than raw.",
+   "Add the garlic with the chili powder, smoked paprika, and cumin, stirring for 1 minute until the spices smell toasty rather than raw.",
    "Add the chopped tomatoes, chickpeas, corn, maple syrup, and 400 milliliters of water, then simmer uncovered for 25 minutes, until thick enough that a spoon dragged through leaves a trail.",
    "Mash a ladleful of chickpeas against the pot wall to thicken the chili from within.",
    "Season with salt and the lime juice, and serve each bowl topped with diced avocado."
@@ -13539,6 +13591,14 @@
     "q": 0.2
    },
    {
+    "f": "turmeric",
+    "q": 3
+   },
+   {
+    "f": "paprika",
+    "q": 2
+   },
+   {
     "f": "spinach",
     "q": 100
    },
@@ -13550,12 +13610,12 @@
   "steps": [
    "Press the tofu between paper towels for 5 minutes, then crumble it with your hands into ragged, egg-sized curds — uneven pieces catch more seasoning.",
    "Heat the olive oil in a large skillet over medium-high until it shimmers, then soften the diced onion and bell pepper for 4 minutes until the edges just begin to brown.",
-   "Stir in the minced garlic for 30 seconds, add the crumbled tofu with a generous pinch of turmeric, paprika, salt, and black pepper, and press it into an even layer.",
+   "Stir in the minced garlic for 30 seconds, add the crumbled tofu with the turmeric, paprika, salt, and black pepper, and press it into an even, sunshine-yellow layer.",
    "Let it sear undisturbed for 3 minutes so the bottom turns golden and slightly crisp, then flip and repeat once more.",
    "Fold in the spinach off the heat and let the residual warmth wilt it to a glossy dark green, about 1 minute.",
    "Divide between two plates and top with sliced avocado and another crack of black pepper."
   ],
-  "tip": "A splash of the avocado's lime juice at the end wakes up turmeric the way an alarm clock never could."
+  "tip": "A splash of lime or lemon at the end wakes up turmeric the way an alarm clock never could."
  },
  {
   "id": "sonoran_tofu_breakfast_tacos",
@@ -13650,6 +13710,10 @@
     "q": 30
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
     "f": "onion",
     "q": 1
    },
@@ -13670,7 +13734,7 @@
    "Dice the potatoes into 1-centimeter cubes and parboil them in salted water for 5 minutes, then drain and let them steam dry — dry surfaces are the secret to crunch.",
    "Heat the olive oil in a cast-iron skillet over medium-high until a test cube sizzles on contact, then add the potatoes in a single layer and leave them alone for 5 full minutes.",
    "Flip in sections once the undersides are deep golden, add the diced onion and bell pepper, and cook 6 more minutes until the peppers blister at the edges.",
-   "Stir in the garlic, paprika, salt, and pepper, then fold in the drained black beans and stripped kale.",
+   "Stir in the garlic and smoked paprika with a good pinch of salt and pepper, coating every cube rust-red, then fold in the drained black beans and stripped kale.",
    "Cook 3 minutes more, pressing everything flat once so the beans crisp slightly and the kale wilts dark and glossy, then serve straight from the pan."
   ],
   "tip": "If your spatula meets resistance when you try to flip, the potatoes are politely telling you they need another minute."
@@ -16087,6 +16151,18 @@
     "q": 2
    },
    {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
     "f": "crushed_tomatoes",
     "q": 500
    },
@@ -16109,8 +16185,8 @@
   ],
   "steps": [
    "Heat the olive oil in a heavy pot over medium heat and cook the diced onion and bell peppers for 8 minutes, until the edges pick up a little char and the onion turns translucent.",
-   "Stir in the minced garlic and cook 1 minute more, just until it smells toasty rather than raw.",
-   "Add the crushed tomatoes, lentils, and 750 ml of water, scraping up any browned bits, then bring to a boil and reduce to a lazy simmer.",
+   "Stir in the minced garlic with the chili powder, smoked paprika, and cumin, and toast the spices in the oil for a full minute until they darken and smell like a barbecue pit.",
+   "Add the crushed tomatoes, lentils, and 750 milliliters of water, scraping up any browned bits, then bring to a boil and reduce to a lazy simmer.",
    "Cover and cook 25 minutes, until the lentils are tender but still hold their shape, then stir in the black beans, chickpeas, and maple syrup.",
    "Simmer uncovered 10 minutes, until the chili is thick enough that a spoon dragged across the bottom leaves a brief trail.",
    "Rest off the heat for 5 minutes before ladling into bowls; the flavors settle and the texture tightens as it sits."
@@ -16163,6 +16239,14 @@
     "q": 1
    },
    {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
     "f": "crushed_tomatoes",
     "q": 400
    },
@@ -16178,9 +16262,9 @@
   "steps": [
    "Pulse the mushrooms and walnuts in a food processor (or chop finely by hand) until the mixture resembles coarse ground meat.",
    "Heat the olive oil in a wide pot over medium-high heat and cook the mushroom-walnut crumble in an even layer for 10 minutes, stirring only occasionally, until the moisture cooks off and the bits turn deeply browned and sizzling.",
-   "Add the diced onion, bell pepper, and garlic and cook 5 minutes, until softened and fragrant.",
-   "Stir in the crushed tomatoes, black beans, maple syrup, and 500 ml of water, then simmer uncovered for 20 minutes, until thick and glossy.",
-   "Taste and adjust; the chili should be rich and savory with a gentle sweetness underneath, and thick enough to mound on a spoon."
+   "Add the diced onion, bell pepper, and garlic and cook 5 minutes until softened, then stir in the chili powder and cumin and toast for 30 seconds until the spices coat the crumble and smell dark and earthy.",
+   "Stir in the crushed tomatoes, black beans, maple syrup, and 500 milliliters of water, then simmer uncovered for 20 minutes, until thick and glossy.",
+   "Taste and adjust the salt; the chili should be rich and savory with a gentle sweetness underneath, and thick enough to mound on a spoon."
   ],
   "tip": "Resist stirring the crumble too often — browning is where the 'meaty' flavor lives, and fidgeting steams it instead."
  },
@@ -17046,6 +17130,18 @@
     "q": 0.4
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
     "f": "tomato",
     "q": 5
    },
@@ -17060,7 +17156,7 @@
   ],
   "steps": [
    "Heat the olive oil in your largest pot over medium-high heat and cook the chopped onion and bell peppers for 7 to 8 minutes until they soften and pick up brown, sticky patches.",
-   "Add the minced garlic along with pantry smoked paprika, cumin, and chili powder, and stir for a full minute until the spices smell toasty rather than raw.",
+   "Add the minced garlic along with the smoked paprika, cumin, and chili powder, and stir for a full minute until the spices smell toasty rather than raw.",
    "Chop the tomatoes and crush them into the pot with the lentils, maple syrup, and 1 liter of water, scraping up every browned bit from the bottom.",
    "Simmer partially covered for 25 minutes, stirring now and then, until the lentils are tender and the chili has thickened enough that a spoon dragged through leaves a brief trail.",
    "Stir in the chickpeas and edamame, simmer 5 more minutes, then season aggressively with salt and ladle into deep bowls."
@@ -17379,6 +17475,18 @@
     "q": 30
    },
    {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "cumin",
+    "q": 3
+   },
+   {
+    "f": "chili_powder",
+    "q": 4
+   },
+   {
     "f": "tortillas",
     "q": 4
    },
@@ -17410,7 +17518,7 @@
   "steps": [
    "Simmer the lentils in salted water for 20 minutes until tender but not mushy, then drain them well.",
    "Toast the walnuts in a dry skillet for 3 minutes until fragrant, then chop them fine so they mimic the crumble of taco meat.",
-   "Heat the olive oil in the same skillet, add the lentils and walnuts with cumin, smoked paprika, and chili powder from the pantry, and fry for 5 minutes, smashing lightly with the spoon, until the mixture is sizzling and crisp in spots.",
+   "Heat the olive oil in the same skillet, add the lentils and walnuts with the cumin, smoked paprika, and chili powder, and fry for 5 minutes, smashing lightly with the spoon, until the mixture is sizzling and crisp in spots.",
    "Warm the tortillas directly over a low flame or in a hot dry pan for 20 seconds a side until soft and lightly charred.",
    "Load each tortilla with the smoky lentil crumble, then top with diced tomato, shredded romaine, sliced onion, avocado, and a decisive squeeze of lime."
   ],
@@ -17513,6 +17621,10 @@
     "q": 480
    },
    {
+    "f": "rosemary",
+    "q": 0.2
+   },
+   {
     "f": "tomato",
     "q": 3
    },
@@ -17538,9 +17650,9 @@
    }
   ],
   "steps": [
-   "Warm the olive oil in a wide pan over medium heat and cook the diced onion, sliced garlic, and a sprig of pantry rosemary for 5 minutes until soft and perfumed.",
+   "Warm the olive oil in a wide pan over medium heat and cook the diced onion, sliced garlic, and the rosemary sprigs for 5 minutes until soft and deeply perfumed.",
    "Add the chopped tomatoes and cook them down for 6 to 7 minutes until they slacken into a rustic sauce, then stir in the chickpeas with 250 milliliters of water.",
-   "Simmer 10 minutes, mashing about a third of the chickpeas with the back of a spoon so the sauce turns creamy and thick around the whole ones.",
+   "Simmer 10 minutes, mashing about a third of the chickpeas with the back of a spoon so the sauce turns creamy and thick around the whole ones; fish out the bare rosemary stems.",
    "Meanwhile, boil the penne in generously salted water until one minute shy of tender, then transfer it into the sauce with a ladleful of starchy pasta water.",
    "Toss over the heat for 2 minutes until the sauce grips every tube, wilt in the spinach, and finish with lemon juice and black pepper."
   ],
@@ -17911,6 +18023,18 @@
     "q": 15
    },
    {
+    "f": "curry_powder",
+    "q": 10
+   },
+   {
+    "f": "garam_masala",
+    "q": 5
+   },
+   {
+    "f": "turmeric",
+    "q": 3
+   },
+   {
     "f": "tomato",
     "q": 2
    },
@@ -17929,11 +18053,11 @@
   ],
   "steps": [
    "Brown the bite-size chicken thigh pieces in olive oil over medium-high heat for 5 minutes until golden at the edges, then remove to a bowl.",
-   "Melt the butter in the same pan and cook the finely chopped onion for 6 to 7 minutes until deeply golden, then add the minced garlic and ginger with a tablespoon of garam masala, turmeric, and cumin, toasting 60 seconds until the spices smell nutty.",
+   "Melt the butter in the same pan and cook the finely chopped onion for 6 to 7 minutes until deeply golden, then add the minced garlic and ginger with the curry powder, garam masala, and turmeric, toasting 60 seconds until the spices smell nutty.",
    "Add the chopped tomatoes and cook 4 minutes, mashing them down until the mixture thickens into a rough, brick-red paste.",
    "Pile in the spinach with a splash of water and let it collapse completely, about 3 minutes, then blitz the sauce roughly with an immersion blender if you like it smooth.",
    "Return the chicken with its juices, simmer 8 to 10 minutes until tender, then stir in the yogurt off the heat one spoonful at a time.",
-   "Taste, adjust salt and a pinch of chili, and serve hot."
+   "Taste, adjust the salt, and serve hot."
   ],
   "tip": "Full-fat yogurt added off the heat stays creamy; cold yogurt into a boiling pot curdles faster than you can say saag."
  },
@@ -17965,6 +18089,10 @@
     "q": 400
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
     "f": "bell_pepper",
     "q": 1
    },
@@ -17990,7 +18118,7 @@
    }
   ],
   "steps": [
-   "Heat the oven to 220C and toss the chicken thighs with half the olive oil, paprika, minced garlic, salt, and pepper until every piece is rust-colored.",
+   "Heat the oven to 220C and toss the chicken thighs with half the olive oil, the paprika, minced garlic, salt, and pepper until every piece is rust-colored.",
    "Toss the broccoli florets, thick-sliced bell pepper, and onion wedges with the remaining oil on a large rimmed sheet pan, then nestle the thighs on top so their juices baste the vegetables.",
    "Roast 25 to 28 minutes until the chicken hits 74C and the broccoli tips are crisp and charred at the edges.",
    "Shower the hot pan with grated parmesan and let it melt into a savory crust for 2 minutes in the turned-off oven.",
@@ -18475,6 +18603,22 @@
     "q": 0.4
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
+    "f": "cinnamon",
+    "q": 1
+   },
+   {
     "f": "broth",
     "q": 500
    },
@@ -18497,7 +18641,7 @@
   ],
   "steps": [
    "Brown the diced chicken thighs in olive oil in a Dutch oven over high heat for 5 to 6 minutes, working in batches so the meat sears instead of steams.",
-   "Lower the heat, add the chopped onion and bell peppers, and cook 5 minutes until softened, then stir in the garlic, paprika, cumin, chili powder, and a pinch of cinnamon, toasting 60 seconds until the pot smells like a taqueria.",
+   "Lower the heat, add the chopped onion and bell peppers, and cook 5 minutes until softened, then stir in the garlic, smoked paprika, cumin, chili powder, and the pinch of cinnamon, toasting 60 seconds until the pot smells like a taqueria.",
    "Add the chopped tomatoes and broth, scrape the bottom clean, and simmer uncovered for 25 minutes, stirring now and then, until the chili thickens enough to mound on a spoon.",
    "Shred a third of the chicken against the pot wall with two forks to give the chili body, then season boldly with salt and half the lime's juice.",
    "Ladle into bowls and top each with a dollop of sour cream, sliced avocado, and a wedge of the remaining lime."
@@ -18604,6 +18748,18 @@
     "q": 2
    },
    {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
     "f": "cheddar",
     "q": 60
    },
@@ -18619,7 +18775,7 @@
   "steps": [
    "Heat the olive oil in a wide skillet over medium-high heat until it shimmers, then add the diced onion and bell pepper and cook for 4 minutes until the edges pick up a little char.",
    "Push the vegetables to one side, add the ground beef in a single layer, and let it sear undisturbed for 3 minutes so it develops a deep brown crust before breaking it up.",
-   "Season generously with chili powder, cumin, smoked paprika, salt, and pepper, then stir in the chopped tomatoes and simmer for 8 minutes until the juices reduce to a thick, glossy coating.",
+   "Season with the chili powder, cumin, smoked paprika, salt, and pepper, letting the spices sizzle in the fat for 30 seconds, then stir in the chopped tomatoes and simmer for 8 minutes until the juices reduce to a thick, glossy coating.",
    "Kill the heat, scatter the cheddar over the top, and cover for 2 minutes until the cheese melts into molten pockets.",
    "Finish with dollops of sour cream and a hard squeeze of lime, and serve straight from the pan while it still sizzles."
   ],
@@ -18841,6 +18997,22 @@
     "q": 6
    },
    {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "cinnamon",
+    "q": 1
+   },
+   {
     "f": "broth",
     "q": 500
    },
@@ -18852,7 +19024,7 @@
   "steps": [
    "Heat the olive oil in a heavy pot over high heat and brown the ground beef in two batches, 4 minutes each, so it sears instead of steams; set it aside with its juices.",
    "Drop the heat to medium, add the diced onion and bell peppers, and cook for 5 minutes until softened and sweet, scraping up the browned bits stuck to the pot.",
-   "Stir in the garlic, a heaped spoonful each of chili powder and cumin, smoked paprika, and a pinch of cinnamon, and toast the spices for 60 seconds until they smell dark and toasty.",
+   "Stir in the garlic, the chili powder, cumin, and smoked paprika, plus a pinch of cinnamon, and toast the spices for 60 seconds until they smell dark and toasty.",
    "Return the beef, add the chopped tomatoes and broth, and bring to a lazy simmer.",
    "Cook uncovered for 30 minutes, stirring occasionally, until the chili is thick enough that a spoon dragged through it leaves a brief trail, then season boldly with salt and serve steaming."
   ],
@@ -19358,16 +19530,24 @@
     "q": 0.4
    },
    {
+    "f": "rosemary",
+    "q": 0.25
+   },
+   {
+    "f": "thyme",
+    "q": 0.25
+   },
+   {
     "f": "lemon",
     "q": 1
    }
   ],
   "steps": [
-   "Heat the oven to 200C and pat the pork loin bone-dry, then rub it all over with half the olive oil, the minced garlic, salt, and plenty of cracked pepper.",
-   "Sear the loin in a hot ovenproof skillet for 3 minutes per side until it wears a deep mahogany crust.",
+   "Heat the oven to 200C and pat the pork loin bone-dry, then rub it all over with half the olive oil, the minced garlic, chopped rosemary and thyme leaves, salt, and plenty of cracked pepper.",
+   "Sear the loin in a hot ovenproof skillet for 3 minutes per side until it wears a deep mahogany crust and the herbs cling to the meat.",
    "Scatter the green beans around the pork, toss them in the remaining oil, and roast for 20 to 25 minutes until the meat reads 63C at the center and the beans are blistered and squeaky-tender.",
    "Rest the pork under foil for 10 full minutes so the juices settle back into the meat instead of onto your cutting board.",
-   "Slice against the grain into thick coins, squeeze the lemon over everything, and serve with the pan drippings spooned on top."
+   "Slice against the grain into thick coins, squeeze the lemon over everything, and serve with the herby pan drippings spooned on top."
   ],
   "tip": "A resting pork loin is like a toddler at bedtime — disturb it early and everyone ends up in tears."
  },
@@ -19653,6 +19833,10 @@
     "q": 20
    },
    {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
     "f": "butter",
     "q": 30
    },
@@ -19667,7 +19851,7 @@
   ],
   "steps": [
    "Melt the butter in a deep skillet over medium heat and cook the finely chopped onion for 6 to 8 minutes until soft and golden at the edges.",
-   "Add the minced garlic and ginger with a generous spoonful of curry spices and toast for 1 minute until the kitchen smells unmistakably like dinner.",
+   "Add the minced garlic and ginger with the curry powder and toast for 1 minute until the kitchen smells unmistakably like dinner.",
    "Add the cubed pork loin and sear for 4 to 5 minutes, turning to coat every piece in the spiced butter.",
    "Pile in the spinach in handfuls, letting each batch wilt down glossy and dark before adding the next, then splash in a few tablespoons of water and simmer covered for 10 minutes until the pork is just cooked through.",
    "Off the heat, stir in the greek yogurt a spoonful at a time until the sauce turns pale and creamy, then brighten with lemon juice and salt to taste."
@@ -21932,6 +22116,18 @@
     "q": 2
    },
    {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
     "f": "cheddar",
     "q": 80
    },
@@ -21950,7 +22146,7 @@
   ],
   "steps": [
    "Heat the olive oil in a large skillet over medium-high heat until it shimmers, then add the diced onion and bell pepper and cook for 4 minutes until the edges pick up a little char.",
-   "Push the vegetables aside, add the ground turkey, and let it sear undisturbed for 2 minutes before breaking it up; season generously with chili powder, cumin, smoked paprika, and salt.",
+   "Push the vegetables aside, add the ground turkey, and let it sear undisturbed for 2 minutes before breaking it up; season with the chili powder, cumin, smoked paprika, and a big pinch of salt.",
    "Stir in the chopped tomatoes and simmer for 5 to 6 minutes, until the juices reduce into a thick, brick-red sauce that coats the back of a spoon.",
    "Kill the heat, scatter the cheddar over the top, and cover for 2 minutes so the cheese melts into glossy pools.",
    "Serve straight from the pan with dollops of sour cream, sliced avocado, and a hard squeeze of lime over everything."
@@ -22365,6 +22561,18 @@
     "q": 4
    },
    {
+    "f": "chili_powder",
+    "q": 15
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
     "f": "broth",
     "q": 500
    },
@@ -22383,7 +22591,7 @@
   ],
   "steps": [
    "Brown the ground turkey in olive oil in a heavy pot over medium-high heat for 6 to 8 minutes, letting it develop dark crusty bits on the bottom of the pot — that fond is the chili's backbone.",
-   "Add the diced onion, bell peppers, and garlic and cook 5 minutes until softened, then bloom two tablespoons of chili powder with cumin and smoked paprika directly in the fat for 1 minute until the kitchen smells like a barbecue joint.",
+   "Add the diced onion, bell peppers, and garlic and cook 5 minutes until softened, then bloom the chili powder, cumin, and smoked paprika directly in the fat for 1 minute until the kitchen smells like a barbecue joint.",
    "Stir in the chopped tomatoes and broth, scraping up the browned bits, and simmer uncovered for 25 minutes until thick enough to mound on a spoon.",
    "Add the diced zucchini for the last 10 minutes so it stays tender-firm instead of dissolving.",
    "Taste, correct the salt bravely, and ladle into bowls under a landslide of cheddar and sour cream."
@@ -23609,6 +23817,10 @@
     "q": 0.3
    },
    {
+    "f": "paprika",
+    "q": 4
+   },
+   {
     "f": "olive_oil",
     "q": 30
    }
@@ -23616,7 +23828,7 @@
   "steps": [
    "Cube the eggplant and sear it in olive oil in a wide skillet over medium-high heat for 8 minutes, resisting the urge to stir until each side is mahogany and creamy inside.",
    "Push the eggplant aside, soften the onion, bell pepper, and garlic for 4 minutes until sweet and slumped.",
-   "Add the chopped tomatoes, crushing them with your spoon, and simmer 8 to 10 minutes until the sauce darkens and thickens enough to hold a trench.",
+   "Sprinkle in the smoked paprika and let it bloom in the oil for 30 seconds, then add the chopped tomatoes, crushing them with your spoon, and simmer 8 to 10 minutes until the sauce darkens and thickens enough to hold a trench.",
    "Carve four wells with the back of a spoon, crack an egg into each, cover, and cook 5 to 7 minutes until the whites set but the yolks still shiver.",
    "Shower with crumbled feta straight off the heat so it softens into salty pockets."
   ],
@@ -23856,6 +24068,10 @@
     "q": 0.4
    },
    {
+    "f": "curry_powder",
+    "q": 12
+   },
+   {
     "f": "spinach",
     "q": 150
    },
@@ -23866,7 +24082,7 @@
   ],
   "steps": [
    "Cut the eggplants into chunky 3-centimeter pieces and brown them in oil over medium-high heat in two batches, about 6 minutes per batch, until the cut faces are burnished and the flesh turns silky.",
-   "Soften the onion in the same pot for 5 minutes, then add the garlic and cook until the whole kitchen smells like dinner.",
+   "Soften the onion in the same pot for 5 minutes, then add the garlic and curry powder and toast for 1 minute until the whole kitchen smells like dinner.",
    "Add the chopped tomatoes and simmer 8 minutes, mashing them down until the mixture thickens into a rusty, jammy base.",
    "Pour in the coconut milk, return the eggplant with cubed tofu, and simmer gently for 12 to 15 minutes until the sauce coats a spoon and the eggplant collapses at the touch of a fork.",
    "Wilt in the spinach during the last 2 minutes and season boldly — coconut milk drinks up salt like it is owed."
@@ -24341,6 +24557,18 @@
     "q": 6
    },
    {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
     "f": "broth",
     "q": 500
    },
@@ -24356,7 +24584,7 @@
   "steps": [
    "Brown the ground beef in a heavy pot over medium-high heat for 7 to 8 minutes, breaking it into rough crumbles and letting a dark fond build on the bottom of the pot.",
    "Add the diced onion and bell peppers and cook 5 minutes, scraping up the browned bits, until the vegetables soften and pick up color.",
-   "Stir in the minced garlic along with a generous spoonful of chili seasonings, salt, and pepper, toasting for 1 minute until the whole kitchen smells smoky.",
+   "Stir in the minced garlic with the chili powder, smoked paprika, cumin, salt, and pepper, toasting for 1 minute until the whole kitchen smells smoky.",
    "Add the chopped tomatoes and broth, bring to a boil, then reduce to a low, blipping simmer and cook uncovered for 30 minutes, until the chili is thick enough to mound on a spoon.",
    "Taste and sharpen the seasoning, then ladle into bowls and crown each with shredded cheddar and a cool spoonful of sour cream."
   ],
@@ -24602,6 +24830,10 @@
     "q": 0.4
    },
    {
+    "f": "red_pepper_flakes",
+    "q": 4
+   },
+   {
     "f": "soy_sauce",
     "q": 45
    },
@@ -24616,10 +24848,10 @@
   ],
   "steps": [
    "Press the tofu for 10 minutes, cut it into 2-centimeter cubes, and sear in the sesame oil over medium-high heat for 6 to 8 minutes, turning until the faces are burnished and crisp.",
-   "Add the minced ginger and garlic to the pot and stir for 30 seconds, until the aroma blooms and hits the back of your throat.",
+   "Add the minced ginger, garlic, and red pepper flakes to the pot and stir for 30 seconds, until the aroma blooms and the chile heat hits the back of your throat.",
    "Whisk the peanut butter and soy sauce into 1 liter of hot water until smooth, pour it over the tofu, and bring to a gentle simmer.",
    "Add the shredded cabbage and sliced bell pepper and simmer uncovered for 10 minutes, until the cabbage is silky and the broth has thickened to the texture of thin cream.",
-   "Squeeze in the lime juice, taste for salt and heat, and serve in deep bowls while the broth still clings to every cube of tofu."
+   "Squeeze in the lime juice, taste for salt and heat — add another pinch of flakes if it doesn't bite back — and serve in deep bowls while the broth still clings to every cube of tofu."
   ],
   "tip": "The peanut broth thickens as it sits, so keep a kettle of hot water nearby to loosen leftovers back into stew instead of dip."
  },
@@ -24905,6 +25137,10 @@
     "q": 20
    },
    {
+    "f": "curry_powder",
+    "q": 12
+   },
+   {
     "f": "butter",
     "q": 60
    },
@@ -24918,7 +25154,7 @@
    }
   ],
   "steps": [
-   "Melt the butter in a heavy pot over medium heat and fry the sliced onion for 8 to 10 minutes, until deeply golden at the edges, then add the minced garlic, ginger, and your curry spices and toast 1 fragrant minute.",
+   "Melt the butter in a heavy pot over medium heat and fry the sliced onion for 8 to 10 minutes, until deeply golden at the edges, then add the minced garlic, ginger, and the curry powder and toast 1 fragrant minute.",
    "Add the chopped tomatoes and cook 8 minutes, mashing as they soften, until the mixture thickens into a rusty paste and the butter beads at the edges.",
    "Add the cauliflower florets with 500 milliliters of water and a big pinch of salt, cover, and simmer 12 minutes, until the florets are tender but still hold their shape.",
    "Stir in the spinach until it wilts, then pull the pot off the heat and fold in the greek yogurt one spoonful at a time so it melts into a creamy, pale-orange sauce without splitting.",
@@ -28495,12 +28731,28 @@
     "q": 0.3
    },
    {
+    "f": "garam_masala",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "turmeric",
+    "q": 3
+   },
+   {
+    "f": "cayenne",
+    "q": 1
+   },
+   {
     "f": "olive_oil",
     "q": 20
    }
   ],
   "steps": [
-   "Whisk the yogurt with minced garlic, garam masala, paprika, turmeric, cayenne, and salt into a brick-red marinade.",
+   "Whisk the yogurt with the minced garlic, garam masala, paprika, turmeric, cayenne, and salt into a brick-red tandoori marinade.",
    "Cut the chicken into large chunks, coat them completely in two-thirds of the marinade, and let them sit at least 20 minutes while the oven heats to 220C.",
    "Toss the cauliflower florets and thick onion wedges with olive oil, salt, and the remaining marinade on a large sheet pan.",
    "Nestle the chicken among the vegetables in a single layer with breathing room so everything roasts instead of steams.",
@@ -30738,6 +30990,10 @@
     "q": 0.3
    },
    {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
     "f": "tomato",
     "q": 2
    },
@@ -30753,7 +31009,7 @@
   "steps": [
    "Start the rice: rinse, cover with water, and simmer lidded on low for 15 minutes, then rest off the heat.",
    "Heat the oil in a deep skillet over medium and cook the sliced onion 4 to 5 minutes until soft and golden at the edges.",
-   "Stir in the minced garlic with a heaped spoonful of curry powder and a pinch of salt, toasting for 30 seconds until the kitchen smells unmistakably like dinner.",
+   "Stir in the minced garlic with the curry powder and a pinch of salt, toasting for 30 seconds until the kitchen smells unmistakably like dinner.",
    "Add the chopped tomatoes and cook 3 minutes until they break down, then pour in the coconut milk and bring to a gentle bubble.",
    "Slide in the cubed chicken and simmer 8 to 10 minutes, stirring occasionally, until the chicken is cooked through and the sauce coats a spoon.",
    "Taste, adjust the salt, and ladle the curry over the fluffy rice."
@@ -30994,6 +31250,18 @@
     "q": 1
    },
    {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "cumin",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 6
+   },
+   {
     "f": "olive_oil",
     "q": 15
    },
@@ -31008,7 +31276,7 @@
   ],
   "steps": [
    "Heat the oil in a Dutch oven over medium-high and sauté the diced onion and bell pepper for 4 minutes until softened and starting to color.",
-   "Add the garlic with a hefty spoonful each of chili powder, cumin, and paprika, stirring 30 seconds until the spices darken and bloom.",
+   "Add the garlic with the chili powder, cumin, and smoked paprika, stirring 30 seconds until the spices darken and bloom.",
    "Stir in the diced chicken and cook 3 minutes until the outside turns opaque, then add the chopped tomatoes, beans, and broth.",
    "Bring to a boil, then simmer briskly, uncovered, for 15 minutes until the chicken is tender and the chili has thickened enough to mound on a spoon.",
    "Mash a ladleful of beans against the pot wall and stir it back in for body, then season with salt to taste.",
@@ -33427,6 +33695,18 @@
     "q": 0.4
    },
    {
+    "f": "curry_powder",
+    "q": 6
+   },
+   {
+    "f": "garam_masala",
+    "q": 4
+   },
+   {
+    "f": "turmeric",
+    "q": 2
+   },
+   {
     "f": "spinach",
     "q": 100
    },
@@ -33440,7 +33720,7 @@
    }
   ],
   "steps": [
-   "Cube the pork loin and toss it with a third of the yogurt, salt, garam masala, and turmeric, letting it sit while you prep — even 15 minutes tenderizes noticeably.",
+   "Cube the pork loin and toss it with a third of the yogurt, salt, the curry powder, garam masala, and turmeric, letting it sit while you prep — even 15 minutes tenderizes noticeably.",
    "Cook the rice, then heat the olive oil in a deep pan over medium heat and fry the finely chopped onion for 8 minutes until deeply golden and smelling sweet, not just soft.",
    "Add the minced garlic and chopped tomatoes and cook them down for 5 minutes, mashing occasionally, until the mixture darkens and the oil separates at the edges.",
    "Add the pork with its marinade and simmer gently for 12 to 15 minutes, stirring now and then, until the meat is just cooked through and the sauce thickens to coat a spoon.",
@@ -33551,6 +33831,14 @@
     "q": 0.4
    },
    {
+    "f": "paprika",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 5
+   },
+   {
     "f": "lime",
     "q": 1
    },
@@ -33560,10 +33848,10 @@
    }
   ],
   "steps": [
-   "Cube the pork loin, season with salt, paprika, and cumin, and brown it in olive oil over medium-high heat in a heavy pot until every side has a mahogany crust, about 6 minutes total.",
+   "Cube the pork loin, season with salt, the smoked paprika, and cumin, and brown it in olive oil over medium-high heat in a heavy pot until every side has a mahogany crust, about 6 minutes total.",
    "Lift the pork out, then soften the chopped onion, bell peppers, and garlic in the same pot for 5 minutes, scraping up the browned bits stuck to the bottom — that fond is the soul of the stew.",
    "Return the pork, pour in the broth, and bring to a simmer, skimming any foam that rises.",
-   "Add the potatoes cut into bite-size chunks and simmer uncovered for 25 to 30 minutes, until they are fork-tender and the broth has reduced to something silky.",
+   "Add the potatoes cut into bite-size chunks and simmer uncovered for 25 to 30 minutes, until they are fork-tender and the broth has reduced to something silky and faintly red from the paprika.",
    "Squeeze in the lime juice, taste for salt, and ladle into bowls while it steams."
   ],
   "tip": "Brown the pork in batches even when you're hungry — a crowded pot makes gray stew meat and gray stew meat makes sad soup."
@@ -33825,6 +34113,14 @@
     "q": 200
    },
    {
+    "f": "cumin",
+    "q": 4
+   },
+   {
+    "f": "chili_powder",
+    "q": 3
+   },
+   {
     "f": "avocado",
     "q": 1
    },
@@ -33846,7 +34142,7 @@
    }
   ],
   "steps": [
-   "Get the rice simmering, then dice the pork loin into small cubes and toss with salt, cumin, and a little chili powder until evenly dusted.",
+   "Get the rice simmering, then dice the pork loin into small cubes and toss with salt, the cumin, and the chili powder until evenly dusted.",
    "Heat the olive oil in a skillet over medium-high and cook the pork with the diced onion for 6 to 8 minutes, stirring occasionally, until the cubes are browned outside and just cooked through.",
    "Add the black beans with a splash of water and warm them 2 minutes, mashing a few against the pan so they get creamy and bind to the pork.",
    "Dice the tomatoes and toss with lime juice and a pinch of salt for a thirty-second salsa.",
@@ -33896,14 +34192,22 @@
     "q": 1
    },
    {
+    "f": "rosemary",
+    "q": 0.25
+   },
+   {
+    "f": "thyme",
+    "q": 0.25
+   },
+   {
     "f": "olive_oil",
     "q": 25
    }
   ],
   "steps": [
-   "Heat the oven to 400°F (200°C) and rub the pork loin all over with half the olive oil, minced garlic, lemon zest, dried rosemary, salt, and cracked pepper.",
+   "Heat the oven to 400°F (200°C). Strip and finely chop the rosemary and thyme, then rub the pork loin all over with half the olive oil, the minced garlic, chopped herbs, lemon zest, salt, and plenty of cracked pepper.",
    "Sear the roast in a hot ovenproof pan for 2 to 3 minutes per side until the whole surface is golden and your kitchen smells like a taverna.",
-   "Toss the chunked potatoes, thick carrot coins, and onion wedges with the rest of the oil and scatter them around the pork.",
+   "Toss the chunked potatoes, thick carrot coins, and onion wedges with the rest of the oil and a pinch of salt, then scatter them around the pork.",
    "Roast for 35 to 45 minutes, turning the vegetables once, until the potatoes are crusty at the edges and the pork's center hits 145°F (63°C) on a thermometer.",
    "Rest the roast under foil for 10 minutes, squeeze the lemon over the pan vegetables, and carve into thick, juicy slices."
   ],
@@ -34123,6 +34427,10 @@
     "q": 0.3
    },
    {
+    "f": "curry_powder",
+    "q": 10
+   },
+   {
     "f": "butter",
     "q": 15
    },
@@ -34133,10 +34441,10 @@
   ],
   "steps": [
    "Start the rice simmering in salted water, then melt the butter in a deep skillet and cook the sliced onion over medium heat for 8 minutes until deeply golden and sweet-smelling.",
-   "Stir in the minced garlic with a generous spoonful of curry spices and toast for 60 seconds, until the pan smells warm and slightly nutty.",
+   "Stir in the minced garlic and the curry powder and toast for 60 seconds, until the pan smells warm and slightly nutty.",
    "Add the spinach in handfuls with a splash of water, letting each batch collapse into a silky green tangle before adding the next.",
    "Cut the salmon into large chunks, nestle them into the greens, cover, and simmer gently for 6 to 7 minutes until the fish turns opaque and flakes at a poke.",
-   "Pull the pan off the heat, wait 2 minutes, then stir in the yogurt until the sauce turns pale and creamy, and serve it spooned over the rice."
+   "Pull the pan off the heat, wait 2 minutes, then stir in the yogurt until the sauce turns pale gold and creamy, and serve it spooned over the rice."
   ],
   "tip": "Stir the yogurt in off the heat or it will split into curds and regret."
  },
@@ -34345,11 +34653,15 @@
    {
     "f": "garlic",
     "q": 0.3
+   },
+   {
+    "f": "paprika",
+    "q": 5
    }
   ],
   "steps": [
    "Melt the butter in a heavy pot and sweat the diced onion with a pinch of salt over medium heat for 6 minutes, until translucent and sweet but not browned.",
-   "Stir in the minced garlic and a big pinch of paprika, then add the potatoes cut into 2cm chunks with 400ml of water and a teaspoon of salt.",
+   "Stir in the minced garlic and the smoked paprika, letting the spice bloom in the butter for 30 seconds until the pot turns brick red and smells faintly of campfire, then add the potatoes cut into 2cm chunks with 400ml of water and a teaspoon of salt.",
    "Simmer for 15 minutes until a knife slides through the potatoes, then mash a few chunks against the side of the pot to thicken the broth naturally.",
    "Pour in the milk, bring it back to a bare shiver of a simmer, and slide in the salmon cut into large bite-sized pieces.",
    "Poach gently for 5 to 6 minutes, until the fish turns pale pink and flakes without resistance, then season with black pepper and serve while it steams."
@@ -34456,6 +34768,14 @@
     "q": 100
    },
    {
+    "f": "dill",
+    "q": 0.4
+   },
+   {
+    "f": "chives",
+    "q": 0.25
+   },
+   {
     "f": "romaine",
     "q": 0.5
    },
@@ -34470,10 +34790,10 @@
   ],
   "steps": [
    "Tear the bread into crumbs and pulse or finely chop the salmon until it holds together like coarse ground meat, leaving a few larger flakes for texture.",
-   "Mix the salmon with the crumbs, egg, lemon zest, salt, and pepper, then chill the mixture for 10 minutes so the patties firm up.",
+   "Chop the dill and snip the chives, then mix the salmon with the crumbs, egg, most of the herbs, lemon zest, salt, and pepper. Chill the mixture for 10 minutes so the patties firm up.",
    "Shape two thick patties and pan-fry them in the olive oil over medium heat for 4 minutes per side, until deeply golden with an interior that is just cooked through and still moist.",
-   "Stir the yogurt with the lemon juice and a pinch of salt into a bright, tangy sauce while the burgers rest for 2 minutes.",
-   "Serve the patties on crisp romaine leaves with the sauce spooned generously on top."
+   "Stir the yogurt with the lemon juice, the reserved dill, and a pinch of salt into a bright, tangy sauce while the burgers rest for 2 minutes.",
+   "Serve the patties on crisp romaine leaves with the herbed sauce spooned generously on top."
   ],
   "tip": "Chill the patties before frying; warm salmon mix flops like a handshake from a jellyfish."
  },
@@ -35817,6 +36137,14 @@
     "q": 0.2
    },
    {
+    "f": "parsley",
+    "q": 0.25
+   },
+   {
+    "f": "dill",
+    "q": 0.2
+   },
+   {
     "f": "lemon",
     "q": 1
    },
@@ -35830,11 +36158,11 @@
    }
   ],
   "steps": [
-   "Pulse the oats briefly or crush them in a bag until they resemble coarse crumbs, then stir them with the well-drained tuna, eggs, grated onion, minced garlic, the zest of the lemon, and a generous pinch of salt.",
+   "Pulse the oats briefly or crush them in a bag until they resemble coarse crumbs, then stir them with the well-drained tuna, eggs, grated onion, minced garlic, chopped parsley and dill, the zest of the lemon, and a generous pinch of salt.",
    "Rest the mixture for 10 minutes so the oats drink up the moisture — it should pack like damp sand, not batter.",
    "Shape into 6 patties about 2 centimeters thick, pressing firmly so they survive the flip.",
    "Heat the olive oil in a heavy skillet over medium heat until it shimmers, then fry the patties 3 to 4 minutes per side until deeply golden and crusted, flipping only once.",
-   "Whisk the greek yogurt with the lemon's juice and a pinch of salt, and serve the hot patties dolloped with the tangy sauce."
+   "Whisk the greek yogurt with the lemon's juice, a few extra fronds of dill, and a pinch of salt, and serve the hot patties dolloped with the tangy sauce."
   ],
   "tip": "If a test patty falls apart in the pan, the fix is patience, not more egg — give the oats five more minutes to hydrate."
  },
@@ -36246,6 +36574,14 @@
     "q": 0.5
    },
    {
+    "f": "chili_powder",
+    "q": 6
+   },
+   {
+    "f": "hot_sauce",
+    "q": 10
+   },
+   {
     "f": "lemon",
     "q": 1
    },
@@ -36255,11 +36591,11 @@
    }
   ],
   "steps": [
-   "Stir the drained tuna with the olive oil, half the lemon's juice, a big pinch of chili powder, cumin, and salt, breaking it into rough shreds seasoned all the way through.",
+   "Stir the drained tuna with the olive oil, half the lemon's juice, the chili powder, a dash of hot sauce, and salt, breaking it into rough shreds seasoned all the way through.",
    "Warm a dry skillet over medium-high heat and toast each tortilla 30 to 45 seconds per side until puffed in spots and lightly charred at the edges.",
    "Whisk the sour cream with the remaining lemon juice and a pinch of salt into a pourable crema.",
    "Sear the tuna mixture in the hot skillet for 2 minutes without stirring so the bottom crisps and catches golden-brown edges.",
-   "Load each tortilla with shredded romaine, the crisped tuna, sliced avocado, and minced onion, then zigzag the crema over the top and serve while the tortillas are still warm and pliable."
+   "Load each tortilla with shredded romaine, the crisped tuna, sliced avocado, and minced onion, then zigzag the crema over the top and pass the hot sauce for anyone who wants more fire."
   ],
   "tip": "A tortilla straight from the bag is a sad handshake — thirty seconds on a hot pan turns it into a proper greeting."
  },
@@ -36357,6 +36693,10 @@
     "q": 0.4
    },
    {
+    "f": "curry_powder",
+    "q": 12
+   },
+   {
     "f": "greek_yogurt",
     "q": 150
    },
@@ -36372,7 +36712,7 @@
   "steps": [
    "Start the rice in salted water so it finishes as the curry does, about 12 minutes at a gentle simmer.",
    "Melt the butter in a deep skillet over medium heat and cook the finely diced onion for 8 to 10 minutes, stirring occasionally, until deeply golden and jammy — this is the backbone of the sauce, so do not rush it.",
-   "Add the minced garlic with a tablespoon of curry powder or garam masala and a pinch of salt, toasting 60 seconds until intensely fragrant.",
+   "Add the minced garlic and the curry powder with a pinch of salt, toasting 60 seconds until the butter turns amber and intensely fragrant.",
    "Pile in the spinach with a splash of water and cook 3 minutes until fully wilted and glossy, then fold in the drained tuna in large chunks.",
    "Pull the pan off the heat, stir in the greek yogurt one spoonful at a time so it stays creamy instead of splitting, warm through gently, and serve ladled over the rice."
   ],
@@ -36537,6 +36877,18 @@
     "q": 0.4
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "cumin",
+    "q": 5
+   },
+   {
     "f": "tomato",
     "q": 4
    },
@@ -36551,7 +36903,7 @@
   ],
   "steps": [
    "Warm the olive oil in a heavy pot over medium heat and cook the diced onion and bell peppers for 8 minutes, until the edges pick up a little char and the onion turns translucent.",
-   "Stir in the minced garlic with a generous pinch of smoked seasoning and toast for 60 seconds, just until the pot smells sweet and heady rather than raw.",
+   "Stir in the minced garlic, smoked paprika, chili powder, and cumin and toast for 60 seconds, just until the spices darken a shade and the pot smells sweet and heady rather than raw.",
    "Add the chopped tomatoes and cook 5 minutes, mashing them against the side of the pot until they collapse into a rough, brick-red sauce.",
    "Tip in the black beans with a splash of their liquid, bring to a lazy simmer, and cook uncovered for 20 minutes, stirring occasionally, until the chili thickens enough that a spoon dragged across the bottom leaves a trail.",
    "Crush a ladleful of beans against the pot wall to thicken things further, then finish with lime juice and taste for salt before serving hot."
@@ -36593,6 +36945,14 @@
     "q": 20
    },
    {
+    "f": "curry_powder",
+    "q": 15
+   },
+   {
+    "f": "garam_masala",
+    "q": 5
+   },
+   {
     "f": "tomato",
     "q": 3
    },
@@ -36616,9 +36976,9 @@
   "steps": [
    "Rinse the rice and simmer it, covered, in double its volume of salted water for 15 minutes, then let it steam off the heat while you build the curry.",
    "Heat the oil in a wide pan over medium-high and fry the sliced onion for 10 minutes until deeply golden at the edges, because that browning is where the curry's sweetness lives.",
-   "Add the minced garlic and grated ginger and sizzle for 1 minute, then stir in the chopped tomatoes and cook 6 to 8 minutes until the oil separates and pools at the edges of the sauce.",
+   "Add the minced garlic and grated ginger and sizzle for 1 minute, then stir in the curry powder and let it bloom in the oil for 30 seconds before adding the chopped tomatoes; cook 6 to 8 minutes until the oil separates and pools at the edges of the sauce.",
    "Fold in the chickpeas with a splash of water and simmer 10 minutes so they drink up the masala, then pile in the spinach by the handful and let it wilt to a glossy dark green.",
-   "Pull the pan off the heat, swirl in the yogurt so it stays silky instead of splitting, and serve ladled over the fluffed rice."
+   "Pull the pan off the heat, dust with the garam masala, swirl in the yogurt so it stays silky instead of splitting, and serve ladled over the fluffed rice."
   ],
   "tip": "Yogurt curdles when boiled, so treat it like a guest who arrives after the party calms down."
  },
@@ -39304,6 +39664,14 @@
     "q": 0.3
    },
    {
+    "f": "oregano",
+    "q": 3
+   },
+   {
+    "f": "parsley",
+    "q": 0.25
+   },
+   {
     "f": "olive_oil",
     "q": 25
    },
@@ -39323,8 +39691,8 @@
   "steps": [
    "Heat the oven to 425°F and rinse the quinoa until the water runs clear, then simmer it in double its volume of water for 15 minutes until the germ spirals loose.",
    "Toss thick half-moons of zucchini, strips of bell pepper, and onion wedges with half the olive oil, then roast 20 minutes until the edges char and turn sweet.",
-   "Season the chicken breasts generously, sear them in the remaining oil over medium-high heat for 5 to 6 minutes per side until deeply golden and 165°F inside, then rest 5 minutes before slicing against the grain.",
-   "Squeeze the lemon over the warm quinoa along with the minced garlic and a big pinch of salt, folding until fragrant and glossy.",
+   "Rub the chicken breasts with the oregano, salt, and pepper, sear them in the remaining oil over medium-high heat for 5 to 6 minutes per side until deeply golden and 165°F inside, then rest 5 minutes before slicing against the grain.",
+   "Squeeze the lemon over the warm quinoa along with the minced garlic, a handful of chopped parsley, and a big pinch of salt, folding until fragrant and glossy.",
    "Pile quinoa into bowls, wilt the spinach under the hot roasted vegetables, fan the chicken on top, and finish with crumbled feta and any resting juices."
   ],
   "tip": "Resting the chicken is not optional — slice it early and you will watch your sauce run away across the cutting board."
@@ -39433,6 +39801,14 @@
     "q": 0.2
    },
    {
+    "f": "chili_powder",
+    "q": 8
+   },
+   {
+    "f": "paprika",
+    "q": 3
+   },
+   {
     "f": "lime",
     "q": 2
    },
@@ -39448,7 +39824,7 @@
   "steps": [
    "Simmer the quinoa in salted water for 15 minutes, then fluff it with the zest and juice of one lime.",
    "Roast the bell pepper strips and onion wedges at 450°F with half the olive oil for 18 minutes until blistered and sweet at the edges.",
-   "Pat the shrimp bone-dry, toss them with minced garlic, a heavy dusting of chili powder and paprika, and the remaining oil.",
+   "Pat the shrimp bone-dry, then toss them with the minced garlic, the chili powder and paprika, a pinch of salt, and the remaining oil until every shrimp wears a rusty-red coat.",
    "Sear the shrimp in a screaming-hot skillet for 90 seconds per side, just until they curl into loose Cs and turn opaque pink.",
    "Build bowls of citrusy quinoa, charred peppers, and shrimp, then crown with sliced avocado and wedges of the second lime for squeezing at the table."
   ],
@@ -39633,6 +40009,14 @@
     "q": 0.2
    },
    {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "cumin",
+    "q": 3
+   },
+   {
     "f": "tomato",
     "q": 2
    },
@@ -39652,7 +40036,7 @@
   "steps": [
    "Simmer the quinoa in salted water for 15 minutes, then fluff and hold it covered off the heat.",
    "Roast the bell pepper strips and onion wedges at 450°F with half the oil for 18 minutes until the edges blacken fajita-style.",
-   "Warm the remaining oil in a saucepan, bloom the minced garlic with paprika and cumin for 30 seconds until fragrant, then add the black beans and diced tomatoes.",
+   "Warm the remaining oil in a saucepan and bloom the minced garlic with the smoked paprika and cumin for 30 seconds, until the oil turns brick red and fragrant, then add the black beans and diced tomatoes.",
    "Simmer the beans for 8 minutes, mashing a few against the pot wall so the mixture thickens into something saucy and glossy.",
    "Layer quinoa, smoky beans, and charred vegetables into bowls, then finish with sliced avocado and a hard squeeze of lime to wake everything up."
   ],
@@ -40064,6 +40448,14 @@
     "q": 0.3
    },
    {
+    "f": "curry_powder",
+    "q": 10
+   },
+   {
+    "f": "turmeric",
+    "q": 3
+   },
+   {
     "f": "olive_oil",
     "q": 25
    },
@@ -40237,7 +40629,7 @@
     "q": 450
    },
    {
-    "f": "black_beans",
+    "f": "kidney_beans",
     "q": 400
    },
    {
@@ -40257,6 +40649,14 @@
     "q": 1
    },
    {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
     "f": "corn_frozen",
     "q": 150
    },
@@ -40272,9 +40672,9 @@
   "steps": [
    "Heat the olive oil in a large pot over medium-high and sear the ground turkey for 5 to 6 minutes, pressing it flat and leaving it alone until it browns and releases from the pan.",
    "Add the diced onion and bell pepper and cook 5 minutes, until the pepper's edges soften and the onion picks up a little color.",
-   "Stir in the garlic and chopped tomatoes with a big pinch of salt and let them cook down for 5 minutes, until the mixture thickens and smells sweet and roasty.",
+   "Stir in the garlic, chili powder, and cumin and toast 30 seconds, then add the chopped tomatoes with a big pinch of salt and let them cook down for 5 minutes, until the mixture thickens and smells sweet and roasty.",
    "Pour in the broth and the drained kidney beans and simmer uncovered for 15 minutes, until the liquid reduces slightly and turns brick red.",
-   "Add the corn, simmer 3 minutes more, then taste — it should be smoky-sweet with a gentle burn — and adjust the seasoning before ladling it out."
+   "Add the corn, simmer 3 minutes more, then taste — it should carry a gentle chili burn behind the sweetness — and adjust the seasoning before ladling it out."
   ],
   "tip": "Chili soup improves overnight, so make it today and take the credit tomorrow."
  },
@@ -40440,6 +40840,14 @@
     "q": 1
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "cumin",
+    "q": 3
+   },
+   {
     "f": "tomato",
     "q": 1.5
    },
@@ -40454,7 +40862,7 @@
   ],
   "steps": [
    "Heat the olive oil in a Dutch oven over medium heat and cook the diced onion and bell pepper for 6 to 7 minutes, until the pepper chars slightly at the edges and the kitchen smells sweet.",
-   "Add the minced garlic and chopped tomatoes and cook 3 minutes, mashing the tomatoes with your spoon until they melt into the vegetables.",
+   "Add the minced garlic, smoked paprika, and cumin and stir 30 seconds until the oil turns rust-colored, then add the chopped tomatoes and cook 3 minutes, mashing them with your spoon until they melt into the vegetables.",
    "Add the drained black beans, rice, and 1.2 liters of water; bring to a boil, then simmer partly covered for 18 minutes, until the rice is tender and the broth has darkened to deep violet-black.",
    "Ladle about a quarter of the soup into a bowl, mash it thoroughly, and stir it back in so the broth turns thick and velvety while whole beans still pop between your teeth.",
    "Squeeze in the lime juice, season assertively with salt, and simmer 2 final minutes before serving — the acid should make the whole pot taste suddenly brighter."
@@ -40768,16 +41176,20 @@
     "q": 20
    },
    {
+    "f": "red_pepper_flakes",
+    "q": 4
+   },
+   {
     "f": "spinach",
     "q": 150
    }
   ],
   "steps": [
-   "Simmer the diced onion, minced garlic, and grated ginger in a splash of water in a large pot for 4 minutes, until softened and fragrant.",
+   "Simmer the diced onion, minced garlic, and grated ginger in a splash of water in a large pot for 4 minutes, until softened and fragrant, then stir in the red pepper flakes and let them sizzle for 30 seconds to wake up their heat.",
    "Add the chopped tomatoes and cook 5 minutes, crushing them down until they thicken into a rough, brick-colored base.",
    "Add the sweet potatoes in 2-centimeter cubes and 1 liter of water, bring to a boil, and simmer 15 minutes, until the cubes are fudgy-soft at the center.",
    "Whisk the peanut butter with a ladle of hot broth in a bowl until smooth, then stir it into the pot along with the coconut milk and simmer 5 minutes, until the soup turns thick, glossy, and the color of caramel.",
-   "Fold in the spinach until it collapses, season with salt and as much chile heat as you dare, and serve — it should taste rich, nutty, and quietly fiery."
+   "Fold in the spinach until it collapses, season with salt, and taste — the pepper flakes should leave a slow, friendly burn; add another pinch if you want it fiercer."
   ],
   "tip": "Temper the peanut butter with hot broth first, or you will spend ten minutes chasing a stubborn blob around the pot."
  },
@@ -40934,7 +41346,7 @@
     "q": 500
    },
    {
-    "f": "black_beans",
+    "f": "kidney_beans",
     "q": 480
    },
    {
@@ -40954,6 +41366,18 @@
     "q": 1
    },
    {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "chili_powder",
+    "q": 15
+   },
+   {
+    "f": "cumin",
+    "q": 5
+   },
+   {
     "f": "olive_oil",
     "q": 15
    },
@@ -40964,10 +41388,10 @@
   ],
   "steps": [
    "Heat the olive oil in a heavy Dutch oven over medium-high heat and brown the ground beef for 6 to 8 minutes, breaking it into rough crumbles and letting it develop deep mahogany edges before stirring.",
-   "Add the diced onion and bell pepper and cook 5 minutes until the onion turns translucent and the pan smells sweet, then stir in the minced garlic for 30 seconds until fragrant.",
+   "Add the diced onion and bell pepper and cook 5 minutes until the onion turns translucent, then stir in the minced garlic, smoked paprika, chili powder, and cumin and toast 60 seconds, until the spices coat the beef and the pot smells like a barbecue pit.",
    "Pour in the crushed tomatoes and broth, scraping up the browned bits stuck to the bottom, and bring everything to a lively simmer.",
    "Stir in the drained kidney beans, reduce the heat to low, and simmer uncovered for 35 to 40 minutes, stirring occasionally, until the chili thickens enough that a spoon dragged through leaves a brief trail.",
-   "Rest the pot off the heat for 5 minutes so the flavors settle, then taste and ladle into deep bowls."
+   "Rest the pot off the heat for 5 minutes so the flavors settle, then taste for salt and ladle into deep bowls."
   ],
   "tip": "Chili is one of the few dishes that improves by ignoring it overnight, so make it a day ahead and take all the credit tomorrow."
  },
@@ -41187,14 +41611,22 @@
    {
     "f": "olive_oil",
     "q": 30
+   },
+   {
+    "f": "chili_powder",
+    "q": 12
+   },
+   {
+    "f": "cumin",
+    "q": 5
    }
   ],
   "steps": [
    "Warm the olive oil in a large pot over medium heat and sweat the diced onion and bell pepper for 6 minutes until soft and fragrant.",
-   "Stir in the minced garlic for 30 seconds, then add the sweet potatoes cut into 2-centimeter cubes and toss to coat them in the aromatics.",
+   "Stir in the minced garlic, chili powder, and cumin and toast for 30 seconds until the spices darken a shade, then add the sweet potatoes cut into 2-centimeter cubes and toss to coat them in the red-stained aromatics.",
    "Pour in the crushed tomatoes plus 250 milliliters of water, bring to a boil, then reduce to a steady simmer for 15 minutes until the sweet potato yields slightly to a knife tip.",
-   "Add the drained black beans and simmer 15 minutes more, stirring occasionally, until the chili turns thick and glossy and the sweet potatoes are fully tender.",
-   "Mash a few sweet potato cubes against the side of the pot to thicken the pot naturally, rest 5 minutes off the heat, and serve."
+   "Add the drained black beans and simmer 15 minutes more, stirring occasionally, until the chili turns thick, glossy, and brick-red and the sweet potatoes are fully tender.",
+   "Mash a few sweet potato cubes against the side of the pot to thicken things naturally, rest 5 minutes off the heat, taste for salt, and serve."
   ],
   "tip": "Cut the sweet potatoes evenly unless you enjoy a chili where half the cubes are mush and the other half fight back."
  },
@@ -41252,12 +41684,24 @@
    {
     "f": "cheddar",
     "q": 60
+   },
+   {
+    "f": "green_chiles",
+    "q": 100
+   },
+   {
+    "f": "chili_powder",
+    "q": 6
+   },
+   {
+    "f": "cumin",
+    "q": 5
    }
   ],
   "steps": [
    "Heat the olive oil in a Dutch oven over medium heat and soften the diced onion and bell pepper for 5 minutes until they smell sweet and lose their crunch.",
-   "Add the minced garlic and stir 30 seconds, then nestle in the whole chicken breasts and pour the broth over the top.",
-   "Simmer gently, partially covered, for 18 to 20 minutes until the chicken registers cooked through and shreds easily, then lift it out and pull it apart with two forks.",
+   "Add the minced garlic, chili powder, and cumin and stir for 30 seconds until fragrant, then tip in the green chiles, nestle in the whole chicken breasts, and pour the broth over the top.",
+   "Simmer gently, partially covered, for 18 to 20 minutes until the chicken shreds easily at the prod of a fork, then lift it out and pull it apart with two forks.",
    "Return the shredded chicken to the pot with the drained chickpeas, mashing a handful of chickpeas first so they thicken the broth, and simmer 8 minutes until slightly creamy.",
    "Take the pot off the heat, stir in the sour cream until the chili turns pale and velvety, and finish each bowl with a snowfall of grated cheddar."
   ],
@@ -41367,14 +41811,22 @@
    {
     "f": "butter",
     "q": 30
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "thyme",
+    "q": 0.2
    }
   ],
   "steps": [
    "Melt the butter in a heavy pot over medium heat and sweat the diced onion, celery, and carrots for 6 minutes until soft and sweet-smelling, without letting them color.",
-   "Add the potatoes cut into 2-centimeter cubes, pour in the broth and milk, and bring to the barest simmer with lazy bubbles just breaking the surface.",
-   "Cook gently for 15 minutes, stirring occasionally so the milk does not catch, until the potato cubes are tender enough to crush against the pot wall.",
+   "Stir in the smoked paprika and thyme leaves and cook 30 seconds until the fat turns brick-red and the pot smells faintly of campfire, then add the potatoes cut into 2-centimeter cubes.",
+   "Pour in the broth and milk and bring to the barest simmer, lazy bubbles just breaking the surface; cook gently 15 minutes, stirring so the milk does not catch, until the potatoes crush easily against the pot wall.",
    "Mash a few potatoes into the liquid to thicken the chowder, then lower in the salmon cut into large chunks and poach 5 to 6 minutes until it flakes into rosy petals.",
-   "Rest the pot off the heat for 3 minutes, taste for seasoning, and ladle up, keeping the salmon pieces as intact as your patience allows."
+   "Rest the pot off the heat for 3 minutes, taste for salt, and ladle up, keeping the salmon pieces as intact as your patience allows."
   ],
   "tip": "Keep the heat whisper-low once the milk goes in, because a boiled chowder breaks and no amount of stirring apologizes for that."
  },
@@ -43556,12 +44008,20 @@
    {
     "f": "lime",
     "q": 1
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "cumin",
+    "q": 3
    }
   ],
   "steps": [
    "Set a wide skillet over medium-high heat, add the beef, and press it flat like a burger; leave it alone for 3 minutes so the underside develops a crackly brown crust.",
    "Break the meat into rubble, stir in the diced onion and minced garlic, and cook 4 minutes more until the onion turns translucent and the kitchen smells like taco night.",
-   "Add the chopped tomato with a firm pinch of salt and a smoky spice of your choosing, and simmer 3 to 4 minutes until the mixture is juicy but no longer watery.",
+   "Add the chopped tomato, the smoked paprika, the cumin, and a firm pinch of salt, and simmer 3 to 4 minutes until the mixture is juicy but no longer watery.",
    "Warm the tortillas in a dry pan for 20 seconds per side until they smell toasty and bend without cracking.",
    "Pile the beef down the center of each tortilla, then finish with shredded romaine, grated cheddar, a swipe of sour cream, and a hard squeeze of lime before folding."
   ],
@@ -43618,13 +44078,17 @@
    {
     "f": "garlic",
     "q": 0.2
+   },
+   {
+    "f": "chili_powder",
+    "q": 6
    }
   ],
   "steps": [
-   "Pat the shrimp bone-dry with paper towels, then toss them with the olive oil, minced garlic, the zest and juice of one lime, and enough chili-forward seasoning to make them blush.",
+   "Pat the shrimp bone-dry with paper towels, then toss them with the olive oil, minced garlic, the zest and juice of one lime, and the chili powder until every shrimp wears a rusty red coat.",
    "Whisk the yogurt with the juice of the second lime and a pinch of salt until it is pourable, and shred the romaine into thin ribbons.",
-   "Heat a skillet over high until it is smoking faintly, then sear the shrimp in a single layer for 90 seconds per side, until they curl into loose commas and turn opaque pink.",
-   "Warm the tortillas in the same pan, letting them soak up the garlicky drippings for a few seconds on each side.",
+   "Heat a skillet over high until it is smoking faintly, then sear the shrimp in a single layer for 90 seconds per side, until they curl into loose commas and the chili crust darkens at the edges.",
+   "Warm the tortillas in the same pan, letting them soak up the garlicky chili drippings for a few seconds on each side.",
    "Layer romaine, sliced avocado, and shrimp onto each tortilla, drizzle with the lime crema, and fold while everything is still hot."
   ],
   "tip": "A shrimp curled into a tight O is overcooked — pull them at the C shape and they will finish in the wrap."
@@ -44051,12 +44515,24 @@
    {
     "f": "olive_oil",
     "q": 10
+   },
+   {
+    "f": "garam_masala",
+    "q": 6
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "turmeric",
+    "q": 2
    }
   ],
   "steps": [
-   "Stir two-thirds of the yogurt with the minced garlic, the juice of half the lemon, salt, and a heavy hand of warm spices — the marinade should be tinted and thick enough to cling.",
+   "Stir two-thirds of the yogurt with the minced garlic, the juice of half the lemon, the garam masala, paprika, turmeric, and a big pinch of salt — the tandoori marinade should turn sunset-orange and cling thickly to a spoon.",
    "Cut the chicken into bite-size chunks, coat them completely in the marinade, and let them sit at least 15 minutes while the yogurt quietly tenderizes.",
-   "Heat the oil in a skillet over medium-high and cook the chicken in a single layer for 8 to 10 minutes, turning occasionally, until the yogurt coating chars in spots and the pieces feel springy.",
+   "Heat the oil in a skillet over medium-high and cook the chicken in a single layer for 8 to 10 minutes, turning occasionally, until the spiced yogurt coating chars in spots and the pieces feel springy.",
    "Slice the onion paper-thin and toss it with the remaining lemon juice and a pinch of salt for a quick pickle, and slice the cucumber into cool half-moons.",
    "Warm the tortillas until pliable, then load each with charred chicken, pickled onion, cucumber, and dollops of the reserved yogurt before rolling snugly."
   ],
@@ -44579,14 +45055,22 @@
    {
     "f": "olive_oil",
     "q": 15
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "cumin",
+    "q": 3
    }
   ],
   "steps": [
    "Heat the olive oil in a skillet over medium and cook half the onion, diced, for 4 minutes until soft and just starting to caramelize at the edges.",
-   "Add the minced garlic and cook 30 seconds until fragrant, then tip in the black beans with a splash of water and a big pinch of smoky spice.",
+   "Add the minced garlic, the smoked paprika, and the cumin and cook 30 seconds until fragrant, then tip in the black beans with a splash of water.",
    "Simmer 5 minutes, then mash roughly with the back of a spoon until the mixture is creamy but still studded with whole beans, loosening with water if it tightens up.",
    "Char the tortillas directly over a flame or in a scorching dry pan until they smell toasty and carry black-flecked blisters.",
-   "Spread the beans thickly on each tortilla and top with diced tomato, the remaining raw onion, avocado slices, and a bright squeeze of lime."
+   "Spread the smoky beans thickly on each tortilla and top with diced tomato, the remaining raw onion, avocado slices, and a bright squeeze of lime."
   ],
   "tip": "Refried-ish beans thicken as they sit, so keep them a little looser than seems right — they will meet you in the middle."
  },
@@ -45766,15 +46250,22 @@
    {
     "f": "lime",
     "q": 1
+   },
+   {
+    "f": "paprika",
+    "q": 4
+   },
+   {
+    "f": "cumin",
+    "q": 3
    }
   ],
   "steps": [
    "Char the bell peppers, cut into wide strips, in the olive oil over high heat for 5 minutes until their skins blister black in spots, then add the onion, zucchini, and garlic for 3 minutes more.",
-   "Stir in the rinsed quinoa and chopped tomatoes with 300 milliliters of water and bring to a boil, scraping the charred bits into the liquid.",
+   "Sprinkle in the smoked paprika and cumin and stir 30 seconds, then add the rinsed quinoa and chopped tomatoes with 300 milliliters of water, scraping the charred bits into the liquid as it comes to a boil.",
    "Cover and simmer on low for 15 minutes, until the quinoa uncurls its little tails and the water is gone.",
    "Fold in the black beans and let them heat through for 3 minutes with the lid back on.",
-   "Rest 5 minutes off the heat, then fluff and finish with diced avocado and lime squeezed over everything.",
-   "Taste and add another squeeze of lime if it does not make you blink slightly."
+   "Rest 5 minutes off the heat, then fluff and finish with diced avocado and lime squeezed over everything — add another squeeze if it does not make you blink slightly."
   ],
   "tip": "Those blackened pepper spots are not a mistake, they are the smoky backbone of the whole dish, so let them happen."
  },
@@ -49984,11 +50475,23 @@
    {
     "f": "rice",
     "q": 120
+   },
+   {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
+    "f": "turmeric",
+    "q": 2
+   },
+   {
+    "f": "cayenne",
+    "q": 1
    }
   ],
   "steps": [
    "Start the rice simmering in salted water, then heat the oil in a deep skillet over medium and cook the finely chopped onion for 5 to 6 minutes until soft and lightly bronzed.",
-   "Stir in the minced garlic, a teaspoon of turmeric, a teaspoon of ground coriander, and a pinch of cayenne, toasting for 30 seconds until the spices darken a shade.",
+   "Stir in the minced garlic, curry powder, turmeric, and cayenne, toasting for 30 seconds until the spices darken a shade and smell heady.",
    "Add the chopped tomatoes and cook 4 minutes until they slump, then pour in the coconut milk and simmer 8 minutes until the sauce reduces slightly and turns a sunset orange.",
    "Season the shrimp with salt, slip them into the sauce, and poach at a bare simmer for 3 to 4 minutes until they curl into loose commas and turn pink.",
    "Brighten with a splash of vinegar or lemon if handy, taste for salt, and ladle generously over the rice."
@@ -50202,14 +50705,30 @@
    {
     "f": "olive_oil",
     "q": 30
+   },
+   {
+    "f": "curry_powder",
+    "q": 6
+   },
+   {
+    "f": "turmeric",
+    "q": 2
+   },
+   {
+    "f": "cumin",
+    "q": 4
+   },
+   {
+    "f": "garam_masala",
+    "q": 3
    }
   ],
   "steps": [
    "Cut the potatoes into 2 cm cubes and the cauliflower into floret halves so they cook at the same pace, then heat the oil in your largest lidded skillet over medium-high.",
-   "Fry the potatoes for 5 minutes until their edges pick up golden crusts, then add the cauliflower, a teaspoon of turmeric, a teaspoon of cumin seeds if you have them, and a solid pinch of salt.",
-   "Stir to stain everything yellow, add the diced onion and garlic, then cover and cook 10 to 12 minutes, lifting the lid to toss every few minutes so nothing scorches.",
+   "Fry the potatoes for 5 minutes until their edges pick up golden crusts, then add the cauliflower, the curry powder, turmeric, cumin, and a solid pinch of salt, stirring to stain everything yellow.",
+   "Add the diced onion and garlic, then cover and cook 10 to 12 minutes, lifting the lid to toss every few minutes so nothing scorches.",
    "When a knife slides through the potatoes without resistance, add the chopped tomatoes and cook uncovered 5 minutes until they melt into a rough coating rather than a sauce.",
-   "Finish with half a teaspoon of garam masala and let the pan sit off heat for 2 minutes so the flavors settle in."
+   "Finish with the garam masala and let the pan sit off heat for 2 minutes so the spices settle in."
   ],
   "tip": "Stir aloo gobi with a flip of the wrist, not a spoon-lashing — mushy cauliflower has ended friendships."
  },
@@ -50376,12 +50895,24 @@
    {
     "f": "rice",
     "q": 120
+   },
+   {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
+    "f": "garam_masala",
+    "q": 3
+   },
+   {
+    "f": "cayenne",
+    "q": 1
    }
   ],
   "steps": [
    "Boil the eggs for 9 minutes, plunge them into cold water, peel, and score each one lightly so the gravy can sneak inside; start the rice at the same time.",
    "Heat the oil in a skillet over medium and brown the finely diced onion for 8 minutes until it reaches a deep amber — pale onions make a flat curry.",
-   "Add the garlic, a teaspoon of cumin, a teaspoon of garam masala, and a pinch of cayenne, toast 30 seconds, then add the chopped tomatoes and cook 7 to 8 minutes into a thick, rust-colored masala.",
+   "Add the garlic, curry powder, garam masala, and cayenne, toast 30 seconds, then add the chopped tomatoes and cook 7 to 8 minutes into a thick, rust-colored masala.",
    "Pour in the coconut milk, simmer 5 minutes until the sauce coats the back of a spoon, and season with salt.",
    "Roll the eggs in the gravy, cut them in half so the yolks face up like little suns, and simmer 2 final minutes before spooning over rice."
   ],
@@ -50429,11 +50960,19 @@
    {
     "f": "olive_oil",
     "q": 20
+   },
+   {
+    "f": "curry_powder",
+    "q": 10
+   },
+   {
+    "f": "red_pepper_flakes",
+    "q": 1
    }
   ],
   "steps": [
    "Heat the oil in a deep pot over medium and soften the diced onion for 5 to 6 minutes until translucent with golden edges.",
-   "Stir in the minced garlic with a tablespoon of curry powder and a pinch of red pepper flakes, toasting 30 seconds until the spices bloom and smell toasty rather than raw.",
+   "Stir in the minced garlic with the curry powder and red pepper flakes, toasting 30 seconds until the spices bloom and smell toasty rather than raw.",
    "Add the sweet potatoes in 2 cm cubes, pour in the coconut milk plus 150 ml of water, and simmer covered for 15 to 18 minutes until a fork slides through without a fight.",
    "Mash a few cubes against the pot wall to thicken the sauce into something spoon-coating and orange as a monsoon sunset.",
    "Fold in the spinach by the handful until it collapses glossy and dark, then season with salt and serve steaming."
@@ -50486,12 +51025,24 @@
    {
     "f": "rice",
     "q": 110
+   },
+   {
+    "f": "curry_powder",
+    "q": 6
+   },
+   {
+    "f": "turmeric",
+    "q": 2
+   },
+   {
+    "f": "cayenne",
+    "q": 1
    }
   ],
   "steps": [
-   "Rub the salmon chunks with salt and half a teaspoon of turmeric and let them sit while the rice simmers — this quick cure firms the fish and stains it a beautiful gold.",
+   "Rub the salmon chunks with salt and the turmeric and let them sit while the rice simmers — this quick cure firms the fish and stains it a beautiful gold.",
    "Heat the oil in a wide pan over medium-high and sear the salmon 1 minute per side, just to set the outside, then move it to a plate.",
-   "Lower the heat, cook the sliced onion for 5 to 6 minutes until soft and browning, then add the garlic, a teaspoon of cumin, and a pinch of cayenne for 30 seconds.",
+   "Lower the heat, cook the sliced onion for 5 to 6 minutes until soft and browning, then add the garlic, curry powder, and cayenne and toast for 30 seconds.",
    "Add the chopped tomatoes and simmer 6 to 7 minutes until they collapse into a loose gravy, then stir in the coconut milk and season with salt.",
    "Return the salmon and poach at a gentle burble for 4 to 5 minutes until it flakes at the nudge of a spoon, then serve over rice without stirring — the fish is delicate and deserves dignity."
   ],
@@ -55134,14 +55685,22 @@
    {
     "f": "pita",
     "q": 2
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "cumin",
+    "q": 3
    }
   ],
   "steps": [
    "Warm the olive oil in a wide skillet over medium heat and cook the sliced onion and bell pepper for 8 minutes, until soft and starting to catch color at the edges.",
-   "Stir in the minced garlic with a pinch of paprika and cumin, and cook for 60 seconds until fragrant.",
+   "Stir in the minced garlic with the smoked paprika and cumin, and cook for 60 seconds until the oil turns brick-red and fragrant.",
    "Add the chopped tomatoes, season with salt, and simmer for 10 to 12 minutes, until the sauce thickens enough that a spoon dragged through it leaves a brief trail.",
    "Nestle four wells into the sauce with the back of a spoon, crack an egg into each, cover, and cook 5 to 7 minutes until the whites are set but the yolks still wobble.",
-   "Crumble the feta over the top, let it soften for a minute, and serve straight from the pan with warm pita for dragging through the sauce."
+   "Crumble the feta over the top, let it soften for a minute, and serve straight from the pan with warm pita for dragging through the smoky sauce."
   ],
   "tip": "Pull the pan off the heat when the whites look barely underdone — carryover heat finishes eggs faster than your confidence suggests."
  },
@@ -55689,14 +56248,26 @@
    {
     "f": "rice",
     "q": 140
+   },
+   {
+    "f": "curry_powder",
+    "q": 8
+   },
+   {
+    "f": "garam_masala",
+    "q": 4
+   },
+   {
+    "f": "turmeric",
+    "q": 2
    }
   ],
   "steps": [
    "Simmer the rice in salted water according to its stubbornness, usually 12 to 15 minutes, then drain and keep covered.",
    "Meanwhile boil the eggs for 9 minutes, shock them in cold water, peel, and score each one lightly so the sauce can get in.",
-   "Heat the oil in a deep skillet over medium and fry the sliced onion for 8 minutes until deeply browned, then add the garlic, a teaspoon of garam masala, half a teaspoon of turmeric, and chili to taste, stirring for 30 seconds.",
+   "Heat the oil in a deep skillet over medium and fry the sliced onion for 8 minutes until deeply browned, then add the garlic, curry powder, garam masala, and turmeric, stirring for 30 seconds until the spices bloom.",
    "Add the chopped tomatoes and a splash of water and simmer 10 minutes, until the sauce thickens and the oil beads at the edges — the classic sign the masala is done.",
-   "Halve the eggs, slide them into the sauce cut-side up for 2 minutes to warm through, and serve ladled over the rice."
+   "Halve the eggs, slide them into the curry cut-side up for 2 minutes to warm through, and serve ladled over the rice."
   ],
   "tip": "Browning the onions past your comfort zone is where the entire curry's flavor lives."
  },
@@ -59661,15 +60232,22 @@
    {
     "f": "onion",
     "q": 0.5
+   },
+   {
+    "f": "parsley",
+    "q": 0.5
+   },
+   {
+    "f": "mint",
+    "q": 0.3
    }
   ],
   "steps": [
    "Pour boiling salted water over the couscous in a bowl, cover with a plate, and let it steam for 5 minutes before fluffing with a fork until every grain separates.",
    "While it steams, dice the cucumber and tomatoes small, mince the half onion, and soak the onion in the lemon juice for 5 minutes to tame its bite.",
    "Toast the drained chickpeas in the olive oil over medium heat for 6 to 8 minutes, shaking the pan until they blister and pop like tiny drums.",
-   "Toss the couscous with the vegetables, lemony onion, warm chickpeas, and a generous pinch of dried oregano and black pepper, tasting for salt as feta will add more.",
-   "Divide between containers and crumble the feta over the top in big craggy chunks rather than stirring it through.",
-   "Chill fully before sealing; the flavors deepen by day two like a good marinade should."
+   "Chop the parsley and mint fine — stems and all for the parsley — then toss the couscous with the vegetables, lemony onion, warm chickpeas, and both herbs until everything is flecked green, tasting for salt since the feta will add more.",
+   "Divide between containers and crumble the feta over the top in big craggy chunks rather than stirring it through; chill fully before sealing, as the flavors deepen by day two like a good marinade should."
   ],
   "tip": "Salt the tomatoes and let them drain in a sieve for 5 minutes, or day three's lunch will be couscous soup."
  },
@@ -59779,12 +60357,24 @@
    {
     "f": "olive_oil",
     "q": 15
+   },
+   {
+    "f": "chili_powder",
+    "q": 15
+   },
+   {
+    "f": "paprika",
+    "q": 5
+   },
+   {
+    "f": "cumin",
+    "q": 4
    }
   ],
   "steps": [
    "Heat the olive oil in a heavy pot over medium-high heat and brown the ground turkey hard for 6 to 8 minutes, leaving it undisturbed in patches so it develops crusty, savory edges.",
    "Add the diced onion, bell pepper, and garlic and cook until the onion turns translucent and the bottom of the pot collects a brown film, about 5 minutes.",
-   "Stir in a heaping tablespoon of chili powder, a teaspoon of paprika, and a teaspoon of cumin, toasting the spices for 30 seconds until they smell like a campfire.",
+   "Stir in the chili powder, smoked paprika, and cumin, toasting the spices for 30 seconds until they smell like a campfire.",
    "Add the crushed tomatoes, drained black beans, and broth, scraping up every browned bit, then simmer uncovered for 25 to 30 minutes until the chili thickens enough to mound on a spoon.",
    "Season with salt and a splash of anything acidic you have on hand, then ladle into four containers and cool before sealing.",
    "Reheat gently with a spoonful of water, as the chili tightens up in the fridge like a fist."
