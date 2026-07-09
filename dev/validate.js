@@ -28,7 +28,7 @@ if (!globalThis.crypto || !globalThis.crypto.subtle) {
 
 const root = path.join(__dirname, '..');
 const LOGIC_FILES = [
-  'js/util.js', 'js/data/foods.js', 'js/data/recipes.js', 'js/data/stores.js',
+  'js/util.js', 'js/data/foods.js', 'js/data/foods-extra.js', 'js/data/recipes.js', 'js/data/stores.js',
   'js/db.js', 'js/auth.js', 'js/expiry.js', 'js/nutrition.js', 'js/inventory.js',
   'js/nonfood.js', 'js/subs.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js',
   'js/cartlink.js', 'js/kroger.js', 'js/places.js'

@@ -241,6 +241,16 @@
     }
   };
 
+  /* Generated catalog extensions (js/data/foods-extra.js) append here.
+     Rebuilds the id map so byId stays correct. */
+  api.register = function (entries) {
+    (entries || []).forEach((f) => {
+      if (!f || !f.id || map[f.id]) return;
+      F.push(f);
+      map[f.id] = f;
+    });
+  };
+
   g.SL = g.SL || {};
   g.SL.foods = api;
 })(typeof window !== 'undefined' ? window : globalThis);

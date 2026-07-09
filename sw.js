@@ -2,7 +2,7 @@
    Offline app shell: cache-first for the app's own files, network for the
    rest (fonts and the OCR engine still need a connection the first time).
    Relative paths keep this working at https://user.github.io/repo/. */
-const CACHE = 'shelflife-v14';
+const CACHE = 'shelflife-v15';
 
 const CORE = [
   './',
@@ -14,6 +14,7 @@ const CORE = [
   './js/util.js',
   './js/config.js',
   './js/data/foods.js',
+  './js/data/foods-extra.js',
   './js/data/recipes.js',
   './js/data/stores.js',
   './js/db.js',
