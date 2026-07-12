@@ -30,7 +30,7 @@ const root = path.join(__dirname, '..');
 const LOGIC_FILES = [
   'js/util.js', 'js/data/foods.js', 'js/data/foods-extra.js', 'js/data/recipes.js', 'js/data/stores.js',
   'js/db.js', 'js/auth.js', 'js/expiry.js', 'js/nutrition.js', 'js/inventory.js',
-  'js/nonfood.js', 'js/subs.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/agent.js',
+  'js/nonfood.js', 'js/subs.js', 'js/planner.js', 'js/shopping.js', 'js/receipt.js', 'js/vision.js', 'js/agent.js',
   'js/cartlink.js', 'js/kroger.js', 'js/places.js'
 ];
 for (const f of LOGIC_FILES) {
@@ -187,6 +187,17 @@ const U = SL.util;
   check(gotSpin, '"2 @ SPINACH" matched spinach with qty 2');
   const noisy = parsed.some((p) => /subtotal|total|tax|visa/i.test(p.raw));
   check(!noisy, 'totals/tax/payment lines were filtered out');
+
+  console.log('\n== Shelf-photo intake (vision) ==');
+  check(SL.foods.match('whole milk').id === 'whole_milk', 'catalog matcher maps "whole milk" to whole milk');
+  check(SL.foods.match('canned black beans').id === 'black_beans', 'catalog matcher maps "canned black beans" to black beans');
+  check(SL.foods.match('flux capacitor coolant').id === null, 'nonsense stays unmatched (below confidence bar)');
+  const vRow = SL.vision.toRow({ name: 'chicken breast', quantity: 2, storage: 'fridge', confidence: 'high' }, 'fridge');
+  check(!!vRow && vRow.match === 'chicken_breast' && vRow.qty === 2 && vRow.storage === 'fridge', 'vision item maps to a reviewed pantry row');
+  const vClamp = SL.vision.toRow({ name: 'eggs', quantity: 900, confidence: 'weird' }, 'fridge');
+  check(vClamp.qty === 24 && vClamp.confidence === 'medium', 'bad quantities/confidence values are clamped to sane defaults');
+  check(SL.vision.toRow({ quantity: 1 }, 'pantry') === null, 'nameless vision items are dropped');
+  check(SL.vision.configured() === false, 'shelf scanning stays off until a vision proxy is configured');
 
   console.log('\n== Agent hand-off brief ==');
   const cart = SL.shopping.cart();

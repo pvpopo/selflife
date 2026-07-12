@@ -232,6 +232,23 @@
       if (food.unit === 'ct') return qty * (food.gpu || 100);
       return qty; // g and ml treated 1:1 for estimate purposes
     },
+    /* Fuzzy-match free text (a receipt line, a vision-model label, user
+       input) to the catalog. One matcher for every intake path, so adding
+       an alias in the catalog improves receipt AND photo scanning alike.
+       Returns { food, score, id } — id is null below the confidence bar. */
+    match(text, threshold) {
+      const U = g.SL.util;
+      const bar = threshold == null ? 0.45 : threshold;
+      let best = null, bestScore = 0;
+      F.forEach((food) => {
+        const names = [food.name, ...(food.aliases || [])];
+        names.forEach((n) => {
+          const s = U.tokenScore(text, n);
+          if (s > bestScore) { bestScore = s; best = food; }
+        });
+      });
+      return { food: best, score: bestScore, id: best && bestScore >= bar ? best.id : null };
+    },
     /* best default shelf life (days) for a storage location, falling back sensibly */
     shelfDays(food, storage) {
       const s = food.shelf || {};

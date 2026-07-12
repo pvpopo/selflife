@@ -17,6 +17,7 @@ Built as a zero-build static site: push it to GitHub, turn on Pages, done. No se
 - **1–2 store consolidation.** The optimizer prices your whole basket at every nearby store, applies listed substitutions when an item is out of stock (ground turkey ⇄ beef, yogurt ⇄ sour cream, …), factors in weekly deals and delivery fees, and recommends the best single store — or a two-store split only when the second stop genuinely earns its trip.
 - **Purchases become inventory.** Marking the cart purchased files everything into the pantry with an estimated use-by date based on storage location (pantry / fridge / freezer), which you confirm per item.
 - **Receipt scanning.** Photograph a paper receipt; OCR runs *on your device* (Tesseract.js — the image never leaves the browser). Parsed lines are fuzzy-matched to the catalog ("CHKN BRST" → chicken breast) and you review every match before anything is saved. A paste-the-text fallback works offline.
+- **Shelf-photo scanning.** Photograph the inside of your pantry, fridge or freezer and a vision model (Claude, via a tiny Cloudflare Worker you deploy) identifies the food; you review every match, set quantities, and a **quick date check** screen follows so you can fix every use-by estimate in one pass — nudge buttons, a date picker, or the on-device label scanner. Honest privacy note: unlike receipts, this photo *does* leave the device (kept at most 7 days by your worker, then auto-deleted) — the UI says so before every scan, and the feature stays off until you configure it. See "Shelf-photo scanning" below.
 - **Honest expiration tracking.** Every item shows a countdown shelf-tag. A prominent disclaimer states these are guesstimates, and every item's detail view describes what spoilage *actually looks like* for that food — smell, color, texture — with "trust your senses" actions ("looks fine, extend estimate" / "tossed it").
 - **Account management.** Local accounts with salted PBKDF2-SHA256 password hashing (WebCrypto, 210k rounds), per-user data isolation, password change, JSON export/import backups, account deletion, and a guest mode. Optionally, **Sign in with Google / Apple** via Supabase — with a private, row-level-secured cloud backup so your data follows you across devices. See "Cloud sign-in" below.
 - **Agent hand-off for real stores.** One tap turns your optimized cart into a guard-railed brief an AI browsing agent (e.g. Claude with the Chrome extension) can execute on a real grocer's site — it fills the cart in your own session and stops before checkout. See "Real-store carts with an AI agent" below.
@@ -75,6 +76,8 @@ js/
   shopping.js               list diffing, package math, 1–2 store optimizer,
                             cart → purchase → inventory
   receipt.js                Tesseract.js loader, OCR, receipt-line parser
+  vision.js                 shelf-photo scanning client (downscale, call
+                            proxy/vision-worker.js, match items on-device)
   views/                    one file per tab + shared components
   app.js                    router, auth gate, service worker registration
 sw.js / manifest.webmanifest / icons/    PWA
@@ -161,6 +164,21 @@ The link needs Walmart item IDs, and the module resolves them in three tiers (be
 **AI agent hand-off (`js/agent.js`).** Alternatively, the same card produces a guard-railed markdown brief for an AI browsing agent (e.g. Claude with the Chrome extension): store, fulfillment, ZIP, every item with package size and acceptable substitutes, plus hard rules — use the existing session, never touch credentials or payment, stop at cart review. Works for Walmart, Kroger, Target, Safeway, H-E-B, Instacart, and Amazon Fresh.
 
 **Kroger lane (`proxy/kroger-worker.js` + `js/kroger.js`).** Kroger's public API is free, needs no paid membership, and — unlike Walmart's — reports **true per-store stock levels**. Setup (~10 min): register at [developer.kroger.com](https://developer.kroger.com) with the Products API, deploy the worker with your client ID/secret (walkthrough at the top of the file), and paste the worker URL into `js/config.js → krogerProxy`. Your nearest Kroger-family store (Kroger, Ralphs, Fred Meyer, King Soopers…) then joins the comparison with live location-level availability and prices.
+
+## Shelf-photo scanning
+
+The Pantry tab's **📷 Shelf** button turns a photo of a pantry/fridge/freezer shelf into reviewed inventory:
+
+1. **Photograph** — pick which storage you're shooting, snap the shelf. The photo is downscaled on-device (~300 KB) before upload.
+2. **Identify** — `proxy/vision-worker.js` (Cloudflare Worker, free tier) forwards it to the Claude API, which returns a structured item list (name, count, confidence). The API key lives in the worker, never in the static site.
+3. **Review** — item names are fuzzy-matched to the catalog on-device with the same matcher receipts use (`foods.match()`); you confirm/fix every line and set package counts before anything is saved. Low-confidence items start unticked.
+4. **Quick date check** — added items appear on one screen with their estimated use-by dates: nudge (−3d/−1d/+1d/+3d), type a date, or 📸 scan the printed label (on-device OCR). Dates count from today, so this pass matters for items that have been sitting a while.
+
+**Privacy, stated plainly:** receipt/label OCR never leaves the browser; the shelf photo does. It goes to *your* worker → the Claude API; the worker keeps it at most **7 days** (Cloudflare KV TTL — and only if you opt into the KV binding; without it nothing is stored), then it's auto-deleted. The UI discloses this before every scan, and the whole feature is off until configured.
+
+**Setup (~10 min):** get an Anthropic API key (platform.claude.com) → `wrangler deploy proxy/vision-worker.js --name shelflife-vision` → `wrangler secret put ANTHROPIC_API_KEY` → paste the worker URL into `js/config.js → visionProxy`. Full walkthrough at the top of the worker file.
+
+Photo-added items never feed the community shelf-life consensus (their purchase dates are assumed, not known) — the same data-quality rule manual adds follow.
 
 ## Smarter expiration dates
 

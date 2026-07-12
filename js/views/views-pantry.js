@@ -9,6 +9,7 @@
   const FOODS = g.SL.foods;
   const inv = g.SL.inventory;
   const receipt = g.SL.receipt;
+  const vision = g.SL.vision;
   const planner = g.SL.planner;
 
   /* ---------- disclaimer ---------- */
@@ -54,7 +55,7 @@
     render(container);
   }
 
-  function scanLabelDate(item, container, closeParent) {
+  function scanLabelDate(item, container, closeParent, onSaved) {
     ui.sheet({
       title: 'Scan the date label',
       render(body, close) {
@@ -76,7 +77,7 @@
             if (!iso) { progress.textContent = 'Couldn’t find a date in that photo — try closer/steadier, or set it by hand below.'; return; }
             close(); if (closeParent) closeParent();
             ui.confirm('Date found: ' + U.fmtDateLong(iso), 'Use this as the use-by date for ' + FOODS.byId(item.foodId).name + '?', 'Use this date')
-              .then((yes) => { if (yes) saveCorrectedDate(item, iso, 'the label', container); });
+              .then((yes) => { if (yes) { saveCorrectedDate(item, iso, 'the label', container); if (onSaved) onSaved(iso); } });
           } catch (err) {
             progress.textContent = err.message || 'Scan failed — set the date by hand below.';
           }
@@ -91,6 +92,7 @@
             if (!dateIn.value) return;
             close(); if (closeParent) closeParent();
             saveCorrectedDate(item, dateIn.value, 'your entry', container);
+            if (onSaved) onSaved(dateIn.value);
           }
         }, 'Save this date'));
       }
@@ -414,6 +416,190 @@
     });
   }
 
+  /* ---------- shelf photo scan (vision model via proxy/vision-worker.js) ---------- */
+  function scanShelf(container) {
+    if (!vision.configured()) {
+      ui.sheet({
+        title: 'Shelf photo scanning',
+        render(body) {
+          body.appendChild(U.el('p', { class: 'sheet-text' },
+            'Photograph the inside of your pantry, fridge or freezer and a vision model identifies the food, so you can update the whole shelf in one go.'));
+          body.appendChild(U.el('p', { class: 'sheet-text' },
+            'It needs a small (free-tier) Cloudflare Worker with a Claude API key — the walkthrough is at the top of proxy/vision-worker.js. Paste the worker URL into js/config.js → visionProxy and this button lights up.'));
+          body.appendChild(U.el('p', { class: 'muted small' }, vision.RETENTION_NOTE));
+        }
+      });
+      return;
+    }
+
+    let storage = 'pantry';
+    ui.sheet({
+      title: 'Photograph a shelf',
+      render(body, close) {
+        body.appendChild(U.el('p', { class: 'muted small' }, vision.RETENTION_NOTE));
+
+        const stWrap = U.el('div', { class: 'field' });
+        stWrap.appendChild(U.el('label', { class: 'field-label' }, 'What are you photographing?'));
+        const row = U.el('div', { class: 'chip-row' });
+        ['pantry', 'fridge', 'freezer'].forEach((s) => {
+          const chip = ui.chip(FOODS.STORAGE_LABELS[s], {
+            active: storage === s,
+            onclick: () => {
+              storage = s;
+              U.$$('.chip', row).forEach((c) => c.classList.remove('active'));
+              chip.classList.add('active');
+            }
+          });
+          row.appendChild(chip);
+        });
+        stWrap.appendChild(row);
+        body.appendChild(stWrap);
+
+        const input = U.el('input', { class: 'file-input', type: 'file', accept: 'image/*', capture: 'environment', id: 'shelf-file' });
+        body.appendChild(U.el('label', { class: 'btn primary wide', for: 'shelf-file' }, '\u{1F4F7} Photo of the shelf'));
+        body.appendChild(input);
+        const progress = U.el('p', { class: 'muted center', 'aria-live': 'polite' }, '');
+        body.appendChild(progress);
+
+        input.addEventListener('change', async () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+          try {
+            const rows = await vision.scanShelf(file, storage, (msg) => { progress.textContent = msg; });
+            if (!rows.length) { progress.textContent = 'No food found in that photo — try closer or with more light.'; return; }
+            close();
+            reviewShelf(rows, container);
+          } catch (err) {
+            progress.textContent = err.message || 'Scan failed — try again.';
+          }
+        });
+      }
+    });
+  }
+
+  /* Review what the model saw before anything is saved — same contract as
+     the receipt flow: the user confirms every line. */
+  function reviewShelf(rows, container) {
+    ui.sheet({
+      title: 'Review spotted items',
+      tall: true,
+      render(body, close) {
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'The model’s best guess at what’s on the shelf — fix anything before adding. Quantity is packages, and items it wasn’t sure about start unticked.'));
+
+        rows.forEach((row) => {
+          row.include = row.include != null ? row.include : (!!row.match && row.confidence !== 'low');
+          const box = U.el('div', { class: 'review-row' + (row.include ? '' : ' skipped') });
+
+          const head = U.el('div', { class: 'review-head' });
+          const toggle = U.el('button', {
+            class: 'check ' + (row.include ? 'on' : ''), type: 'button',
+            'aria-label': 'Include ' + row.name,
+            onclick: () => {
+              row.include = !row.include;
+              toggle.classList.toggle('on', row.include);
+              toggle.textContent = row.include ? '✓' : '';
+              box.classList.toggle('skipped', !row.include);
+            }
+          }, row.include ? '✓' : '');
+          head.appendChild(toggle);
+          head.appendChild(U.el('span', { class: 'review-raw mono' },
+            row.name + (row.confidence === 'low' ? ' (unsure)' : '')));
+          head.appendChild(ui.stepper(row.qty, 1, 24, (v) => { row.qty = v; }));
+          box.appendChild(head);
+
+          const label = () => row.match
+            ? '→ ' + FOODS.byId(row.match).name + ' · ' + FOODS.STORAGE_LABELS[row.storage]
+            : '→ no catalog match — tap to pick';
+          const matchBtn = U.el('button', {
+            class: 'review-match', type: 'button',
+            onclick: () => ui.pickFood('Match “' + row.name + '”', (food) => {
+              row.match = food.id;
+              row.include = true;
+              matchBtn.textContent = label();
+              toggle.classList.add('on'); toggle.textContent = '✓';
+              box.classList.remove('skipped');
+            })
+          }, label());
+          box.appendChild(matchBtn);
+          body.appendChild(box);
+        });
+
+        body.appendChild(U.el('div', { class: 'sheet-actions' }, [
+          U.el('button', { class: 'btn ghost', onclick: close }, 'Cancel'),
+          U.el('button', {
+            class: 'btn primary',
+            onclick: () => {
+              const lines = rows
+                .filter((r) => r.include && r.match)
+                .map((r) => ({ foodId: r.match, packages: r.qty, storage: r.storage }));
+              if (!lines.length) { ui.toast('Nothing selected to add.', 'warn'); return; }
+              const added = inv.addPurchases(lines, 'photo');
+              close(); render(container);
+              ui.toast(added.length + ' ' + U.plural(added.length, 'item') + ' added from the shelf photo');
+              quickDates(added, container);
+            }
+          }, 'Add to pantry')
+        ]));
+      }
+    });
+  }
+
+  /* ---------- quick expiration pass, right after a shelf scan ----------
+     Items already in the pantry have unknown purchase dates, so the shelf-life
+     guess (counted from today) can run long. One screen to sanity-check every
+     date: nudge it, type it, or photograph the printed label. */
+  function quickDates(items, container) {
+    if (!items.length) return;
+    ui.sheet({
+      title: 'Quick date check',
+      tall: true,
+      render(body, close) {
+        body.appendChild(U.el('p', { class: 'muted small' },
+          'Estimates count from today, but shelf items may have been open a while — adjust anything that looks off. Every row saves as you change it.'));
+
+        items.forEach((item) => {
+          const food = FOODS.byId(item.foodId);
+          const box = U.el('div', { class: 'review-row' });
+          box.appendChild(U.el('div', { class: 'review-head' }, [
+            U.el('span', { class: 'review-raw' }, [
+              U.el('b', {}, food.name),
+              U.el('small', { class: 'muted' }, ' · ' + U.fmtQty(item.qty, food.unit))
+            ])
+          ]));
+
+          const dateIn = U.el('input', { class: 'input date-inline', type: 'date', value: item.expiresISO, 'aria-label': 'Use-by date for ' + food.name });
+          const setDate = (iso, verified) => {
+            inv.update(item.id, { expiresISO: iso, verified: !!verified });
+            item.expiresISO = iso;
+            dateIn.value = iso;
+          };
+          dateIn.addEventListener('change', () => { if (dateIn.value) setDate(dateIn.value, true); });
+
+          const nudge = (days) => U.el('button', {
+            class: 'btn small ghost', type: 'button',
+            onclick: () => setDate(U.iso(U.addDays(U.parseISO(item.expiresISO), days)))
+          }, (days > 0 ? '+' : '') + days + 'd');
+
+          box.appendChild(U.el('div', { class: 'btn-row tight' }, [
+            nudge(-3), nudge(-1), dateIn, nudge(1), nudge(3),
+            U.el('button', {
+              class: 'btn small ghost', type: 'button',
+              title: 'Scan the printed best-by date',
+              onclick: () => scanLabelDate(item, container, null, (iso) => { item.expiresISO = iso; dateIn.value = iso; })
+            }, '\u{1F4F8}')
+          ]));
+          body.appendChild(box);
+        });
+
+        body.appendChild(U.el('button', {
+          class: 'btn primary wide',
+          onclick: () => { close(); render(container); }
+        }, 'Done — dates look right'));
+      }
+    });
+  }
+
   /* ---------- main render ---------- */
   function itemRow(item, container) {
     const food = FOODS.byId(item.foodId);
@@ -432,7 +618,8 @@
     const items = inv.items();
 
     const aside = U.el('div', { class: 'btn-row tight' }, [
-      U.el('button', { class: 'btn small ghost', onclick: () => scanReceipt(container) }, '\u{1F9FE} Scan receipt'),
+      U.el('button', { class: 'btn small ghost', onclick: () => scanReceipt(container) }, '\u{1F9FE} Receipt'),
+      U.el('button', { class: 'btn small ghost', onclick: () => scanShelf(container) }, '\u{1F4F7} Shelf'),
       U.el('button', { class: 'btn small primary', onclick: () => addManually(container) }, '+ Add')
     ]);
     container.appendChild(ui.header('On hand', 'Pantry', aside));

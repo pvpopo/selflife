@@ -62,23 +62,16 @@
     line = line.replace(CODE_RE, ' ').replace(/\s{2,}/g, ' ').trim();
     if (line.replace(/[^a-z]/gi, '').length < 3) return null;
 
-    // best catalog match
-    let best = null, bestScore = 0;
-    FOODS.list.forEach((food) => {
-      const names = [food.name, ...(food.aliases || [])];
-      names.forEach((n) => {
-        const s = U.tokenScore(line, n);
-        if (s > bestScore) { bestScore = s; best = food; }
-      });
-    });
+    // best catalog match (shared matcher — same one the shelf-photo flow uses)
+    const m = FOODS.match(line);
 
     return {
       raw: raw.trim(),
       text: line,
       price,
       qty,
-      match: bestScore >= 0.45 ? best.id : null,
-      score: Math.round(bestScore * 100) / 100
+      match: m.id,
+      score: Math.round(m.score * 100) / 100
     };
   }
 

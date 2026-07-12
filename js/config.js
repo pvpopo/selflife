@@ -31,6 +31,15 @@
     /* Second real store lane: URL of your deployed proxy/kroger-worker.js.
        Kroger's public API adds true per-store stock levels. Setup steps are
        at the top of that file; blank = lane stays off. */
-    krogerProxy: ''
+    krogerProxy: '',
+
+    /* Shelf-photo scanning: URL of your deployed proxy/vision-worker.js
+       (e.g. 'https://shelflife-vision.<you>.workers.dev'). Photograph a
+       pantry/fridge/freezer shelf and a vision model identifies the food.
+       NOTE: unlike receipt OCR, the photo LEAVES the device (sent to the
+       worker → Claude API; stored at most 7 days, then auto-deleted) — the
+       UI discloses this before every scan. Blank = feature stays off.
+       Setup: see the top of proxy/vision-worker.js. */
+    visionProxy: 'https://shelflife-vision.richvici.workers.dev'
   };
 })(typeof window !== 'undefined' ? window : globalThis);
